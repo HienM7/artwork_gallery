@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <title>Show</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="text-center">
+	<div>
+		<div class="py-5 text-center">
+    		<h1>Thong tin ca nhan</h1>
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 45px">Username:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.username %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 83px">Email:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.email %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 40px">CreditCard:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.credit_card %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 85px">Point:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.point %>" readonly="readonly">
+    	</div>
+    	<a href="/"><button class="btn btn-lg btn-primary btn-block" style="width: 15%; margin: auto" type="button">Log out</button></a>
+    </div>
+</body>
+</html>
