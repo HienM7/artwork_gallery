@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 		end
 		@user = User.find(params[:id])
 	end
+
 	def xulylogin
 		@user = User.find_by(username:user_params[:username])
 		if @user
@@ -20,12 +21,15 @@ class UsersController < ApplicationController
 			render 'login'
 		end
 	end
+
 	def login
 		session[:user] = ''
 	end
+
 	def new
 		@user = User.new
 	end
+
 	def create
 		user = params.require(:user).permit(:username, :password, :email, :credit_card, :password_confirmation)
 		is_admin = "is_admin"
@@ -40,6 +44,7 @@ class UsersController < ApplicationController
 		else render 'new'
 		end
 	end
+	
 	private def user_params
 		params.require(:user).permit(:username, :password)
 	end
