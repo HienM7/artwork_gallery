@@ -1,0 +1,112 @@
+<%= stylesheet_link_tag "icons/themify-icons/themify-icons" %>
+<%= stylesheet_link_tag "style" %>
+<style>
+  .el-element-overlay .el-card-item {
+    padding-bottom: 0;
+  }
+  .test-title {
+    line-height: 1.5em;
+    height: 3em;
+    overflow: hidden;
+    width: 100%;
+  }
+</style>
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Public Gallery</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Artwork</li>
+            <li class="breadcrumb-item active">List</li>
+        </ol>
+    </div>
+    <div>
+        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10">
+          <i class="ti-settings text-white"></i>
+        </button>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+    <!-- Row -->
+    <div class="row el-element-overlay">
+      <div class="col-md-12">
+          <h4 class="m-b-0">All Artworks</h4>
+          <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
+      </div>
+      
+      <% @artworks.each do |artwork| %>
+      
+      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 col-xs-12" style="display: flex">
+            <%# <div class="card-deck"> %>
+              <div class="card">
+                  <div class="el-card-item box-container">
+                      <div class="el-card-avatar el-overlay-1">
+                          <%= image_tag  artwork.img_link, class: 'card-img-top', style: 'width: 100%; height: 160px !important', alt: 'Oops!' %>
+
+                          <div class="el-overlay">
+                              <ul class="el-info">
+                                  <li>
+                                    <%= link_to  artworks_show_path(artwork) do %>
+                                      <%= artwork.name %>
+                                      <i class="icon-link"></i>
+                                    <% end %>
+                                  </li>
+                              </ul>
+                          </div>
+                      </div>
+
+                      <div class="card-body box-container">
+                          <div>
+                              <h4 class="test-title">
+                                <%= link_to  artwork.name, artworks_show_path(artwork) %>
+                                <%# limit_text(artwork.title, 50) %>
+                              </h4>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            <%# </div> %>
+      </div>
+      
+      <% end %>
+    </div>
+    <!-- End Row -->
+</div>
+
+<%= javascript_pack_tag 'custom' %>
+<%= javascript_pack_tag 'waves' %>
+
+<%
+=begin%>
+ @section('pageScript') 
+<%
+=end
+%>
+
+<script>
+  $(document).ready(function() {
+  // Select and loop the container element of the elements you want to equalise
+    $('.box-container').each(function() {  
+      // Cache the highest
+      var highestBox = 0;
+      // Select and loop the elements you want to equalise
+      $('.box-column', this).each(function() {
+        // If this box is higher than the cached highest then store it
+        if ($(this).height() > highestBox) {
+          highestBox = $(this).height(); 
+        }
+      });  
+      // Set the height of all those children to whichever was highest 
+      $('.box-column', this).height(highestBox);
+    });
+  });
+</script>

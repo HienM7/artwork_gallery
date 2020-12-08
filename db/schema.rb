@@ -17,6 +17,13 @@ ActiveRecord::Schema.define(version: 2020_12_07_165523) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
+  end
+  
+  create_table "artworks", force: :cascade do |t|
+    t.string "name"
+    t.string "img_link"
+    t.integer "value"
+    t.integer "is_public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
