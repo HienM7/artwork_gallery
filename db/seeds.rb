@@ -20,3 +20,42 @@ default_artworks.each do |name, path, value, is_public|
     is_public: is_public
   )
 end
+
+
+cat_list = [
+  '3D',
+  'Adoptables',
+  'Animation',
+  'Anime and Manga',
+  'Anthro',
+  'Artisan Crafts',
+  'Comics',
+  'Cosplay',
+  'Customization',
+  'Digital Art',
+  'Drawings and Paintings',
+  'Emoji and Emoticon',
+  'Fan Art',
+  'Fan Fiction',
+  'Fantasy',
+  'Fractal',
+  'Game Art',
+  'Horror',
+  'Literature',
+  'Photo Manipulation',
+  'Photography',
+  'Pixel Art',
+  'Poetry',
+  'Resources',
+  'Science Fiction',
+  'Sculpture',
+  'Stock Images',
+  'Street Art',
+  'Street Photography',
+  'Traditional Art',
+  'Wallpaper'
+]
+
+cat_list.shuffle.each do |name|
+  Category.create(name: name)
+end

@@ -1,0 +1,108 @@
+<%= stylesheet_link_tag "css/style" %>
+<%= stylesheet_link_tag "css/style" %>
+
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Manage Categories</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Category</li>
+            <li class="breadcrumb-item active">Manage</li>
+        </ol>
+    </div>
+    <div>
+        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
+                class="ti-settings text-white"></i></button>
+    </div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+
+<%
+=begin%>
+ <% if notice.success %>
+      <div class="alert alert-success" role="alert">
+          {{session('success')}}
+      </div>
+      <% else %>
+      <div class="alert alert-danger" role="alert">
+          {{session('error')}}
+      </div>
+      <% end %> 
+<%
+=end%>
+      <p id="notice"><%= notice %></p>
+
+      <!-- topCategories -->
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <h4 class="card-title">Category List</h4>
+            <h6 class="card-subtitle">Find and manage all categories here.</h6>
+            <table id="myTable" class="table table-bordered table-striped">
+              <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Created At</th>
+                    <th>Tools</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <% @categories.each do |category| %>
+                  <tr>
+                    <td><%= category.name %></td>
+                    <td><%= category.created_at %></td>
+                    <td>
+                      <%#= link_to 'Show', category %>
+                      <%= link_to 'Edit',
+                          # edit_category_path(category),
+                          class: 'btn btn-primary btn-xs' do %>
+                        <i class="fa fa-edit"></i> Edit
+                      <% end %>
+                      <%= link_to 'Destroy',
+                          # category, method: :delete,
+                          data: { confirm: 'Are you sure?' },
+                          class: "btn btn-danger btn-xs deleteCategory" do %>
+                          <i class="far fa-trash-alt"></i> Delete
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <%= link_to 'New Category', new_category_path %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<%= javascript_pack_tag 'custom' %>
+<%= javascript_pack_tag 'waves' %>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').dataTable({
+            'paging': false,
+            'info': false,
+            "columnDefs": [
+                { "orderable": false, "targets": [2] }
+            ],
+            "language": {
+                "lengthMenu": "Show _MENU_ categories",
+                "info": "Showing _START_ to _END_ of _TOTAL_ categories",
+                "emptyTable": "No categories",    
+                "infoFiltered": "(filtered from _MAX_ total categories)",
+                "zeroRecords": "No matching categories found",
+                "infoEmpty": "No categories to show"
+            }
+        });
+    });
+</script>

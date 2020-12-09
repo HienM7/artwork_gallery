@@ -15,15 +15,17 @@ ActiveRecord::Schema.define(version: 2020_12_07_165523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "categories", force: :cascade do |t|
-    t.string "name"
-  end
-  
   create_table "artworks", force: :cascade do |t|
     t.string "name"
     t.string "img_link"
     t.integer "value"
     t.integer "is_public"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

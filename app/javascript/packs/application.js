@@ -3,13 +3,19 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+// import "bootstrap"
+
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("packs/custom")
+require("bootstrap")
+require("datatables.net-bs4")
 
-import "bootstrap"
+import JQuery from 'jquery';
+window.$ = window.JQuery = JQuery;
+
 import "../stylesheets/application"
 
 document.addEventListener("turbolinks:load", () => {
