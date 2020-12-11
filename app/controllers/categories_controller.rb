@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
   # GET /categories
   # GET /categories.json
   def index
-    @categories = Category.all
+    @categories = Category.order(created_at: :desc)
   end
 
   # GET /categories/1
@@ -28,9 +28,11 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       if @category.save
-        format.html { redirect_to @category, notice: 'Category was successfully created.' }
+        flash[:notice] = 'Category was successfully created.'
+        format.html { redirect_to action: "index" }
         format.json { render :show, status: :created, location: @category }
       else
+        flash[:alert] = 'Category was not created due to the error(s) below.'
         format.html { render :new }
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
@@ -42,9 +44,11 @@ class CategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @category.update(category_params)
-        format.html { redirect_to @category, notice: 'Category was successfully updated.' }
+        flash[:notice] = 'Category was successfully updated.'
+        format.html { redirect_to action: "index", notice: 'Category was successfully updated.' }
         format.json { render :show, status: :ok, location: @category }
       else
+        flash[:alert] = 'Category was not updated due to the error(s) below.'
         format.html { render :edit }
         format.json { render json: @category.errors, status: :unprocessable_entity }
       end
@@ -56,7 +60,7 @@ class CategoriesController < ApplicationController
   def destroy
     @category.destroy
     respond_to do |format|
-      format.html { redirect_to categories_url, notice: 'Category was successfully destroyed.' }
+      format.html { redirect_to categories_url, notice: 'Category was successfully deleted.' }
       format.json { head :no_content }
     end
   end

@@ -6,10 +6,17 @@
 // import "bootstrap"
 
 require("@rails/ujs").start()
-require("turbolinks").start()
+// require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
+
+require("metismenu")
+
+require("packs/jquery.sticky-kit.min")
+require("packs/jquery.slimscroll")
+require("packs/waves")
 require("packs/custom")
+
 require("bootstrap")
 require("datatables.net-bs4")
 

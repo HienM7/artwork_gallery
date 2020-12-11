@@ -1,4 +1,7 @@
 <%= form_with(model: category, local: true) do |form| %>
+
+  <% next_act = { New: 'Create', Edit: 'Update' } %>
+
   <% if category.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
@@ -11,12 +14,34 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-body">
+      <!--h3 class="card-title">
+        <%= action_label %>
+        Category
+      </h3-->
+      <hr>
+      <div class="row p-t-20">
+          <div class="col-md-6">
+              <div class="field form-group">
+                  <%= form.label :name, class: 'control-label' %>
+                  <%= form.text_field :name,
+                      class: 'form-control',
+                      placeholder: "Category name" %>
+                  <!-- small class="form-control-feedback"> This is inline help </small-->
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="actions form-actions">
+      <div class="actions">
+        <%= form.button :button, type: :submit,
+            class: 'btn btn-success m-r-20' do %>
+          <%= next_act[action_label.to_sym] %>
+        <% end %>
+        <%= link_to 'View category list',
+            categories_path,
+            class: "btn btn-secondary" %>
+      </div>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
 <% end %>

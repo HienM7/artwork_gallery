@@ -1585,7 +1585,7 @@ dropdown-item
 Custom-select
 ******************/
 .custom-select {
-  background: url(../../assets/images/custom-select.png) right 0.75rem center no-repeat; }
+  background: url("../../images/custom-select.png") right 0.75rem center no-repeat; }
 
 /*******************
 textarea
@@ -3424,8 +3424,9 @@ table.dataTable thead .sorting:after {
   color: rgba(50, 50, 50, 0.5); }
 
 .dataTables_wrapper .dataTables_paginate {
-  float: right;
-  text-align: right;
+  /* float: right; */
+  /* display: block !important; */
+  text-align: center;
   padding-top: 0.25em; }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button {
