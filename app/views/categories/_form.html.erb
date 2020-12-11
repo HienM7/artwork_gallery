@@ -1,24 +1,12 @@
-<%= form_with(model: category, local: true) do |form| %>
+<%= form_with(
+      model: category,
+      local: true,
+      html: {class: "needs-validation", novalidate: true}
+    ) do |form| %>
 
   <% next_act = { New: 'Create', Edit: 'Update' } %>
 
-  <% if category.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(category.errors.count, "error") %> prohibited this category from being saved:</h2>
-
-      <ul>
-        <% category.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <div class="form-body">
-      <!--h3 class="card-title">
-        <%= action_label %>
-        Category
-      </h3-->
       <hr>
       <div class="row p-t-20">
           <div class="col-md-6">
@@ -26,8 +14,11 @@
                   <%= form.label :name, class: 'control-label' %>
                   <%= form.text_field :name,
                       class: 'form-control',
-                      placeholder: "Category name" %>
-                  <!-- small class="form-control-feedback"> This is inline help </small-->
+                      placeholder: "Category name",
+                      required: true %>
+                  <div class="invalid-feedback">
+                    Category name must have length of 1 to 100 characters.
+                  </div>
               </div>
           </div>
       </div>
