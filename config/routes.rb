@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :categories
+
   get 'artworks/index'
   get 'artworks/show'
   # namespace :admin do

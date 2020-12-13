@@ -1,0 +1,38 @@
+<%= form_with(
+      model: category,
+      local: true,
+      html: {class: "needs-validation", novalidate: true}
+    ) do |form| %>
+
+  <% next_act = { New: 'Create', Edit: 'Update' } %>
+
+  <div class="form-body">
+      <hr>
+      <div class="row p-t-20">
+          <div class="col-md-6">
+              <div class="field form-group">
+                  <%= form.label :name, class: 'control-label' %>
+                  <%= form.text_field :name,
+                      class: 'form-control',
+                      placeholder: "Category name",
+                      required: true %>
+                  <div class="invalid-feedback">
+                    Category name must have length of 1 to 100 characters.
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="actions form-actions">
+      <div class="actions">
+        <%= form.button :button, type: :submit,
+            class: 'btn btn-success m-r-20' do %>
+          <%= next_act[action_label.to_sym] %>
+        <% end %>
+        <%= link_to 'View category list',
+            categories_path,
+            class: "btn btn-secondary" %>
+      </div>
+  </div>
+
+<% end %>
