@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
+	before_action :authenticate_user!
 	def show
-		if session[:user] != 'user'
-			redirect_to :action => 'login'
-		end
-		@user = User.find(params[:id])
+		#if session[:user] != 'user'
+			#redirect_to :action => 'login'
+		#end
+		@user = current_user
 	end
 
 	def xulylogin

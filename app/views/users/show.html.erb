@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <style type="text/css">
+      .color{
+        color: #ffffff
+      }
+    </style>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
     <title>Show</title>
@@ -24,6 +29,19 @@
 <![endif]-->
 </head>
 <body class="text-center">
+    <nav style="background-color: #4f3ad1" class="navbar navbar-expand-md navbar-dark bg-#2069b5 fixed-top">
+  <a class="navbar-brand" href="/">Artwork</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li><%= link_to "Edit", edit_user_registration_path, :class => 'color' %></li>
+      <li style="margin-left: 30px"><%= link_to "Log out", destroy_user_session_path, :method => 'delete', :class => 'color' %></li>
+    </ul>
+  </div>
+</nav>
 	<div>
 		<div class="py-5 text-center">
     		<h1>Thông tin cá nhân</h1>
@@ -44,7 +62,6 @@
           <label for="address" style="margin-right: 85px">Point:</label>
           <input type="text" class="form-control" id="address" value="<%= @user.point %>" readonly="readonly">
     	</div>
-    	<a href="/"><button class="btn btn-lg btn-primary btn-block" style="width: 15%; margin: auto" type="button">Log out</button></a>
     </div>
 </body>
 </html>
