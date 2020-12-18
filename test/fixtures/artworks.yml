@@ -4,12 +4,10 @@ one:
   name: MyString
   img_link: MyString
   value: 1
-  user: one
-  category: one
+  is_public: 1
 
 two:
   name: MyString
   img_link: MyString
   value: 1
-  user: two
-  category: two
+  is_public: 1

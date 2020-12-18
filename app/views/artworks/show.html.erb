@@ -1,2 +1,213 @@
-<h1>Artworks#show</h1>
-<p>Find me in app/views/artworks/show.html.erb</p>
+<%# section: 'pageStylesheets' %>
+<%= stylesheet_link_tag "css/style" %>
+<style>
+    #content img {
+        width: 100% !important;
+    }
+    #data-table-users td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    [data-target *= "hidden-by-default"]:focus {
+        outline: none;
+    }
+    .error {
+        color: red;
+        display: block;
+        padding: 0;
+        margin: 0;
+    }
+    .list-upload:hover {
+        color: #1976d2;
+        background: #e7f6fe;
+    }
+    #add-file-button:hover {
+        color: #00897b;
+        cursor: pointer;
+    }
+</style>
+
+
+<%# section: 'contents' %>
+
+<div class="row page-titles">
+  <div class="col-md-5 align-self-center">
+    <h3 class="text-themecolor">Artwork View</h3>
+  </div>
+  <div class="col-md-7 align-self-center">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">Artwork</li>
+      <li class="breadcrumb-item active">Show</li>
+    </ol>
+  </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <!-- Column -->
+        <div class="col-lg-8 col-xlg-8 col-md-12 col-sm-12" id="left-info-container">
+            <div class="card" id="left-info">
+<%
+=begin%>
+ <%# if (@artwork.status == 'published') %>
+    <%# if (session().get('admin')['role_id'] == 1) %>
+    <div class="ribbon ribbon-info ribbon-right">Active</div>
+    <%# endif %>
+    <%# if (@artwork.max_quantity <= @artwork.learner_count) %>
+    <div class="ribbon ribbon-danger">Full</div>
+    <%# else %>
+    <div class="ribbon ribbon-info">Available</div>
+    <%# endif %>
+<%# elseif (@artwork.status == 'inactive')  %>
+<div class="ribbon ribbon-danger ribbon-right">Inactive</div>
+<%# elseif (@artwork.status == 'draft')  %>
+<div class="ribbon ribbon-default ribbon-right">Draft</div>
+<%# endif %>
+<%
+=end%>
+                <div class="card-body" id="left-info-header">
+                    <div class="m-t-30 text-center">
+                        <%= image_tag  @artwork.img_link, class: 'card-img-top img-responsive' %>
+                        <h4 class="text-muted text-info m-t-10">
+                          <%= @artwork.name %>
+                        </h4>
+                    </div>
+                </div>
+                <div class="card-body" id="left-info-body">
+                    <div class="row">
+                        <div class="col-4 b-r">
+                            <div class="text-center">
+                                <h5>
+                                  <i class="icon-heart"></i>
+                                  <%#= @artwork.favorites.count %> 999
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 b-r">
+                            <div class="text-center">
+                                <h5>
+                                  <i class="icon-user"></i>
+                                  <%#= @artwork.user.name %>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-4 b-r">
+                            <div class="text-center">
+                                <h5>
+                                  <i class="icon-eye"></i>
+                                  <%#= @artwork.view %>
+                                </h5>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h5>
+                                  <i class="icon-clock date"></i>
+                                  <%= @artwork.created_at %>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+<%
+=begin%>
+ <div class="card-body" id="left-info-footer">
+                    <div class="text-center">
+                    <% @artwork.tags.each do |tag| %>
+                      <%= link_to tag.name,
+                                  link_to_artworks_with_same_tag
+                                  class: "btn btn-sm btn-outline-info"
+                                  style: "margin-bottom: 5px;" %>
+                    <% end %>
+                    </div>
+                </div>     
+<%
+=end%>
+            </div>
+        </div>
+        <!-- Column -->
+
+        <!-- Column -->
+        <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12" id="right-info-container">   
+            <div class="card">
+                <!-- Nav tabs // change to simple scrollable list -->
+                <ul class="nav nav-tabs profile-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" data-toggle="tab" href="#simarts" role="tab">Similar Artworks</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" data-toggle="tab" href="#sameauthor" role="tab" id="tab_sameau">From same author</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content" id="right-info">
+                    <div class="tab-pane active" id="simarts" role="tabpanel">
+                        <div class="card-body" id="content">
+                            <h5>DESCRIPTION</h5>
+                            abc
+                            <hr>
+                            <h5>CONTENT</h5>
+                            xyz
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="sameauthor" role="tabpanel">
+                        <div class="card-body" id="content">
+                            <h5>DESCRIPTION</h5>
+                            abc
+                            <hr>
+                            <h5>CONTENT</h5>
+                            xyz
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Column -->
+        </div>
+    </div>
+</div>
+
+
+<%# section: 'pageScripts' %>
+<%#= javascript_pack_tag 'jquery.lockfixed' %>
+<%#= javascript_pack_tag 'form_validation' %>
+
+<script>
+    let date = new Date();
+    $(document).ready(function () {
+        $('.card-body#left-info-body').each(function() {
+            left_body_height += $(this).outerHeight();
+        });
+
+        let right_info = $("div.card-body#content").height();
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            var target = $(e.target).attr("href") // activated tab
+            if (target == "#home") {
+                right_info = $(".card-body#content").height();
+            } else if (target == "#settings") {
+                right_info = $(".card-body#instructors").height();
+            } else if (target == "#learnersdiv") {
+                right_info = $(".card-body#learners").height();
+            } 
+        });
+        
+        let left_info = $('#left-info').height();
+        let left_info_title = $("#left-info-title.card-body").height();
+        let img = $(".card-img-top").height();
+        let right_info_container = $("#right-info-container").height();
+        let footer = $('.footer').height();
+        let width = $(window).width();
+        let height = $(window).height();
+        if (width >= 1024 && height >= 600) {
+            if (left_info < right_info) {   
+                let left_info_container = $("#left-info-container").height();
+                let left_info_to_footer = $('#left-info-container').height() - $('#left-info').height();
+                if (left_body_height < height) {
+                    $.lockfixed("#left-info", {offset: {top: 60, bottom: footer + (right_info_container - right_info - 10)} });
+                } else {
+                    $.lockfixed("#left-info", {offset: {top: -(left_info - height), bottom: footer + (right_info_container - right_info)}});
+                }
+            }
+        }
+    });
+</script>
