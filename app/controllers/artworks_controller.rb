@@ -4,7 +4,7 @@ class ArtworksController < ApplicationController
   # GET /artworks
   # GET /artworks.json
   def index
-    @artworks = Artwork.all
+    @artworks = Artwork.search(params[:keyword])
   end
 
   # GET /artworks/1
@@ -69,6 +69,8 @@ class ArtworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def artwork_params
-      params.require(:artwork).permit(:name, :img_link, :value, :is_public)
+      params
+      .require(:artwork)
+      .permit(:name, :img_link, :value, :is_public, :keyword)
     end
 end
