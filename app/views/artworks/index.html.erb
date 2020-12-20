@@ -3,11 +3,23 @@
   .el-element-overlay .el-card-item {
     padding-bottom: 0;
   }
-  .test-title {
-    line-height: 1.5em;
-    height: 3em;
-    overflow: hidden;
-    width: 100%;
+  .el-element-overlay .el-card-item .el-card-avatar {
+    margin-bottom: 0;
+  }
+  /* .el-element-overlay .el-card-item .el-overlay-1 {
+    text-align: left;
+    padding-bottom: 0;
+  } */
+  .el-element-overlay .el-card-item .el-overlay-1 .el-info > li a:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+  .formal-text {
+    /* padding-left: 15px;
+    padding-bottom: 10px; */
+    padding-top: 10px;
+    margin: 0 !important;
+    text-transform: capitalize;
   }
 </style>
 
@@ -73,6 +85,14 @@
                   <%= artwork.name %>
                   <i class="icon-link"></i>
                 <% end %>
+                <br />
+                <p class="formal-text">by Anonymous </p>
+                <%#= link_to  artwork.user.name, user_path(artwork.user) %>
+                <br />
+                <p class="formal-text">
+                  <%#= artwork.favorites.count %>
+                  999 <i class="icon-heart"></i>
+                </p>
               </li>
             </ul>
           </div>
