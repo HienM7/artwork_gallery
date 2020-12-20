@@ -1,12 +1,16 @@
 {
-  "name": "artwork_gellery",
+  "name": "artwork_gallery",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "4.3.0",
-    "turbolinks": "^5.2.0"
+    "bootstrap": "^4.5.3",
+    "datatables.net-bs4": "^1.10.22",
+    "jquery": "^3.5.1",
+    "metismenu": "^3.0.6",
+    "popper.js": "^1.16.1"
   },
   "version": "0.1.0",
   "devDependencies": {

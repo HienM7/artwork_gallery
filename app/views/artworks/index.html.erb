@@ -1,0 +1,133 @@
+<%= stylesheet_link_tag "css/style" %>
+<style>
+  .el-element-overlay .el-card-item {
+    padding-bottom: 0;
+  }
+  .el-element-overlay .el-card-item .el-card-avatar {
+    margin-bottom: 0;
+  }
+  /* .el-element-overlay .el-card-item .el-overlay-1 {
+    text-align: left;
+    padding-bottom: 0;
+  } */
+  .el-element-overlay .el-card-item .el-overlay-1 .el-info > li a:hover {
+    background: transparent;
+    border-color: transparent;
+  }
+  .formal-text {
+    /* padding-left: 15px;
+    padding-bottom: 10px; */
+    padding-top: 10px;
+    margin: 0 !important;
+    text-transform: capitalize;
+  }
+</style>
+
+<div class="row page-titles">
+    <!-- Page inner title -->
+    <div class="col-md-2 align-self-center">
+        <h3 class="text-themecolor">Public Gallery</h3>
+    </div>
+    <!-- Search form -->
+    <div class="col-md-6 align-self-center">
+        <div class="md-form active-pink active-pink-2 mt-0">
+          <%= form_with  url: artworks_path,
+                         method: 'get',
+                         local: true do |form| %>
+            <%= form.text_field :keyword,
+                class: 'form-control',
+                placeholder: "Search",
+                value: params[:keyword],
+                aria_label: "Search" %>
+          <% end %>
+        </div>
+    </div>
+    <!-- Bread crumb -->
+    <div class="col-md-4 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Artwork</li>
+            <li class="breadcrumb-item active">List</li>
+        </ol>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- End Bread crumb and right sidebar toggle -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- Container fluid  -->
+<!-- ============================================================== -->
+<div class="container-fluid">
+  <div class="row m-t-40">
+    <div class="col-md-12">
+        <h4 class="m-b-0">All Artworks</h4>
+        <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
+    </div>
+  </div>
+    
+  <div class="card-columns el-element-overlay">
+    
+    <% @artworks.each do |artwork| %>
+
+    <div class="card">
+      <div class="el-card-item">
+        <div class="el-card-avatar el-overlay-1">
+          <%= link_to  artwork_path(artwork),
+              class: 'image-popup-vertical-fit' do %>
+            <%= image_tag  artwork.img_link,
+                           alt: 'Oops!',
+                           loading: 'lazy' %>
+          <% end %>
+          <div class="el-overlay">
+            <ul class="el-info">
+              <li>
+                <%= link_to  artwork_path(artwork) do %>
+                  <%= artwork.name %>
+                  <i class="icon-link"></i>
+                <% end %>
+                <br />
+                <p class="formal-text">by Anonymous </p>
+                <%#= link_to  artwork.user.name, user_path(artwork.user) %>
+                <br />
+                <p class="formal-text">
+                  <%#= artwork.favorites.count %>
+                  999 <i class="icon-heart"></i>
+                </p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <% end %>
+
+  </div>
+</div>
+
+
+<%
+=begin%>
+ section 'pageScript'
+<%
+=end
+%>
+
+<script>
+  $(document).ready(function() {
+  // Select and loop the container element of the elements you want to equalise
+    $('.box-container').each(function() {  
+      // Cache the highest
+      var highestBox = 0;
+      // Select and loop the elements you want to equalise
+      $('.box-column', this).each(function() {
+        // If this box is higher than the cached highest then store it
+        if ($(this).height() > highestBox) {
+          highestBox = $(this).height(); 
+        }
+      });  
+      // Set the height of all those children to whichever was highest 
+      $('.box-column', this).height(highestBox);
+    });
+  });
+</script>

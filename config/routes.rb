@@ -5,4 +5,11 @@ Rails.application.routes.draw do
   post 'xulylogin' => 'users#xulylogin'
   get 'login' => 'users#login'
   resources :users
+  resources :artworks
+  resources :categories
+  # namespace :admin do
+  #   root to: "admin#index"
+  # end
+
+  root to: 'artworks#index'
 end
