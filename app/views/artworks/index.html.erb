@@ -34,50 +34,43 @@
 <!-- Container fluid  -->
 <!-- ============================================================== -->
 <div class="container-fluid">
-    <!-- Row -->
-    <div class="row el-element-overlay">
-      <div class="col-md-12">
-          <h4 class="m-b-0">All Artworks</h4>
-          <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
-      </div>
-      
-      <% @artworks.each do |artwork| %>
-      
-      <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12 col-xs-12" style="display: flex">
-            <%# <div class="card-deck"> %>
-              <div class="card">
-                  <div class="el-card-item box-container">
-                      <div class="el-card-avatar el-overlay-1">
-                          <%= image_tag  artwork.img_link, class: 'card-img-top', style: 'width: 100%; height: 160px !important', alt: 'Oops!' %>
-
-                          <div class="el-overlay">
-                              <ul class="el-info">
-                                  <li>
-                                    <%= link_to  artwork_path(artwork) do %>
-                                      <%= artwork.name %>
-                                      <i class="icon-link"></i>
-                                    <% end %>
-                                  </li>
-                              </ul>
-                          </div>
-                      </div>
-
-                      <div class="card-body box-container">
-                          <div>
-                              <h4 class="test-title">
-                                <%= link_to  artwork.name, artwork_path(artwork) %>
-                                <%# limit_text(artwork.title, 50) %>
-                              </h4>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-            <%# </div> %>
-      </div>
-      
-      <% end %>
+  <div class="row m-t-40">
+    <div class="col-md-12">
+        <h4 class="m-b-0">All Artworks</h4>
+        <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
     </div>
-    <!-- End Row -->
+  </div>
+    
+  <div class="card-columns el-element-overlay">
+    
+    <% @artworks.each do |artwork| %>
+
+    <div class="card">
+      <div class="el-card-item">
+        <div class="el-card-avatar el-overlay-1">
+          <%= link_to  artwork_path(artwork),
+              class: 'image-popup-vertical-fit' do %>
+            <%= image_tag  artwork.img_link,
+                           alt: 'Oops!',
+                           loading: 'lazy' %>
+          <% end %>
+          <div class="el-overlay">
+            <ul class="el-info">
+              <li>
+                <%= link_to  artwork_path(artwork) do %>
+                  <%= artwork.name %>
+                  <i class="icon-link"></i>
+                <% end %>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <% end %>
+
+  </div>
 </div>
 
 
