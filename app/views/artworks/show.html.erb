@@ -190,22 +190,30 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="right-info">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
-                        <div class="card-body" id="content">
-                            <h5>DESCRIPTION</h5>
-                            abc
-                            <hr>
-                            <h5>CONTENT</h5>
-                            xyz
+                      <% @similar.each do |simart| %>
+                      <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1">
+                          <%= link_to  artwork_path(simart),
+                              class: 'image-popup-vertical-fit' do %>
+                            <%= image_tag  simart.img_link,
+                                           alt: 'Oops!' %>
+                          <% end %>
                         </div>
+                      </div>
+                      <% end %>
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
-                        <div class="card-body" id="content">
-                            <h5>DESCRIPTION</h5>
-                            abc
-                            <hr>
-                            <h5>CONTENT</h5>
-                            xyz
+                      <% @same_author.each do |sameauthor| %>
+                      <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1">
+                          <%= link_to  artwork_path(sameauthor),
+                              class: 'image-popup-vertical-fit' do %>
+                            <%= image_tag  sameauthor.img_link,
+                                           alt: 'Oops!' %>
+                          <% end %>
                         </div>
+                      </div>
+                      <% end %>
                     </div>
                 </div>
             </div>
