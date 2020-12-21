@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.2'
@@ -11,6 +11,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'pg'
 
 gem 'dotenv-rails'
+gem 'devise'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <style type="text/css">
+      .color{
+        color: #ffffff
+      }
+    </style>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
+    <title>Show</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="/css/style.css" rel="stylesheet">
+    <!-- You can change the theme colors from here -->
+    <link href="/css/colors/blue.css" id="theme" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+<body class="text-center">
+    <nav style="background-color: #4f3ad1" class="navbar navbar-expand-md navbar-dark bg-#2069b5 fixed-top">
+  <a class="navbar-brand" href="/">Artwork</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li><%= link_to "Edit", edit_user_registration_path, :class => 'color' %></li>
+      <li style="margin-left: 30px"><%= link_to "Log out", destroy_user_session_path, :method => 'delete', :class => 'color' %></li>
+    </ul>
+  </div>
+</nav>
+	<div>
+		<div class="py-5 text-center">
+    		<h1>Thông tin cá nhân</h1>
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+        	<label for="address" style="margin-right: 45px">Username:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.username %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 83px">Email:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.email %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 40px">CreditCard:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.credit_card %>" readonly="readonly">
+    	</div>
+    	<div class="col-md-4 mb-5" style="display: flex; margin: auto;">
+          <label for="address" style="margin-right: 85px">Point:</label>
+          <input type="text" class="form-control" id="address" value="<%= @user.point %>" readonly="readonly">
+    	</div>
+    </div>
+</body>
+</html>
