@@ -10,6 +10,12 @@ class ArtworksController < ApplicationController
   # GET /artworks/1
   # GET /artworks/1.json
   def show
+    # TODO: @similar = Artwork.search_same_tag.most_hearted
+    # TODO: @same_author = Artwork.search_same_author.most_hearted
+    # except current artwork
+
+    @similar = Artwork.order('random()').limit(5)
+    @same_author = Artwork.order(name: :desc).limit(5)
   end
 
   # GET /artworks/new

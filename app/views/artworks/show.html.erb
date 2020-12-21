@@ -25,6 +25,16 @@
         color: #00897b;
         cursor: pointer;
     }
+    .el-element-overlay .el-card-item {
+      padding-bottom: 0;
+    }
+    .el-element-overlay .el-card-item .el-card-avatar {
+      margin-bottom: 0;
+    }
+    .el-element-overlay .el-card-item .el-overlay-1:hover img {
+      -ms-transform: scale(1) translateZ(0);
+      -webkit-transform: scale(1) translateZ(0);
+    }
 </style>
 
 
@@ -44,84 +54,121 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row el-element-overlay">
         <!-- Column -->
         <div class="col-lg-8 col-xlg-8 col-md-12 col-sm-12" id="left-info-container">
             <div class="card" id="left-info">
 <%
 =begin%>
  <%# if (@artwork.status == 'published') %>
-    <%# if (session().get('admin')['role_id'] == 1) %>
-    <div class="ribbon ribbon-info ribbon-right">Active</div>
-    <%# endif %>
-    <%# if (@artwork.max_quantity <= @artwork.learner_count) %>
-    <div class="ribbon ribbon-danger">Full</div>
-    <%# else %>
-    <div class="ribbon ribbon-info">Available</div>
-    <%# endif %>
-<%# elseif (@artwork.status == 'inactive')  %>
-<div class="ribbon ribbon-danger ribbon-right">Inactive</div>
-<%# elseif (@artwork.status == 'draft')  %>
-<div class="ribbon ribbon-default ribbon-right">Draft</div>
-<%# endif %>
+                  <%# if (session().get('admin')['role_id'] == 1) %>
+                  <div class="ribbon ribbon-info ribbon-right">Active</div>
+                  <%# endif %>
+                  <%# if (@artwork.max_quantity <= @artwork.learner_count) %>
+                  <div class="ribbon ribbon-danger">Full</div>
+                  <%# else %>
+                  <div class="ribbon ribbon-info">Available</div>
+                  <%# endif %>
+              <%# elseif (@artwork.status == 'inactive')  %>
+              <div class="ribbon ribbon-danger ribbon-right">Inactive</div>
+              <%# elseif (@artwork.status == 'draft')  %>
+              <div class="ribbon ribbon-default ribbon-right">Draft</div>
+              <%# endif %> 
 <%
 =end%>
-                <div class="card-body" id="left-info-header">
-                    <div class="m-t-30 text-center">
-                        <%= image_tag  @artwork.img_link, class: 'card-img-top img-responsive' %>
-                        <h4 class="text-muted text-info m-t-10">
-                          <%= @artwork.name %>
-                        </h4>
-                    </div>
+              <div class="el-card-item">
+                <div class="el-card-avatar el-overlay-1">
+                    <%= image_tag  @artwork.img_link, class: 'card-img-top img-responsive' %>
                 </div>
-                <div class="card-body" id="left-info-body">
-                    <div class="row">
-                        <div class="col-4 b-r">
-                            <div class="text-center">
-                                <h5>
-                                  <i class="icon-heart"></i>
-                                  <%#= @artwork.favorites.count %> 999
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 b-r">
-                            <div class="text-center">
-                                <h5>
-                                  <i class="icon-user"></i>
-                                  <%#= @artwork.user.name %>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-4 b-r">
-                            <div class="text-center">
-                                <h5>
-                                  <i class="icon-eye"></i>
-                                  <%#= @artwork.view %>
-                                </h5>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="text-center">
-                                <h5>
-                                  <i class="icon-clock date"></i>
-                                  <%= @artwork.created_at %>
-                                </h5>
-                            </div>
-                        </div>
+                <div class="el-card-content">
+                  <div class="row m-t-10">
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <i class="ti-heart btn" data-toggle="tooltip" data-placement="bottom" title="Heart">
+                          </i>
+                          <%#= @artwork.favorites.count %> 999
+                        </h5>
+                      </div>
                     </div>
-                </div>  
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <i class="ti-download btn" data-toggle="tooltip" data-placement="bottom" title="Download"></i>
+                          <%#= @artwork.downloadcount %>
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <i class="ti-share btn" data-toggle="tooltip" data-placement="bottom" title="Share"></i>
+                          <%#= @artwork.sharecount %>
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-3">
+                      <div class="text-center">
+                        <h5>
+                          <i class="ti-flag-alt-2 btn" data-toggle="tooltip" data-placement="bottom" title="Report"></i>
+                        </h5>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row m-l-10 m-t-10">
+                    <div class="col-12">
+                      <div class="text-left vm">
+                        <h3 class="text-themecolor m-t-10">
+                          <%= @artwork.name %>
+                        </h3>
+                        <br/>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="text-left">
+                        <h5>
+                          <i class="icon-user"></i>
+                          <%#= @artwork.user.avatar, link %>
+                          <%#= @artwork.user.name, link %>
+                          Daniel
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="text-left">
+                        <h5>
+                          <small>
+                            <i class="icon-clock date"></i> on
+                            <%= @artwork.created_at.strftime("%H:%M - %b %d, %Y") %>
+                          </small>
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-12 m-t-10">
+                      <div class="text-left">
+                        <h4>Description</h4>
+                        <hr />
+                        <p>
+                          <%#= @artwork.description %>
+                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 <%
 =begin%>
  <div class="card-body" id="left-info-footer">
-                    <div class="text-center">
-                    <% @artwork.tags.each do |tag| %>
-                      <%= link_to tag.name,
-                                  link_to_artworks_with_same_tag
-                                  class: "btn btn-sm btn-outline-info"
-                                  style: "margin-bottom: 5px;" %>
-                    <% end %>
-                    </div>
-                </div>     
+                  <div class="text-left">
+                  <% @artwork.tags.each do |tag| %>
+                    <%= link_to tag.name,
+                                link_to_artworks_with_same_tag
+                                class: "btn btn-sm btn-outline-info"
+                                style: "margin-bottom: 5px;" %>
+                  <% end %>
+                  </div>
+              </div> 
 <%
 =end%>
             </div>
@@ -143,22 +190,30 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="right-info">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
-                        <div class="card-body" id="content">
-                            <h5>DESCRIPTION</h5>
-                            abc
-                            <hr>
-                            <h5>CONTENT</h5>
-                            xyz
+                      <% @similar.each do |simart| %>
+                      <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1">
+                          <%= link_to  artwork_path(simart),
+                              class: 'image-popup-vertical-fit' do %>
+                            <%= image_tag  simart.img_link,
+                                           alt: 'Oops!' %>
+                          <% end %>
                         </div>
+                      </div>
+                      <% end %>
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
-                        <div class="card-body" id="content">
-                            <h5>DESCRIPTION</h5>
-                            abc
-                            <hr>
-                            <h5>CONTENT</h5>
-                            xyz
+                      <% @same_author.each do |sameauthor| %>
+                      <div class="el-card-item">
+                        <div class="el-card-avatar el-overlay-1">
+                          <%= link_to  artwork_path(sameauthor),
+                              class: 'image-popup-vertical-fit' do %>
+                            <%= image_tag  sameauthor.img_link,
+                                           alt: 'Oops!' %>
+                          <% end %>
                         </div>
+                      </div>
+                      <% end %>
                     </div>
                 </div>
             </div>
