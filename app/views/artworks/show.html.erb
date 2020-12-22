@@ -35,6 +35,20 @@
       -ms-transform: scale(1) translateZ(0);
       -webkit-transform: scale(1) translateZ(0);
     }
+    .btn-facebook {
+      color: #fff;
+      background-color: #4C67A1;
+    }
+    .btn-facebook:hover {
+      color: #fff;
+      background-color: #405D9B;
+    }
+    .btn-facebook:focus {
+      color: #fff;
+    }
+    #get-link:hover i {
+      color: #fff !important;
+    }
 </style>
 
 
@@ -102,16 +116,140 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <i class="ti-share btn" data-toggle="tooltip" data-placement="bottom" title="Share"></i>
+                          <button class="invisible"
+                                  data-toggle="modal"
+                                  data-target="#share-modal">
+                            <i class="ti-share btn visible" data-toggle="tooltip" data-placement="bottom" title="Share">
+                            </i>
+                          </button>
                           <%#= @artwork.sharecount %>
                         </h5>
+                        <div class="modal"
+                            id="share-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="Share"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-sm modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title"
+                                    id="exampleModalCenterTitle">
+                                  Share this artwork
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <div>
+                                  <button type="button" id="get-link" class="btn btn-secondary m-l-10 m-r-10" onclick="copy2clipboard()">
+                                    <i class="icon-link text-themecolor font-weight-bold" 
+                                       data-toggle="tooltip"
+                                       data-placement="bottom"
+                                       title="Copy link"></i>
+                                  </button>
+                                  <a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<% @artwork.img_link %>&p[images][0]=&p[title]=Title%20Goes%20Here&p[summary]=Description%20goes%20here!" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250,top=80,left=180'); return false">
+                                    <button type="button" class="btn btn-facebook m-l-10 m-r-10">
+                                      <i class="fa fa-facebook fa-2"
+                                         data-toggle="tooltip"
+                                         data-placement="bottom"
+                                         title="Share on Facebook">
+                                      </i>
+                                    </button>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-3">
                       <div class="text-center">
                         <h5>
-                          <i class="ti-flag-alt-2 btn" data-toggle="tooltip" data-placement="bottom" title="Report"></i>
+                          <button class="invisible"
+                                  data-toggle="modal"
+                                  data-target="#report-modal">
+                            <i class="ti-flag-alt-2 btn visible" data-toggle="tooltip" data-placement="bottom" title="Report">
+                            </i>
+                          </button>
                         </h5>
+                        <div class="modal"
+                            id="report-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="Report"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title"
+                                    id="report-artwork">
+                                  Report content
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <%= form_with  url: '#',
+                                                 method: 'post',
+                                                 local: true do |form| %>
+                                    <div class="form-body">
+                                      <div class="row m-l-10 m-r-10">
+                                        <%= form.label :reasons, class: 'col-12 control-label font-weight-bold text-left' %>
+                                        <ul class="icheck-list">
+                                          <!-- NOTE: options for collection_check_boxes contain invisible char -->
+                                          <!--       used as a quick fix for checkbox bug -->
+                                          <%= form.collection_check_boxes :reasons, 
+                                              [
+                                                ["⠀Violence", "v"],
+                                                ["⠀Nudity", "n"],
+                                                ["⠀Harassment", "h"],
+                                                ["⠀Copyright infringement", "c"],
+                                                ["⠀Repulsive content", "r"],
+                                                ["⠀Hateful content", "t"],
+                                                ["⠀Other", "o"]
+                                              ],
+                                              :second, :first do |b| %>
+                                            <li class="float-left d-inline-block">
+                                              <%= b.check_box %>
+                                              <%= b.label class: "m-l-20" %>
+                                            </li>
+                                          <% end %>
+                                        </ul>
+                                      </div>
+                                      <div class="row m-l-10 m-r-10">
+                                        <%= form.label :description, class: 'col-12 control-label font-weight-bold m-t-10 text-left' %>
+                                        <%= form.text_area :description,
+                                            size: '30x5',
+                                            class: 'form-control m-l-10 m-r-10',
+                                            placeholder: "Describe how you think the content is inappropriate (optional)" %>
+                                      </div>
+                                    </div>
+                                    <div class="actions form-actions m-t-20">
+                                      <div class="actions">
+                                        <%= form.button :button,
+                                            type: :submit,
+                                            class: 'btn btn-success waves-effect' do %>
+                                          Submit
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -179,7 +317,7 @@
         <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12" id="right-info-container">   
             <div class="card">
                 <!-- Nav tabs // change to simple scrollable list -->
-                <ul class="nav nav-tabs profile-tab" role="tablist">
+                <ul class="nav nav-tabs customtab" role="tablist">
                     <li class="nav-item">
                       <a class="nav-link active" data-toggle="tab" href="#simarts" role="tab">Similar Artworks</a>
                     </li>
@@ -228,6 +366,17 @@
 <%#= javascript_pack_tag 'form_validation' %>
 
 <script>
+    function copy2clipboard() {
+      navigator.clipboard.writeText("<%= artwork_url(@artwork) %>").then(
+        function() {
+          console.log('clipboard successfully set');
+        },
+        function() {
+          console.log('clipboard write failed');
+        }
+      );
+    }
+
     let date = new Date();
     $(document).ready(function () {
         $('.card-body#left-info-body').each(function() {
