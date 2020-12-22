@@ -124,7 +124,7 @@
                           </button>
                           <%#= @artwork.sharecount %>
                         </h5>
-                        <div class="modal"
+                        <div class="modal fade"
                             id="share-modal"
                             tabindex="-1"
                             role="dialog"
@@ -135,7 +135,7 @@
                             <div class="modal-content">
                               <div class="modal-header">
                                 <h4 class="modal-title"
-                                    id="exampleModalCenterTitle">
+                                    id="share-artwork">
                                   Share this artwork
                                 </h4>
                                 <button type="button"
@@ -147,19 +147,18 @@
                               </div>
                               <div class="modal-body">
                                 <div>
-                                  <button type="button" id="get-link" class="btn btn-secondary m-l-10 m-r-10" onclick="copy2clipboard()">
-                                    <i class="icon-link text-themecolor font-weight-bold" 
+                                  <button type="button" id="get-link" class="btn btn-success btn-circle btn-lg m-l-10 m-r-10" onclick="copy2clipboard()">
+                                    <i class="fa fa-link"
                                        data-toggle="tooltip"
                                        data-placement="bottom"
                                        title="Copy link"></i>
                                   </button>
                                   <a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<% @artwork.img_link %>&p[images][0]=&p[title]=Title%20Goes%20Here&p[summary]=Description%20goes%20here!" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250,top=80,left=180'); return false">
-                                    <button type="button" class="btn btn-facebook m-l-10 m-r-10">
-                                      <i class="fa fa-facebook fa-2"
+                                    <button class="btn btn-facebook waves-effect btn-circle btn-lg waves-light m-l-10 m-r-10" type="button">
+                                      <i class="fa fa-facebook"
                                          data-toggle="tooltip"
                                          data-placement="bottom"
-                                         title="Share on Facebook">
-                                      </i>
+                                         title="Share on Facebook"></i>
                                     </button>
                                   </a>
                                 </div>
@@ -179,7 +178,7 @@
                             </i>
                           </button>
                         </h5>
-                        <div class="modal"
+                        <div class="modal fade"
                             id="report-modal"
                             tabindex="-1"
                             role="dialog"
@@ -212,17 +211,17 @@
                                           <!--       used as a quick fix for checkbox bug -->
                                           <%= form.collection_check_boxes :reasons, 
                                               [
-                                                ["⠀Violence", "v"],
-                                                ["⠀Nudity", "n"],
-                                                ["⠀Harassment", "h"],
-                                                ["⠀Copyright infringement", "c"],
-                                                ["⠀Repulsive content", "r"],
-                                                ["⠀Hateful content", "t"],
-                                                ["⠀Other", "o"]
+                                                ["⠀⠀Violence", "v"],
+                                                ["⠀⠀Nudity", "n"],
+                                                ["⠀⠀Harassment", "h"],
+                                                ["⠀⠀Copyright infringement", "c"],
+                                                ["⠀⠀Repulsive content", "r"],
+                                                ["⠀⠀Hateful content", "t"],
+                                                ["⠀⠀Other", "o"]
                                               ],
                                               :second, :first do |b| %>
                                             <li class="float-left d-inline-block">
-                                              <%= b.check_box %>
+                                              <%= b.check_box class: "filled-in chk-col-light-blue" %>
                                               <%= b.label class: "m-l-20" %>
                                             </li>
                                           <% end %>
@@ -282,10 +281,35 @@
                         </h5>
                       </div>
                     </div>
+                    <div class="col-12">
+                      <div class="text-left m-t-10">
+                        <% dummy_tags = [
+                          'US',
+                          'mountain',
+                          '30-day-challenge',
+                          'sky'
+                        ] %>
+                        <% dummy_tags.each do |tag| %>
+                          <%= link_to tag,
+                              '#',
+                              class: "badge badge-info text-dark" %>
+                        <% end %>
+<%
+=begin%>
+                        <% @artwork.tags.each do |tag| %>
+                          <%= link_to tag.name,
+                                      link_to_artworks_with_same_tag,
+                                      class: "btn btn-sm btn-outline-info",
+                                      style: "margin-bottom: 5px;" %>
+                        <% end %> 
+<%
+=end%>
+                      </div>
+                    </div> 
                     <div class="col-12 m-t-10">
                       <div class="text-left">
-                        <h4>Description</h4>
                         <hr />
+                        <h4>Description</h4>
                         <p>
                           <%#= @artwork.description %>
                           Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
@@ -295,20 +319,6 @@
                   </div>
                 </div>
               </div>
-<%
-=begin%>
- <div class="card-body" id="left-info-footer">
-                  <div class="text-left">
-                  <% @artwork.tags.each do |tag| %>
-                    <%= link_to tag.name,
-                                link_to_artworks_with_same_tag
-                                class: "btn btn-sm btn-outline-info"
-                                style: "margin-bottom: 5px;" %>
-                  <% end %>
-                  </div>
-              </div> 
-<%
-=end%>
             </div>
         </div>
         <!-- Column -->
@@ -319,7 +329,7 @@
                 <!-- Nav tabs // change to simple scrollable list -->
                 <ul class="nav nav-tabs customtab" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active" data-toggle="tab" href="#simarts" role="tab">Similar Artworks</a>
+                      <a class="nav-link active" data-toggle="tab" href="#simarts" role="tab">In same category</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" data-toggle="tab" href="#sameauthor" role="tab" id="tab_sameau">From same author</a>
@@ -377,12 +387,7 @@
       );
     }
 
-    let date = new Date();
     $(document).ready(function () {
-        $('.card-body#left-info-body').each(function() {
-            left_body_height += $(this).outerHeight();
-        });
-
         let right_info = $("div.card-body#content").height();
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
             var target = $(e.target).attr("href") // activated tab
@@ -394,24 +399,5 @@
                 right_info = $(".card-body#learners").height();
             } 
         });
-        
-        let left_info = $('#left-info').height();
-        let left_info_title = $("#left-info-title.card-body").height();
-        let img = $(".card-img-top").height();
-        let right_info_container = $("#right-info-container").height();
-        let footer = $('.footer').height();
-        let width = $(window).width();
-        let height = $(window).height();
-        if (width >= 1024 && height >= 600) {
-            if (left_info < right_info) {   
-                let left_info_container = $("#left-info-container").height();
-                let left_info_to_footer = $('#left-info-container').height() - $('#left-info').height();
-                if (left_body_height < height) {
-                    $.lockfixed("#left-info", {offset: {top: 60, bottom: footer + (right_info_container - right_info - 10)} });
-                } else {
-                    $.lockfixed("#left-info", {offset: {top: -(left_info - height), bottom: footer + (right_info_container - right_info)}});
-                }
-            }
-        }
     });
 </script>
