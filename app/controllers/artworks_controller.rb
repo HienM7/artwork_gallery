@@ -10,7 +10,7 @@ class ArtworksController < ApplicationController
   # GET /artworks/1
   # GET /artworks/1.json
   def show
-    # TODO: @similar = Artwork.search_same_tag.most_hearted
+    # TODO: @similar = Artwork.search_same_cat.most_hearted
     # TODO: @same_author = Artwork.search_same_author.most_hearted
     # except current artwork
 
