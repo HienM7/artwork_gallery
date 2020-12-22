@@ -108,9 +108,79 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <i class="ti-download btn" data-toggle="tooltip" data-placement="bottom" title="Download"></i>
-                          <%#= @artwork.downloadcount %>
+                          <button class="invisible"
+                                  data-toggle="modal"
+                                  data-target="#download-modal">
+                            <i class="ti-download btn visible" data-toggle="tooltip" data-placement="bottom" title="Download"></i>
+                            <%#= @artwork.downloadcount %>
+                          </button>
                         </h5>
+                        <div class="modal fade"
+                            id="download-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="Download"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title"
+                                    id="download-artwork">
+                                  Download this artwork
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <%= form_with  url: '#',
+                                                 method: 'post',
+                                                 local: true,
+                                                 html: {class: 'form-material'} do |form| %>
+                                    <div class="form-body row">
+                                        <div class="col-6 b-r">
+                                          <div>
+                                            <%= form.radio_button :option, 'free', class: 'with-gap', checked: true %>
+                                            <%= form.label :option_free, 'free', class: 'text-uppercase font-weight-bold' %>
+                                          </div>
+                                          <h5>Standard quality</h5>
+                                          <small class="text-justify">
+                                            Consider donating points to support the author
+                                          </small>
+                                          <br />
+                                          <%= number_field_tag 'amount',
+                                              5, min: 5, max: 9999, step: 5,
+                                              class: 'w-25 form-control text-right' %> points
+                                        </div>
+                                        <div class="col-6">
+                                          <div>
+                                            <%= form.radio_button :option, 'paid', class: 'with-gap' %>
+                                            <%= form.label :option_paid, 'paid', class: 'text-uppercase font-weight-bold' %>
+                                          </div>
+                                          <h5>High quality</h5>
+                                          <h3 class="text-success">
+                                            <%= @artwork.value %>
+                                          </h3> points
+                                        </div>
+                                    </div>
+                                    <div class="actions form-actions m-t-20">
+                                      <div class="actions">
+                                        <%= form.button :button,
+                                            type: :submit,
+                                            class: 'btn btn-success waves-effect' do %>
+                                          Download
+                                        <% end %>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-3 b-r">
