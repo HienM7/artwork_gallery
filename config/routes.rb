@@ -7,9 +7,8 @@ Rails.application.routes.draw do
   resources :users
   resources :artworks
   resources :categories
-  # namespace :admin do
-  #   root to: "admin#index"
-  # end
+  
+  post 'artworks/:id/download', to: 'artworks#download', as: 'download'
   
   resources :users do
     resources :artworks do

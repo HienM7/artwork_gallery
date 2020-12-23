@@ -108,9 +108,6 @@
                           uses_ajax = false
                           toggle_data = {}
                           
-                          # For logged-in users
-                          # user_signed_in = true  # Note: HARDCODED
-                          # current_user = User.find(1)  # Note: HARDCODED
                           if current_user
                             fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
                             fav_id = if fav then fav.id else 0 end
@@ -207,10 +204,12 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <%= form_with  url: '#',
+                                  <%= form_with  url: download_path(@artwork.id),
                                                  method: 'post',
-                                                 local: true,
-                                                 html: {class: 'form-material'} do |form| %>
+                                                 html: {
+                                                   id: 'dl-form',
+                                                   class: 'form-material'
+                                                 } do |form| %>
                                     <div class="form-body row">
                                         <div class="col-6 b-r">
                                           <div>
@@ -222,8 +221,8 @@
                                             Consider donating points to support the author
                                           </small>
                                           <br />
-                                          <%= number_field_tag 'amount',
-                                              5, min: 5, max: 9999, step: 5,
+                                          <%= number_field_tag :amount,
+                                              0, min: 0, max: 9999, step: 1,
                                               class: 'w-25 form-control text-right' %> points
                                         </div>
                                         <div class="col-6">
@@ -241,12 +240,40 @@
                                       <div class="actions">
                                         <%= form.button :button,
                                             type: :submit,
+                                            id: 'dl-submit',
                                             class: 'btn btn-success waves-effect' do %>
                                           Download
                                         <% end %>
                                       </div>
                                     </div>
                                   <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal fade"
+                            id="dnload-err-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="Download failed"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-sm modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title text-danger"
+                                    id="download-artwork">
+                                  Download failed
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-left">
+                                <span id="dl-failed-txt">Error</span>
                               </div>
                             </div>
                           </div>
@@ -536,6 +563,77 @@
       );
     }
     
+    $(document).on('ajax:success', 'form#dl-form', function (event) {
+      const [data, status, xhr] = event.detail;
+      if (data.error) {
+        $('#download-modal').modal('hide');
+        $('#dnload-err-modal').modal('show');
+        $('#dl-failed-txt').text(data.error);
+        console.log('Download failed due to insufficient points.');  ///////////
+      }
+      else {
+        // OK, so the problem is, I don't want to have the server handling
+        // any images; it just has to return the img url. Client has to download
+        // the image located at that url.
+        // However, because of the hassle of CORS, it is impossible to directly
+        // download from an external url.
+        // Therefore, I did a search and came across this really useful code
+        // snippet (it's a little bit hackish though).
+        // In short, what it does are
+        //    1. fetch the image from the url
+        //    2. convert it into base64
+        //    3. attach the base64 text to an anchor tag (a)
+        //    4. simulate a click on the anchor tag to download the image
+
+        function arrayBufferToBase64(buffer) {
+          var binary = '';
+          var bytes = [].slice.call(new Uint8Array(buffer));
+
+          bytes.forEach((b) => binary += String.fromCharCode(b));
+
+          return window.btoa(binary);
+        };
+
+        let options = {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'default'
+        };
+        let url = data.img_url;
+        let request = new Request(url);
+
+        fetch(request, options)
+        .then((response) => {
+          response.arrayBuffer()
+          .then((buffer) => {
+            let base64Flag = 'data:image/jpeg;base64,';
+            let imageStr = arrayBufferToBase64(buffer);
+            let base64Encoded = base64Flag + imageStr;
+
+            let a = document.createElement('a');
+            a.href = base64Encoded;
+            a.download = data.artw_name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        });
+
+        $('#download-modal').modal('hide');
+
+        /* Opens new tab */
+        // let popout = window.open(data.img_url);
+        // if (!popout || popout.closed || typeof popout.closed == 'undefined') { 
+        //     window.location.href = data.img_url;
+        // }
+        // else {
+        //   window.setTimeout(function() {
+        //       popout.close();
+        //   }, 2000);
+        // }
+      }
+    });
+
     $(document).on('ajax:success', 'a#favlink', function (event) {
       const [data, status, xhr] = event.detail;
       $("#favcount").text(data.count);
