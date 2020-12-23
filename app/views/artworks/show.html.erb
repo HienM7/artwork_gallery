@@ -99,16 +99,86 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <i class="ti-heart btn" data-toggle="tooltip" data-placement="bottom" title="Heart">
-                          </i>
-                          <%#= @artwork.favorites.count %> 999
+                          <%
+                          # For guest users
+                          empty_heart = 'text-active'
+                          filled_heart = 'text'
+                          link = login_path
+                          meth = :get
+                          uses_ajax = false
+                          toggle_data = {}
+                          
+                          # For logged-in users
+                          # user_signed_in = true  # Note: HARDCODED
+                          # current_user = User.find(1)  # Note: HARDCODED
+                          if current_user
+                            fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
+                            fav_id = if fav then fav.id else 0 end
+                            delete_link = user_artwork_favorite_path(
+                              user_id: current_user.id,
+                              artwork_id: @artwork.id,
+                              id: fav_id
+                            )
+                            create_link = user_artwork_favorites_path(
+                              user_id: current_user.id,
+                              artwork_id: @artwork.id
+                            )
+
+                            if fav
+                              link = delete_link
+                              toggle_data = {
+                                toggle_href: create_link,
+                                toggle_meth: 'create'
+                              }
+                              empty_heart, filled_heart = filled_heart, empty_heart
+                              meth = :delete
+                              uses_ajax = true
+                            else
+                              link = create_link
+                              toggle_data = {
+                                toggle_href: delete_link,
+                                toggle_meth: 'delete'
+                              }
+                              meth = :post
+                              uses_ajax = true
+                            end
+                          end
+                          %>
+
+                          <%= link_to link,
+                              method: meth,
+                              remote: uses_ajax,
+                              data: toggle_data,
+                              id: 'favlink',
+                              class: 'invisible' do %>
+                            <button type="button"
+                                class="btn btn-outline invisible"
+                                data-toggle="button"
+                                aria-pressed="true">
+                              <i id="empty-heart"
+                                class="fa fa-heart-o <%= empty_heart %> visible"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Favorite"
+                                aria-hidden="true"></i>
+                              <i id="filled-heart"
+                                class="fa fa-heart <%= filled_heart %> text-danger visible"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Favorite"
+                                aria-hidden="true"></i>
+                            </button>
+                          <% end %>
+                          <span id="favcount">
+                            <%=Favorite.where(artwork_id: @artwork.id).count %>
+                          </span>
                         </h5>
                       </div>
                     </div>
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#download-modal">
                             <i class="ti-download btn visible" data-toggle="tooltip" data-placement="bottom" title="Download"></i>
@@ -186,7 +256,7 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#share-modal">
                             <i class="ti-share btn visible" data-toggle="tooltip" data-placement="bottom" title="Share">
@@ -241,7 +311,7 @@
                     <div class="col-3">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#report-modal">
                             <i class="ti-flag-alt-2 btn visible" data-toggle="tooltip" data-placement="bottom" title="Report">
@@ -277,7 +347,7 @@
                                       <div class="row m-l-10 m-r-10">
                                         <%= form.label :reasons, class: 'col-12 control-label font-weight-bold text-left' %>
                                         <ul class="icheck-list">
-                                          <!-- NOTE: options for collection_check_boxes contain invisible char -->
+                                          <!-- NOTE: options for collection_check_boxes contain invisible chars -->
                                           <!--       used as a quick fix for checkbox bug -->
                                           <%= form.collection_check_boxes :reasons, 
                                               [
@@ -382,7 +452,15 @@
                         <h4>Description</h4>
                         <p>
                           <%#= @artwork.description %>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+                          dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+                          sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+                          qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
+                          tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
+                          quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+                          Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+                          vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
                         </p>
                       </div>
                     </div>
@@ -448,19 +526,47 @@
 <script>
     function copy2clipboard() {
       navigator.clipboard.writeText("<%= artwork_url(@artwork) %>").then(
+        // writeText without ruby code: .writeText(window.location.href).
         function() {
-          console.log('clipboard successfully set');
+          console.log('Clipboard successfully set.');  /////////////////////////
         },
         function() {
-          console.log('clipboard write failed');
+          console.log('Clipboard write failed.');  /////////////////////////////
         }
       );
     }
+    
+    $(document).on('ajax:success', 'a#favlink', function (event) {
+      const [data, status, xhr] = event.detail;
+      $("#favcount").text(data.count);
+      console.log("success ajax response: fav_count = " + data.count);  ////////
+      
+      let $a = $("#favlink");
+      let meth = $a.attr('data-method');
+      let tg_meth = $a.attr('data-toggle-meth');
+      let href = $a.attr('href');
+      let tg_href = $a.attr('data-toggle-href');
+      // update newly-created fav_id
+      if (meth == 'post') {
+        tg_href = tg_href.replace(/[0-9]+$/, data.favid);
+      }
+
+      $a.attr('href', tg_href);
+      $a.attr('data-toggle-href', href);
+      $a.attr('data-method', tg_meth);
+      $a.attr('data-toggle-meth', meth);
+
+      let $filled = $("#filled-heart");
+      let $empty = $("#empty-heart");
+
+      $filled.toggleClass('text text-active');
+      $empty.toggleClass('text text-active');
+    });
 
     $(document).ready(function () {
         let right_info = $("div.card-body#content").height();
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).attr("href") // activated tab
+            let target = $(e.target).attr("href") // activated tab
             if (target == "#home") {
                 right_info = $(".card-body#content").height();
             } else if (target == "#settings") {

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root 'users#show', as: 'home'
+  root to: 'artworks#index', as: 'home'
   post 'xulylogin' => 'users#xulylogin'
   get 'login' => 'users#login'
   resources :users
@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   # namespace :admin do
   #   root to: "admin#index"
   # end
-
-  root to: 'artworks#index'
+  
+  resources :users do
+    resources :artworks do
+      resources :favorites
+    end
+  end
 end
