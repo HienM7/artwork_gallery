@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: 'registrations' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :artworks
   # namespace :admin do
   #   root to: "admin#index"
   # end
@@ -9,6 +8,16 @@ Rails.application.routes.draw do
     resources :categories
     resources :users
   end
+  
+  resources :artworks
+  
+  root to: 'artworks#index', as: 'home'
+  
+  post 'artworks/:id/download', to: 'artworks#download', as: 'download'
 
-  root to: 'artworks#index'
+  resources :users do
+    resources :artworks do
+      resources :favorites
+    end
+  end
 end

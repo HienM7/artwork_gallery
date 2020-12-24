@@ -27,7 +27,6 @@ class UsersController < ApplicationController
   end
 
 	def update
-		byebug	
     if @user.update_attributes(user_params_update)
       redirect_to users_path, :flash => { :success => 'User was successfully updated.' }
 		else

@@ -67,6 +67,51 @@ class ArtworksController < ApplicationController
     end
   end
 
+  def download
+    if request.xhr?
+      transfer_ok = false  # TODO, stub here
+      dl_artw = Artwork.find(params[:id])
+      
+      if params[:option] == 'free'
+        # img_url = dl_artw.img_link
+        img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
+        
+        if params[:amount].to_i > 0
+          # transfer_ok = make_transfer(current_user, artw_owner)
+          
+          if transfer_ok
+            render json: { img_url: img_url, artw_name: dl_artw.name }
+          else
+            render json: {
+              error: 'Cannot transfer points and download the artwork. ' +
+                     'Make sure you have enough points.'
+            }
+          end
+
+        else
+          render json: { img_url: img_url, artw_name: dl_artw.name }
+        end
+      
+      elsif params[:option] == 'paid'
+        img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
+        # img_url = dl_artw.download_link
+        # transfer_ok = make_transfer(current_user, artw_owner)
+
+        if transfer_ok
+          render json: { img_url: img_url, artw_name: dl_artw.name }
+        else
+          render json: {
+            error: 'Cannot transfer points and download the artwork. ' +
+                   'Make sure you have enough points.'
+          }
+        end
+      end
+
+    else
+      redirect_to dl_artw.img_link
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_artwork
@@ -79,4 +124,12 @@ class ArtworksController < ApplicationController
       .require(:artwork)
       .permit(:name, :img_link, :value, :is_public, :keyword)
     end
+
+    # MOVE TO USER
+    # def able_to_pay(amount)
+    #   return current_user.point > amount
+    # end
+
+    # def make_transfer(usr1, usr2)
+    # end
 end

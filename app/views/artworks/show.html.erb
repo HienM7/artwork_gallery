@@ -49,6 +49,28 @@
     #get-link:hover i {
       color: #fff !important;
     }
+    .square {
+      float: left;
+      position: relative;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .square-3 {
+      width: 30%;
+      padding-bottom: 30%; /* = width for a 1:1 aspect ratio */
+      margin: 1.66%;
+      /* FOR .square-n where n = _items_per_row
+       * _items_per_row = 100 / width
+       * _gutters = 100 - _items_per_row * width
+       * margin = _gutters / (2 * _items_per_row)
+       */
+    }
+    .square-2 {
+      width: 45%;
+      padding-bottom: 45%;
+      margin: 2.5%;
+    }
 </style>
 
 
@@ -99,16 +121,83 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <i class="ti-heart btn" data-toggle="tooltip" data-placement="bottom" title="Heart">
-                          </i>
-                          <%#= @artwork.favorites.count %> 999
+                          <%
+                          # For guest users
+                          empty_heart = 'text-active'
+                          filled_heart = 'text'
+                          link = login_path
+                          meth = :get
+                          uses_ajax = false
+                          toggle_data = {}
+                          
+                          if current_user
+                            fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
+                            fav_id = if fav then fav.id else 0 end
+                            delete_link = user_artwork_favorite_path(
+                              user_id: current_user.id,
+                              artwork_id: @artwork.id,
+                              id: fav_id
+                            )
+                            create_link = user_artwork_favorites_path(
+                              user_id: current_user.id,
+                              artwork_id: @artwork.id
+                            )
+
+                            if fav
+                              link = delete_link
+                              toggle_data = {
+                                toggle_href: create_link,
+                                toggle_meth: 'create'
+                              }
+                              empty_heart, filled_heart = filled_heart, empty_heart
+                              meth = :delete
+                              uses_ajax = true
+                            else
+                              link = create_link
+                              toggle_data = {
+                                toggle_href: delete_link,
+                                toggle_meth: 'delete'
+                              }
+                              meth = :post
+                              uses_ajax = true
+                            end
+                          end
+                          %>
+
+                          <%= link_to link,
+                              method: meth,
+                              remote: uses_ajax,
+                              data: toggle_data,
+                              id: 'favlink',
+                              class: 'invisible' do %>
+                            <button type="button"
+                                class="btn btn-outline invisible"
+                                data-toggle="button"
+                                aria-pressed="true">
+                              <i id="empty-heart"
+                                class="fa fa-heart-o <%= empty_heart %> visible"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Favorite"
+                                aria-hidden="true"></i>
+                              <i id="filled-heart"
+                                class="fa fa-heart <%= filled_heart %> text-danger visible"
+                                data-toggle="tooltip"
+                                data-placement="bottom"
+                                title="Favorite"
+                                aria-hidden="true"></i>
+                            </button>
+                          <% end %>
+                          <span id="favcount">
+                            <%=Favorite.where(artwork_id: @artwork.id).count %>
+                          </span>
                         </h5>
                       </div>
                     </div>
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#download-modal">
                             <i class="ti-download btn visible" data-toggle="tooltip" data-placement="bottom" title="Download"></i>
@@ -137,10 +226,12 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <%= form_with  url: '#',
+                                  <%= form_with  url: download_path(@artwork.id),
                                                  method: 'post',
-                                                 local: true,
-                                                 html: {class: 'form-material'} do |form| %>
+                                                 html: {
+                                                   id: 'dl-form',
+                                                   class: 'form-material'
+                                                 } do |form| %>
                                     <div class="form-body row">
                                         <div class="col-6 b-r">
                                           <div>
@@ -152,8 +243,8 @@
                                             Consider donating points to support the author
                                           </small>
                                           <br />
-                                          <%= number_field_tag 'amount',
-                                              5, min: 5, max: 9999, step: 5,
+                                          <%= number_field_tag :amount,
+                                              0, min: 0, max: 9999, step: 1,
                                               class: 'w-25 form-control text-right' %> points
                                         </div>
                                         <div class="col-6">
@@ -171,6 +262,7 @@
                                       <div class="actions">
                                         <%= form.button :button,
                                             type: :submit,
+                                            id: 'dl-submit',
                                             class: 'btn btn-success waves-effect' do %>
                                           Download
                                         <% end %>
@@ -181,12 +273,39 @@
                             </div>
                           </div>
                         </div>
+                        <div class="modal fade"
+                            id="dnload-err-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="Download failed"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-sm modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title text-danger"
+                                    id="download-artwork">
+                                  Download failed
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body text-left">
+                                <span id="dl-failed-txt">Error</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#share-modal">
                             <i class="ti-share btn visible" data-toggle="tooltip" data-placement="bottom" title="Share">
@@ -241,7 +360,7 @@
                     <div class="col-3">
                       <div class="text-center">
                         <h5>
-                          <button class="invisible"
+                          <button class="btn btn-outline invisible"
                                   data-toggle="modal"
                                   data-target="#report-modal">
                             <i class="ti-flag-alt-2 btn visible" data-toggle="tooltip" data-placement="bottom" title="Report">
@@ -277,7 +396,7 @@
                                       <div class="row m-l-10 m-r-10">
                                         <%= form.label :reasons, class: 'col-12 control-label font-weight-bold text-left' %>
                                         <ul class="icheck-list">
-                                          <!-- NOTE: options for collection_check_boxes contain invisible char -->
+                                          <!-- NOTE: options for collection_check_boxes contain invisible chars -->
                                           <!--       used as a quick fix for checkbox bug -->
                                           <%= form.collection_check_boxes :reasons, 
                                               [
@@ -382,7 +501,15 @@
                         <h4>Description</h4>
                         <p>
                           <%#= @artwork.description %>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+                          dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+                          sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
+                          qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
+                          tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
+                          quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+                          Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
+                          vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
                         </p>
                       </div>
                     </div>
@@ -408,29 +535,43 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="right-info">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
-                      <% @similar.each do |simart| %>
-                      <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1">
-                          <%= link_to  artwork_path(simart),
-                              class: 'image-popup-vertical-fit' do %>
-                            <%= image_tag  simart.img_link,
-                                           alt: 'Oops!' %>
-                          <% end %>
-                        </div>
-                      </div>
+                      <% @similar.each_with_index do |simart, index| %>
+                        <%
+# hardcoded links for dev purposes
+link1 = 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg'
+link2 = 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+                          if index % 2 == 1
+                            simart.img_link = link1
+                          else
+                            simart.img_link = link2
+                          end
+                        %>
+                        <%= link_to  artwork_path(simart),
+                            class: 'image-popup-vertical-fit' do %>
+                          <div class="square square-2"
+                            style="background-image: url('<%= simart.img_link %>');">
+                          </div>
+                        <% end %>
                       <% end %>
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
-                      <% @same_author.each do |sameauthor| %>
-                      <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1">
-                          <%= link_to  artwork_path(sameauthor),
-                              class: 'image-popup-vertical-fit' do %>
-                            <%= image_tag  sameauthor.img_link,
-                                           alt: 'Oops!' %>
-                          <% end %>
-                        </div>
-                      </div>
+                      <% @same_author.each_with_index do |sameauthor, index| %>
+                        <%
+# hardcoded links for dev purposes
+link1 = 'https://cdn.mos.cms.futurecdn.net/ntFmJUZ8tw3ULD3tkBaAtf.jpg'
+link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg'
+                          if index % 2 == 0
+                            sameauthor.img_link = link1
+                          else
+                            sameauthor.img_link = link2
+                          end
+                        %>
+                        <%= link_to  artwork_path(sameauthor),
+                            class: 'image-popup-vertical-fit' do %>
+                          <div class="square square-2"
+                            style="background-image: url('<%= sameauthor.img_link %>');">
+                          </div>
+                        <% end %>
                       <% end %>
                     </div>
                 </div>
@@ -448,19 +589,118 @@
 <script>
     function copy2clipboard() {
       navigator.clipboard.writeText("<%= artwork_url(@artwork) %>").then(
+        // writeText without ruby code: .writeText(window.location.href).
         function() {
-          console.log('clipboard successfully set');
+          console.log('Clipboard successfully set.');  /////////////////////////
         },
         function() {
-          console.log('clipboard write failed');
+          console.log('Clipboard write failed.');  /////////////////////////////
         }
       );
     }
+    
+    $(document).on('ajax:success', 'form#dl-form', function (event) {
+      const [data, status, xhr] = event.detail;
+      if (data.error) {
+        $('#download-modal').modal('hide');
+        $('#dnload-err-modal').modal('show');
+        $('#dl-failed-txt').text(data.error);
+        console.log('Download failed due to insufficient points.');  ///////////
+      }
+      else {
+        // OK, so the problem is, I don't want to have the server handling
+        // any images; it just has to return the img url. Client has to download
+        // the image located at that url.
+        // However, because of the hassle of CORS, it is impossible to directly
+        // download from an external url.
+        // Therefore, I did a search and came across this really useful code
+        // snippet (it's a little bit hackish though).
+        // In short, what it does are
+        //    1. fetch the image from the url
+        //    2. convert it into base64
+        //    3. attach the base64 text to an anchor tag (a)
+        //    4. simulate a click on the anchor tag to download the image
+
+        function arrayBufferToBase64(buffer) {
+          var binary = '';
+          var bytes = [].slice.call(new Uint8Array(buffer));
+
+          bytes.forEach((b) => binary += String.fromCharCode(b));
+
+          return window.btoa(binary);
+        };
+
+        let options = {
+          method: 'GET',
+          mode: 'cors',
+          cache: 'default'
+        };
+        let url = data.img_url;
+        let request = new Request(url);
+
+        fetch(request, options)
+        .then((response) => {
+          response.arrayBuffer()
+          .then((buffer) => {
+            let base64Flag = 'data:image/jpeg;base64,';
+            let imageStr = arrayBufferToBase64(buffer);
+            let base64Encoded = base64Flag + imageStr;
+
+            let a = document.createElement('a');
+            a.href = base64Encoded;
+            a.download = data.artw_name;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+        });
+
+        $('#download-modal').modal('hide');
+
+        /* Opens new tab */
+        // let popout = window.open(data.img_url);
+        // if (!popout || popout.closed || typeof popout.closed == 'undefined') { 
+        //     window.location.href = data.img_url;
+        // }
+        // else {
+        //   window.setTimeout(function() {
+        //       popout.close();
+        //   }, 2000);
+        // }
+      }
+    });
+
+    $(document).on('ajax:success', 'a#favlink', function (event) {
+      const [data, status, xhr] = event.detail;
+      $("#favcount").text(data.count);
+      console.log("success ajax response: fav_count = " + data.count);  ////////
+      
+      let $a = $("#favlink");
+      let meth = $a.attr('data-method');
+      let tg_meth = $a.attr('data-toggle-meth');
+      let href = $a.attr('href');
+      let tg_href = $a.attr('data-toggle-href');
+      // update newly-created fav_id
+      if (meth == 'post') {
+        tg_href = tg_href.replace(/[0-9]+$/, data.favid);
+      }
+
+      $a.attr('href', tg_href);
+      $a.attr('data-toggle-href', href);
+      $a.attr('data-method', tg_meth);
+      $a.attr('data-toggle-meth', meth);
+
+      let $filled = $("#filled-heart");
+      let $empty = $("#empty-heart");
+
+      $filled.toggleClass('text text-active');
+      $empty.toggleClass('text text-active');
+    });
 
     $(document).ready(function () {
         let right_info = $("div.card-body#content").height();
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-            var target = $(e.target).attr("href") // activated tab
+            let target = $(e.target).attr("href") // activated tab
             if (target == "#home") {
                 right_info = $(".card-body#content").height();
             } else if (target == "#settings") {
