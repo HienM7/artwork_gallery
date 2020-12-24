@@ -49,6 +49,28 @@
     #get-link:hover i {
       color: #fff !important;
     }
+    .square {
+      float: left;
+      position: relative;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .square-3 {
+      width: 30%;
+      padding-bottom: 30%; /* = width for a 1:1 aspect ratio */
+      margin: 1.66%;
+      /* FOR .square-n where n = _items_per_row
+       * _items_per_row = 100 / width
+       * _gutters = 100 - _items_per_row * width
+       * margin = _gutters / (2 * _items_per_row)
+       */
+    }
+    .square-2 {
+      width: 45%;
+      padding-bottom: 45%;
+      margin: 2.5%;
+    }
 </style>
 
 
@@ -486,29 +508,43 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="right-info">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
-                      <% @similar.each do |simart| %>
-                      <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1">
-                          <%= link_to  artwork_path(simart),
-                              class: 'image-popup-vertical-fit' do %>
-                            <%= image_tag  simart.img_link,
-                                           alt: 'Oops!' %>
-                          <% end %>
-                        </div>
-                      </div>
+                      <% @similar.each_with_index do |simart, index| %>
+                        <%
+# hardcoded links for dev purposes
+link1 = 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg'
+link2 = 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+                          if index % 2 == 1
+                            simart.img_link = link1
+                          else
+                            simart.img_link = link2
+                          end
+                        %>
+                        <%= link_to  artwork_path(simart),
+                            class: 'image-popup-vertical-fit' do %>
+                          <div class="square square-2"
+                            style="background-image: url('<%= simart.img_link %>');">
+                          </div>
+                        <% end %>
                       <% end %>
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
-                      <% @same_author.each do |sameauthor| %>
-                      <div class="el-card-item">
-                        <div class="el-card-avatar el-overlay-1">
-                          <%= link_to  artwork_path(sameauthor),
-                              class: 'image-popup-vertical-fit' do %>
-                            <%= image_tag  sameauthor.img_link,
-                                           alt: 'Oops!' %>
-                          <% end %>
-                        </div>
-                      </div>
+                      <% @same_author.each_with_index do |sameauthor, index| %>
+                        <%
+# hardcoded links for dev purposes
+link1 = 'https://cdn.mos.cms.futurecdn.net/ntFmJUZ8tw3ULD3tkBaAtf.jpg'
+link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg'
+                          if index % 2 == 0
+                            sameauthor.img_link = link1
+                          else
+                            sameauthor.img_link = link2
+                          end
+                        %>
+                        <%= link_to  artwork_path(sameauthor),
+                            class: 'image-popup-vertical-fit' do %>
+                          <div class="square square-2"
+                            style="background-image: url('<%= sameauthor.img_link %>');">
+                          </div>
+                        <% end %>
                       <% end %>
                     </div>
                 </div>
