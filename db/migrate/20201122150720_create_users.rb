@@ -4,9 +4,9 @@ class CreateUsers < ActiveRecord::Migration[6.0]
       t.string :username
       t.string :email
       t.string :credit_card
-      t.boolean :is_admin
-      t.boolean :is_banned
-      t.integer :point
+      t.boolean :is_admin, default: false
+      t.boolean :is_banned, default: false
+      t.integer :point, default: 0
 
       t.timestamps
     end
