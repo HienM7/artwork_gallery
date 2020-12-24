@@ -21,9 +21,15 @@
     <!-- Bootstrap Core CSS -->
     <!--link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"-->
     <!-- Custom CSS -->
-    <%#= stylesheet_link_tag "css/style" %>
+    <%= stylesheet_pack_tag 'sidebar-nav' %>
+    <%= stylesheet_link_tag "css/style" %>
     <!-- You can change the theme colors from here -->
-    <% stylesheet_link_tag "css/colors/blue" %>
+    <%= stylesheet_link_tag "css/colors/green" %>
+    
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <%= yield :head %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -60,10 +66,9 @@
                         <!-- Logo text -->
                         <span>
                             <!-- dark Logo text -->
-                            <%= image_tag  asset_path('paint-palette.png'), alt: 'homepage', class: 'dark-logo' %>
-                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                            <%= image_tag  asset_path('logo.jpg'), alt: 'homepage', class: 'dark-logo' %>
                             <!-- Light Logo text -->    
-                            <%= image_tag  asset_path('paint-palette.png'), alt: 'homepage', class: 'light-logo' %>
+                            <%= image_tag  asset_path('logo.jpg'), alt: 'homepage', class: 'light-logo' %>
                          </span>
                     </a>
                 </div>
@@ -144,7 +149,7 @@
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="../assets/images/users/1.jpg" alt="user"></div>
+                                            <div class="u-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbzRbR5I1_bOPdaT8CaZ5GMkTTejy3Jl0Y1g&usqp=CAU" alt="user"></div>
                                             <div class="u-text">
                                                 <h4>Steave Jobs</h4>
                                                 <p class="text-muted">stevejobs@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -178,13 +183,13 @@
                 <div class="user-profile">
                     <!-- User profile image -->
                     <div class="profile-img">
-                        <%= image_tag  asset_path('paint-palette.png'), alt: 'user' %>
+                        <%#= image_tag  asset_path('paint-palette.png'), alt: 'user' %>
+                        <div class="u-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbzRbR5I1_bOPdaT8CaZ5GMkTTejy3Jl0Y1g&usqp=CAU" alt="user"></div>
                         <!-- this is blinking heartbit-->
-                        <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text">
-                        <h5>Team 4 admin</h5>
+                        <h5><span class="text-light">Team 4 admin</span></h5>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                         <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                         <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
@@ -298,27 +303,14 @@
         <!-- Page wrapper  -->
         <!-- ============================================================== -->
         <div class="page-wrapper">
-            <p class="notice"><%= notice %></p>
-            <p class="alert"><%= alert %></p>
-            <%= yield %>
-            
             <!-- ============================================================== -->
             <!-- Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            <!--div class="row page-titles">
-                <div class="col-md-5 align-self-center">
-                    <h3 class="text-themecolor">Dashboard</h3>
-                </div>
-                <div class="col-md-7 align-self-center">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </div>
-                <div>
-                    <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
-                </div>
-            </div-->
+
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <%= yield :header %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
@@ -327,51 +319,21 @@
             <!-- Container fluid  -->
             <!-- ============================================================== -->
             <div class="container-fluid">
+
+                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+                <%= yield :alert %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
                 
                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <%#= yield %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+                <%= yield %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
                 
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
-                <!-- ============================================================== -->
-                
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <!--div class="right-sidebar">
-                    <div class="slimscrollright">
-                        <div class="rpanel-title"> Service Panel <span><i class="ti-close right-side-toggle"></i></span> </div>
-                        <div class="r-panel-body">
-                            <ul id="themecolors" class="m-t-20">
-                                <li><b>With Light sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default" class="default-theme">1</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green" class="green-theme">2</a></li>
-                                <li><a href="javascript:void(0)" data-theme="red" class="red-theme">3</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a></li>
-                                <li class="d-block m-t-30"><b>With Dark sidebar</b></li>
-                                <li><a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a></li>
-                                <li><a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a></li>
-                                <li><a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a></li>
-                                <li><a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a></li>
-                                <li><a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a></li>
-                                <li><a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div-->
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
                 <!-- ============================================================== -->
             </div>
             <!-- ============================================================== -->
@@ -381,9 +343,9 @@
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
-            <footer class="footer">
-              ❤️ Project made with love from Team 4
-              - Designed by themedesigner.in
+            <footer class="footer text-center">
+              Web project made with love from <strong class="text-primary">Team 4</strong>
+              - Designed by <strong class="text-secondary">themedesigner.in</strong>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -401,7 +363,23 @@
     <!-- JS -->
     <!-- ============================================================== -->
     <!-- Chart JS -->
-    <%#= javascript_pack_tag 'dashboard1.js' %>
+    <!-- slimscrollbar scrollbar JavaScript -->
+    <%#= javascript_pack_tag 'jquery_slimscroll' %>
+    <!--Wave Effects -->
+    <%#= javascript_pack_tag 'waves' %>
+    <!--Menu sidebar -->
+    <%#= javascript_pack_tag 'sidebarmenu' %>
+    <!--stickey kit -->
+    <%#= javascript_pack_tag 'jquery_sticky_kit' %>
+    <%#= javascript_pack_tag 'jquery_sparkline' %>
+    <!--Custom JavaScript -->
+    <%#= javascript_pack_tag 'custom' %>
+
+    <%#= javascript_pack_tag 'jQuery_style_switcher' %>
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <%= yield :scripts %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 </body>
 
 </html>

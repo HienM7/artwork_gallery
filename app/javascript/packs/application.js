@@ -10,18 +10,22 @@ require("@rails/ujs").start()
 require("@rails/activestorage").start()
 require("channels")
 
-require("metismenu")
-
-require("packs/jquery.sticky-kit.min")
-require("packs/jquery.slimscroll")
-require("packs/waves")
-require("packs/custom")
+import JQuery from 'jquery';
+window.$ = window.JQuery = JQuery;
 
 require("bootstrap")
 require("datatables.net-bs4")
 
-import JQuery from 'jquery';
-window.$ = window.JQuery = JQuery;
+require("packs/jQuery_style_switcher")
+require("packs/jquery_sticky_kit")
+require("packs/jquery_slimscroll")
+require("packs/waves")
+require("packs/form_validation")
+require("packs/jquery_sparkline")
+
+require("packs/sidebar_nav")
+require("packs/sidebarmenu")
+require("packs/custom")
 
 import "../stylesheets/application"
 

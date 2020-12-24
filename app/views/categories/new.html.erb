@@ -1,5 +1,5 @@
-<%= stylesheet_link_tag "css/style" %>
 
+<% content_for :header do %>
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <h3 class="text-themecolor">Create category</h3>
@@ -11,18 +11,11 @@
             <li class="breadcrumb-item active">Create</li>
         </ol>
     </div>
-    <!--div>
-        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
-                class="ti-settings text-white"></i></button>
-    </div-->
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Container fluid  -->
-<!-- ============================================================== -->
-<div class="container-fluid">
+<% end %>
+
+
+<% content_for :alert do %>
     <div class="row">
         <div class="col-12">
         <% flash.each do |type, msg| %>
@@ -32,10 +25,9 @@
         <% end %>
         </div>
     </div>
-    <!-- ============================================================== -->
-    <!-- Start Page Content -->
-    <!-- ============================================================== -->
-    <!-- Row -->
+<% end %>
+
+
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
@@ -51,10 +43,8 @@
             </div>
         </div>
     </div>
-    <!-- Row -->
-    <!-- ============================================================== -->
-    <!-- End Right sidebar -->
-    <!-- ============================================================== -->
-</div>
 
-<%= javascript_pack_tag 'form_validation' %>
+
+<% content_for :scripts do %>
+    <%= javascript_pack_tag 'form_validation' %>
+<% end %>

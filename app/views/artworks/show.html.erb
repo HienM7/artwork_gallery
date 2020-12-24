@@ -1,5 +1,4 @@
-<%# section: 'pageStylesheets' %>
-<%= stylesheet_link_tag "css/style" %>
+<% content_for :head do %>
 <style>
     #content img {
         width: 100% !important;
@@ -72,10 +71,10 @@
       margin: 2.5%;
     }
 </style>
+<% end %>
 
 
-<%# section: 'contents' %>
-
+<% content_for :header do %>
 <div class="row page-titles">
   <div class="col-md-5 align-self-center">
     <h3 class="text-themecolor">Artwork View</h3>
@@ -88,8 +87,32 @@
     </ol>
   </div>
 </div>
+<% end %>
 
-<div class="container-fluid">
+
+<% content_for :alert do %>
+  <div class="row">
+    <div class="col-12">
+      <% flash.each do |type, msg| %>
+        <% if type == 'notice' %>
+          <div class="alert alert-success">
+            <%= msg %>
+          </div>
+        <% elsif type == 'alert' %>
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
     <div class="row el-element-overlay">
         <!-- Column -->
         <div class="col-lg-8 col-xlg-8 col-md-12 col-sm-12" id="left-info-container">
@@ -533,7 +556,7 @@
                     </li>
                 </ul>
                 <!-- Tab panes -->
-                <div class="tab-content" id="right-info">
+                <div class="tab-content" id="right-info" style="padding: 2.5%;">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
                       <% @similar.each_with_index do |simart, index| %>
                         <%
@@ -579,10 +602,9 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
         <!-- Column -->
         </div>
     </div>
-</div>
 
 
-<%# section: 'pageScripts' %>
+<% content_for :scripts do %>
 <%#= javascript_pack_tag 'jquery.lockfixed' %>
 <%#= javascript_pack_tag 'form_validation' %>
 
@@ -711,3 +733,4 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
         });
     });
 </script>
+<% end %>
