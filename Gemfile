@@ -12,6 +12,7 @@ gem 'pg'
 
 gem 'dotenv-rails'
 gem 'devise'
+gem 'rails_12factor'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
