@@ -6,7 +6,7 @@ class FavoritesController < ApplicationController
     favorites = {user_id: @user.id, artwork_id: @artwork.id}
     @favorite = Favorite.new(favorites)
     @favorite.save!
-    # byebug
+    
     if request.xhr?
       favs = Favorite.where(artwork_id: params[:artwork_id])
       render json: {
@@ -20,7 +20,7 @@ class FavoritesController < ApplicationController
   
   def destroy
     Favorite.find(params[:id]).destroy
-    # byebug
+    
     if request.xhr?
       favs = Favorite.where(artwork_id: params[:artwork_id])
       render json: {

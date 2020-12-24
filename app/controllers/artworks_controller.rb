@@ -68,7 +68,6 @@ class ArtworksController < ApplicationController
   end
 
   def download
-    byebug  #################################
     if request.xhr?
       transfer_ok = false  # TODO, stub here
       dl_artw = Artwork.find(params[:id])
