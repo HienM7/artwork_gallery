@@ -140,6 +140,9 @@
                     <%= image_tag @artwork.image, class: 'card-img-top img-responsive' %>
                 </div>
                 <div class="el-card-content">
+
+                  <% if not (current_user and current_user.is_admin) %>
+
                   <div class="row m-t-10">
                     <div class="col-3 b-r">
                       <div class="text-center">
@@ -148,7 +151,7 @@
                           # For guest users
                           empty_heart = 'text-active'
                           filled_heart = 'text'
-                          link = login_path
+                          link = new_user_session_path
                           meth = :get
                           uses_ajax = false
                           toggle_data = {}
@@ -464,6 +467,9 @@
                       </div>
                     </div>
                   </div>
+
+                  <% end %>
+
                   <div class="row m-l-10 m-t-10">
                     <div class="col-12">
                       <div class="text-left vm">

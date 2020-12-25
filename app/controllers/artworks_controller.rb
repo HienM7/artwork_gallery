@@ -83,7 +83,7 @@ class ArtworksController < ApplicationController
 
   def download
     if request.xhr?
-      transfer_ok = false  # TODO, stub here
+      transfer_ok = true  # TODO, stub here
       dl_artw = Artwork.find(params[:id])
       
       if params[:option] == 'free'

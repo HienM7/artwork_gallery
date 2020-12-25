@@ -22,6 +22,7 @@ require("packs/jquery_slimscroll")
 require("packs/waves")
 require("packs/form_validation")
 require("packs/jquery_sparkline")
+require("packs/dropify")
 
 require("packs/sidebar_nav")
 require("packs/sidebarmenu")

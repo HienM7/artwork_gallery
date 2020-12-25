@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   
   resources :artworks
 
+  # resources :categories, only: [:index]
+  
   root to: 'artworks#index', as: 'home'
   
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
