@@ -28,8 +28,11 @@
         a.btn.btn-primary.btn-xs:visited {
             color: #fff !important;
         }
-        a.nav-link:hover {
-
+        a:hover {
+            background-color: transparent !important;
+        }
+        a.has-arrow.waves-effect.waves-dark.active:hover {
+            background: #fff !important;
         }
         ul.collapse > li > a:hover {
             background-color: transparent !important;
@@ -66,7 +69,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header" style="background: #272c33 !important;">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="/">
                         <!-- Logo icon -->
                         <b>
                             <!-- Logo icon -->
@@ -156,25 +159,28 @@
                                             <div class="u-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbzRbR5I1_bOPdaT8CaZ5GMkTTejy3Jl0Y1g&usqp=CAU" alt="user"></div>
                                             <div class="u-text">
                                                 <h4>Steave Jobs</h4>
-                                                <p class="text-muted">stevejobs@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <p class="text-muted">stevejobs@gmail.com</p><a href="/users/edit" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                         </div>
                                     </li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
+                                    <li><a href="/users/edit"><i class="ti-user"></i> My Profile</a></li>
                                     <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
                                     <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
+                                    <li>
+                                    <%= link_to  "Logout", destroy_user_session_path,
+                                    method: :delete %>
+                                    </li>
                                 </ul>
 
                                 <% else %>
 
                                 <ul class="dropdown-user">
-                                    <li><a href="#"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <li><a href="/users/sign_in"><i class="fa fa-sign-in"></i> Login</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="fa fa-address-book-o"></i> Signup</a></li>
+                                    <li><a href="/users/sign_up"><i class="fa fa-address-book-o"></i> Signup</a></li>
                                 </ul>
 
                                 <% end %>
@@ -211,26 +217,13 @@
                                 <%= current_user.username %>
                             </span>
                         </h5>
-                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
-                        <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                        <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
-                        <div class="dropdown-menu animated flipInY">
-                            <!-- text-->
-                            <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                            <!-- text-->
-                            <a href="#" class="dropdown-item"><i class="ti-wallet"></i> My Balance</a>
-                            <!-- text-->
-                            <a href="#" class="dropdown-item"><i class="ti-email"></i> Inbox</a>
-                            <!-- text-->
-                            <div class="dropdown-divider"></div>
-                            <!-- text-->
-                            <a href="#" class="dropdown-item"><i class="ti-settings"></i> Account Setting</a>
-                            <!-- text-->
-                            <div class="dropdown-divider"></div>
-                            <!-- text-->
-                            <a href="login.html" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
-                            <!-- text-->
-                        </div>
+                        <a href="#" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+                        
+                        <%= link_to destroy_user_session_path,
+                                    method: :delete, data_toggle: "tooltip", title: "Logout" do %>
+                        <i class="mdi mdi-power"></i>
+                        <% end %>
+
                     </div>
                 </div>
                 <!-- End User profile text-->
@@ -244,11 +237,11 @@
                         
                         <% if (not current_user) ############################ %>
 
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
                         </li>
                         
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li>
+                        <!--li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li-->
                         
                         <% elsif current_user.is_admin ###################### %>
                         
@@ -256,42 +249,42 @@
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu">USERS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Add User </a></li>
-                                <li><a href="index2.html">View User List</a></li>
+                                <!--li><a href="/admin/users/new">Add User </a></li-->
+                                <li><a href="/admin/users">View User List</a></li>
                             </ul>
                         </li>
                         
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
+                        <!--li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="index2.html">View Artwork List</a></li>
                             </ul>
-                        </li>
+                        </li-->
                         
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Add Category </a></li>
-                                <li><a href="index2.html">View Category List</a></li>
+                                <li><a href="/admin/categories/new">Add Category </a></li>
+                                <li><a href="/admin/categories">View Category List</a></li>
                             </ul>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">TAGS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Add Tag </a></li>
-                                <li><a href="index2.html">View Tag List</a></li>
+                                <li><a href="/">Add Tag </a></li>
+                                <li><a href="/">View Tag List</a></li>
                             </ul>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index2.html">View Transaction Log</a></li>
+                                <li><a href="/">View Transaction Log</a></li>
                             </ul>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span class="hide-menu">STATISTICS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index2.html">Users</a></li>
-                                <li><a href="index2.html">Artworks</a></li>
-                                <li><a href="index2.html">Transactions</a></li>
+                                <li><a href="/">Users</a></li>
+                                <li><a href="/">Artworks</a></li>
+                                <li><a href="/">Transactions</a></li>
                             </ul>
                         </li>
                         
@@ -299,23 +292,23 @@
                         
                         <li class="nav-devider"></li>
                         
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
                         </li>
                         
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li>
+                        <!--li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li-->
 
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
+                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">YOUR ARTWORKS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index2.html">Upload Artwork</a></li>
-                                <li><a href="index2.html">View Artwork List</a></li>
+                                <li><a href="/">Upload Artwork</a></li>
+                                <li><a href="/">View Artwork List</a></li>
                             </ul>
                         </li>
 
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
+                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                         </li>
                         
                         <% end ############################################## %>
