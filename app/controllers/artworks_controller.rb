@@ -91,7 +91,7 @@ class ArtworksController < ApplicationController
         img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
         
         if params[:amount].to_i > 0
-          # transfer_ok = make_transfer(current_user, artw_owner)
+          transfer_ok = make_donate(current_user, artw, params[:amount])
           
           if transfer_ok
             render json: { img_url: img_url, artw_name: dl_artw.name }
@@ -107,9 +107,8 @@ class ArtworksController < ApplicationController
         end
       
       elsif params[:option] == 'paid'
-        img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
-        # img_url = dl_artw.download_link
-        # transfer_ok = make_transfer(current_user, artw_owner)
+        img_url = dl_artw.img_link
+        transfer_ok = make_transfer(current_user, artw_owner)
 
         if transfer_ok
           render json: { img_url: img_url, artw_name: dl_artw.name }
@@ -142,6 +141,23 @@ class ArtworksController < ApplicationController
     #   return current_user.point > amount
     # end
 
-    # def make_transfer(usr1, usr2)
-    # end
+    def make_donate(usr1, artw, amount)
+      if usr1.point >= amount
+        usr1.point -= amount
+        artw.user.point += amount
+        return true
+      else
+        return false
+      end
+    end
+
+    def make_transfer(usr1, artw)
+      if usr1.point >= artw.value
+        usr1.point -= artw.value
+        artw.user.point += artw.value
+        return true
+      else
+        return false
+      end
+    end
 end
