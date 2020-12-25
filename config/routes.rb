@@ -1,15 +1,20 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: 'artworks#index', as: 'home'
-  post 'xulylogin' => 'users#xulylogin'
-  get 'login' => 'users#login'
-  resources :users
+  # namespace :admin do
+  #   root to: "admin#index"
+  # end
+  scope '/admin' do 
+    resources :categories
+    resources :users
+  end
+  
   resources :artworks
-  resources :categories
+  
+  root to: 'artworks#index', as: 'home'
   
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
-  
+
   resources :users do
     resources :artworks do
       resources :favorites
