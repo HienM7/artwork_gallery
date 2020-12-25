@@ -96,7 +96,7 @@
         <div class="el-card-avatar el-overlay-1">
           <%= link_to  artwork_path(artwork),
               class: 'image-popup-vertical-fit' do %>
-            <%= image_tag (artwork.image) if artwork.image.attached?,
+            <%= image_tag (artwork.image),
               alt: 'Oops!' %>
           <% end %>
           <div class="el-overlay">
