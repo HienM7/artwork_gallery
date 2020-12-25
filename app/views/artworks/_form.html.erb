@@ -12,12 +12,8 @@
                   <%= form.label :image, 'Upload your artwork file', class: 'control-label' %>
                   <%= form.file_field :image,
                       id: 'input-file-now-custom-1',
-                      class: 'dropify',
+                      class: 'dropify'
                     #   readonly: form.object.persisted?,
-                      data: {
-                        max_file_size: '200M',
-                        default_file: (@artwork.img_link if @artwork.img_link.present?)
-                      }
                  %>
                   <div class="invalid-feedback">
                     Artwork file must have max size of 200MB.

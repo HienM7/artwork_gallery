@@ -36,19 +36,20 @@ class ArtworksController < ApplicationController
   # POST /artworks
   # POST /artworks.json
   def create
-    user_id = current_user.id
-    name = params[:name]
-    image = params[:image]
-    value = params[:value]
-    category_id = params[:category_id]
+    a = artwork_params
+    # byebug
+    # user_id = current_user.id
+    # name = params[:name]
+    # image = params[:image]
+    # value = params[:value]
+    # category_id = params[:category_id]
+    a['user_id'] = current_user.id
 
-
-
-    @artwork = Artwork.new({user_id: user_id, name: name, image: image, value: value, category_id: category_id})
+    @artwork = Artwork.new(a)
 
     respond_to do |format|
       if @artwork.save
-        format.html { redirect_to @artwork, notice: 'Artwork was successfully created.' }
+        format.html { redirect_to @artwork, notice: 'Artwork was successfully created.'}
         format.json { render :show, status: :created, location: @artwork }
       else
         format.html { render :new, notice: @artwork.errors }
@@ -133,7 +134,7 @@ class ArtworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def artwork_params
-      # params.require(:artwork).permit(:name, :image, :value, :category_id)
+      params.require(:artwork).permit(:name, :image, :value, :category_id)
     end
 
     # MOVE TO USER
