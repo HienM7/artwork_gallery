@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   end
   
   resources :artworks
+  # resources :categories, only: [:index]
   
   root to: 'artworks#index', as: 'home'
   
