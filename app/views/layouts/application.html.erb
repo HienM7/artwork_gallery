@@ -25,8 +25,17 @@
     <%= stylesheet_link_tag "css/colors/green" %>
 
     <style>
-        a:visited {
+        a.btn.btn-primary.btn-xs:visited {
             color: #fff !important;
+        }
+        a.nav-link:hover {
+
+        }
+        ul.collapse > li > a:hover {
+            background-color: transparent !important;
+        }
+        .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
+            /* top: 0 !important; */
         }
     </style>
     
@@ -56,24 +65,13 @@
                 <!-- ============================================================== -->
                 <!-- Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-header">
+                <div class="navbar-header" style="background: #272c33 !important;">
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon -->
                         <b>
-                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <%= image_tag  asset_path('paint-palette.png'), alt: 'homepage', class: 'dark-logo' %>
-                            <!-- Light Logo icon -->
-                            <%= image_tag  asset_path('paint-palette.png'), alt: 'homepage', class: 'light-logo' %>
+                            <!-- Logo icon -->
+                            <%= image_tag  image_url('logo.png'), alt: 'homepage', height: '36' %>
                         </b>
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
-                        <span>
-                            <!-- dark Logo text -->
-                            <%= image_tag  asset_path('logo.jpg'), alt: 'homepage', class: 'dark-logo' %>
-                            <!-- Light Logo text -->    
-                            <%= image_tag  asset_path('logo.jpg'), alt: 'homepage', class: 'light-logo' %>
-                         </span>
                     </a>
                 </div>
                 <!-- ============================================================== -->
@@ -276,20 +274,20 @@
                             </ul>
                         </li>
 
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">TAGS</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">TAGS</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="index.html">Add Tag </a></li>
                                 <li><a href="index2.html">View Tag List</a></li>
                             </ul>
                         </li>
 
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">TRANSACTIONS</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="index2.html">View Transaction Log</a></li>
                             </ul>
                         </li>
 
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">STATISTICS</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span class="hide-menu">STATISTICS</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="index2.html">Users</a></li>
                                 <li><a href="index2.html">Artworks</a></li>
