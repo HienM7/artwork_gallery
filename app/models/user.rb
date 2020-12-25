@@ -12,5 +12,6 @@ class User < ApplicationRecord
 	validates :credit_card,	numericality: true
 
 	has_many :favorites
+	has_many :artwork
   has_many :fav_artworks, class_name: 'FavArtwork', through: :favorites,  :source => :artwork
 end

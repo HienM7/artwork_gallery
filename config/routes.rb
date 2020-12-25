@@ -10,10 +10,11 @@ Rails.application.routes.draw do
   end
   
   resources :artworks
-  
+
   root to: 'artworks#index', as: 'home'
   
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
+  get 'my/artworks', to: 'artworks#my_artworks', as: 'show_my_artworks'
 
   resources :users do
     resources :artworks do
