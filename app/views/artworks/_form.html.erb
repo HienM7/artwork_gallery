@@ -9,18 +9,18 @@
       <div class="row p-t-20">
           <div class="col-lg-6 col-md-6">
               <div class="field input-group">
-                  <%= form.label :input_file, 'Upload your artwork file', class: 'control-label' %>
-                  <%= form.file_field :input_file,
+                  <%= form.label :image, 'Upload your artwork file', class: 'control-label' %>
+                  <%= form.file_field :image,
                       id: 'input-file-now-custom-1',
                       class: 'dropify',
-                      readonly: form.object.persisted?,
+                    #   readonly: form.object.persisted?,
                       data: {
-                        max_file_size: '20M',
-                        default_file: @artwork.img_link
-                      },
-                      required: (not form.object.persisted?) %>
+                        max_file_size: '200M',
+                        default_file: (@artwork.img_link if @artwork.img_link.present?)
+                      }
+                 %>
                   <div class="invalid-feedback">
-                    Artwork file must have max size of 20MB.
+                    Artwork file must have max size of 200MB.
                   </div>
               </div>
           </div>
@@ -57,14 +57,11 @@
               <div class="field input-group">
                   <%= form.label :catid, 'Category', class: 'col-md-2 col-form-label' %>
                   <div class="col-md-10">
-                    <%= form.select :catid,
-                          options_for_select([
-                            "Cell", "Work",
-                            "Office", "Home", "Other"
-                          ]),
-                          prompt: 'Select Category',
-                          class: 'custom-select col-12',
-                          required: true %>
+                    <%= form.select :category_id,
+                        options_for_select(categories),
+                        prompt: 'Select Category',
+                        class: 'custom-select col-12',
+                        required: true %>
                   </div>
                   <div class="invalid-feedback">
                   </div>

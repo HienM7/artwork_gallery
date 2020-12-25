@@ -1,10 +1,16 @@
 class ArtworksController < ApplicationController
   before_action :set_artwork, only: [:show, :edit, :update, :destroy]
+  before_action :ensure_login, only: [:my_artworks, :new, :edit, :create, :update, :destroy]
 
   # GET /artworks
   # GET /artworks.json
+  
   def index
     @artworks = Artwork.search(params[:keyword])
+  end
+
+  def my_artworks
+    @artworks = Artwork.where(user_id: current_user.id)
   end
 
   # GET /artworks/1
@@ -30,14 +36,22 @@ class ArtworksController < ApplicationController
   # POST /artworks
   # POST /artworks.json
   def create
-    @artwork = Artwork.new(artwork_params)
+    user_id = current_user.id
+    name = params[:name]
+    image = params[:image]
+    value = params[:value]
+    category_id = params[:category_id]
+
+
+
+    @artwork = Artwork.new({user_id: user_id, name: name, image: image, value: value, category_id: category_id})
 
     respond_to do |format|
       if @artwork.save
         format.html { redirect_to @artwork, notice: 'Artwork was successfully created.' }
         format.json { render :show, status: :created, location: @artwork }
       else
-        format.html { render :new }
+        format.html { render :new, notice: @artwork.errors }
         format.json { render json: @artwork.errors, status: :unprocessable_entity }
       end
     end
@@ -120,9 +134,7 @@ class ArtworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def artwork_params
-      params
-      .require(:artwork)
-      .permit(:name, :img_link, :value, :is_public, :keyword)
+      # params.require(:artwork).permit(:name, :image, :value, :category_id)
     end
 
     # MOVE TO USER

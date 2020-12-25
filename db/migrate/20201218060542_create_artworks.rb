@@ -5,6 +5,7 @@ class CreateArtworks < ActiveRecord::Migration[6.0]
       t.string :img_link
       t.integer :value
       t.integer :is_public
+      t.references :category
 
       t.timestamps
     end

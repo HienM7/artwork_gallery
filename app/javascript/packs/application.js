@@ -27,6 +27,7 @@ require("packs/dropify")
 require("packs/sidebar_nav")
 require("packs/sidebarmenu")
 require("packs/custom")
+require("@rails/activestorage").start()
 
 import "../stylesheets/application"
 
