@@ -11,7 +11,7 @@
     
     <!-- Favicon icon -->
     <%= favicon_link_tag asset_path('paint-palette.png') %>
-    <title>Artwork Gallery</title>
+    <title><%= content_for?(:title) ? yield(:title) : "Artwork Gallery" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     
@@ -21,10 +21,15 @@
     <!-- Bootstrap Core CSS -->
     <!--link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"-->
     <!-- Custom CSS -->
-    <%= stylesheet_pack_tag 'sidebar-nav' %>
     <%= stylesheet_link_tag "css/style" %>
     <!-- You can change the theme colors from here -->
     <%= stylesheet_link_tag "css/colors/green" %>
+
+    <style>
+        a:visited {
+            color: #fff !important;
+        }
+    </style>
     
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <%= yield :head %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
@@ -101,7 +106,7 @@
                                             <a href="#">
                                                 <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
                                                 <div class="mail-contnet">
-                                                    <h5>Luanch Admin</h5> <span class="mail-desc">Just see the my new admin!</span> <span class="time">9:30 AM</span> </div>
+                                                    <h5>Admin</h5> <span class="mail-desc">Just see my new admin!</span> <span class="time">9:30 AM</span> </div>
                                             </a>
                                             <!-- Message -->
                                             <a href="#">
@@ -146,6 +151,8 @@
                                 <%= image_tag  asset_path('paint-palette.png'), alt: 'user', class: 'profile-pic' %>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
+                                <% if current_user ########################## %>
+
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
@@ -164,6 +171,16 @@
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
+
+                                <% else %>
+
+                                <ul class="dropdown-user">
+                                    <li><a href="#"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#"><i class="fa fa-address-book-o"></i> Signup</a></li>
+                                </ul>
+
+                                <% end %>
                             </div>
                         </li>
                     </ul>
@@ -179,6 +196,9 @@
         <aside class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
+
+                <% if current_user ########################################## %>
+
                 <!-- User profile -->
                 <div class="user-profile">
                     <!-- User profile image -->
@@ -189,7 +209,11 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text">
-                        <h5><span class="text-light">Team 4 admin</span></h5>
+                        <h5>
+                            <span class="text-light">
+                                <%= current_user.username %>
+                            </span>
+                        </h5>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                         <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                         <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
@@ -213,83 +237,92 @@
                     </div>
                 </div>
                 <!-- End User profile text-->
+
+                <% end ###################################################### %>
+
                 
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        
+                        <% if (not current_user) ############################ %>
+
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                        </li>
+                        
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li>
+                        
+                        <% elsif current_user.is_admin ###################### %>
+                        
                         <li class="nav-devider"></li>
-                        <li class="nav-small-cap">USER MANAGEMENT</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu">USERS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index.html">Minimal </a></li>
-                                <li><a href="index2.html">Analytical</a></li>
-                                <li><a href="index3.html">Demographical</a></li>
-                                <li><a href="index4.html">Modern</a></li>
+                                <li><a href="index.html">Add User </a></li>
+                                <li><a href="index2.html">View User List</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Apps</span></a>
+                        
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Calendar</a></li>
-                                <li><a href="app-chat.html">Chat app</a></li>
-                                <li><a href="app-ticket.html">Support Ticket</a></li>
-                                <li><a href="app-contact.html">Contact / Employee</a></li>
-                                <li><a href="app-contact2.html">Contact Grid</a></li>
-                                <li><a href="app-contact-detail.html">Contact Detail</a></li>
+                                <li><a href="index2.html">View Artwork List</a></li>
                             </ul>
                         </li>
-                        <li class="nav-small-cap">ARTWORK MANAGEMENT</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+                        
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li><a href="index.html">Add Category </a></li>
+                                <li><a href="index2.html">View Category List</a></li>
                             </ul>
                         </li>
-                        <li class="nav-small-cap">CATEGORY MANAGEMENT</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">TAGS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li><a href="index.html">Add Tag </a></li>
+                                <li><a href="index2.html">View Tag List</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">TRANSACTIONS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li><a href="index2.html">View Transaction Log</a></li>
                             </ul>
                         </li>
-                        <li class="nav-small-cap">TAG MANAGEMENT</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">STATISTICS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li><a href="index2.html">Users</a></li>
+                                <li><a href="index2.html">Artworks</a></li>
+                                <li><a href="index2.html">Transactions</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
+                        
+                        <% else ############################################# %>
+                        
+                        <li class="nav-devider"></li>
+                        
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                        </li>
+                        
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li>
+
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
+                        </li>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">YOUR ARTWORKS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
+                                <li><a href="index2.html">Upload Artwork</a></li>
+                                <li><a href="index2.html">View Artwork List</a></li>
                             </ul>
                         </li>
-                        <li class="nav-small-cap">FAVORITE LIST</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
-                            </ul>
+
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-email"></i><span class="hide-menu">Inbox</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-email.html">Mailbox</a></li>
-                                <li><a href="app-email-detail.html">Mailbox Detail</a></li>
-                                <li><a href="app-compose.html">Compose Mail</a></li>
-                            </ul>
-                        </li>
+                        
+                        <% end ############################################## %>
+
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
