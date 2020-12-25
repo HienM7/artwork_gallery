@@ -1,52 +1,62 @@
 class UsersController < ApplicationController
-	before_action :authenticate_user!
-	def show
-		#if session[:user] != 'user'
-			#redirect_to :action => 'login'
-		#end
-		@user = current_user
-	end
+  before_action :find_user, only: [:show, :edit, :update, :destroy ]
+	before_action :ensure_admin_user!
+ 
+  def index
+    @users = User.all
+  end
 
-	def xulylogin
-		@user = User.find_by(username:user_params[:username])
-		if @user
-			if @user.password == user_params[:password]
-				session[:user] = 'user'
-				redirect_to :action => 'show', :id => @user.id
-			else
-				flash[:login_errors] = ['Mat khau sai, hay nhap lai!']
-				render 'login'
-			end
+  def show
+  end
+
+  def new
+    @user = User.new
+  end
+
+  def edit
+  end
+
+  def create
+    @user = User.new(user_params_create)
+    
+    if @user.save 
+      redirect_to users_path, :flash => { :success => 'User was successfully created.' }
+    else
+      render :action => 'new'
+    end
+  end
+
+	def update
+    if @user.update_attributes(user_params_update)
+      redirect_to users_path, :flash => { :success => 'User was successfully updated.' }
 		else
-			flash[:login_errors] = ['Tai khoan khong ton tai!']
-			render 'login'
+      render :action => 'edit'
+    end
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path, :flash => { :success => 'User was successfully deleted.' }
+  end
+
+	private
+
+		def find_user
+			@user = User.find params[:id]
 		end
-	end
-
-	def login
-		session[:user] = ''
-	end
-
-	def new
-		@user = User.new
-	end
-
-	def create
-		user = params.require(:user).permit(:username, :password, :email, :credit_card, :password_confirmation)
-		is_admin = "is_admin"
-		is_banned = "is_banned"
-		point = "point"
-		user[is_admin.to_sym] = false
-		user[is_banned.to_sym] = false
-		user[point.to_sym] = 0
-		@user = User.create(user)
-		if @user.save
-			redirect_to :action => 'login'
-		else render 'new'
-		end
-	end
 	
-	private def user_params
-		params.require(:user).permit(:username, :password)
-	end
+    def user_params_create
+      params.require(:user).permit(:username, :password, :password_confirmation, :email, :point)
+		end
+		
+		def user_params_update
+			if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+				params[:user].delete(:password)
+				params[:user].delete(:password_confirmation)
+				params.require(:user).permit(:username, :email, :point)
+			else
+      	params.require(:user).permit(:username, :password, :password_confirmation, :email, :point )
+				
+			end
+		end
 end
