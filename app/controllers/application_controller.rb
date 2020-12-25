@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+	layout :layout_by_resource
+	
 	before_action :update_allowed_parameters, if: :devise_controller?
 
 	protected
@@ -19,5 +21,17 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path
       return
     end
+	end
+
+	def layout_by_resource
+		log_act = [
+			[:user, 'new'],
+			[:user, 'cancel']
+		]
+		if devise_controller? && log_act.include?([resource_name, action_name])
+			"auth"
+		else
+			"application"
+		end
 	end
 end

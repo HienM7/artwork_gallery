@@ -1,31 +1,31 @@
-<%= stylesheet_link_tag "css/style" %>
-<style>
-.dataTables_wrapper .dataTables_paginate .pagination {
-  /* To center paginator */
-  /* .dataTables_wrapper .dataTables_paginate {text-align: center;} */
-  display: inline-block !important;
-}
-</style>
-
-<div class="row page-titles">
-    <div class="col-md-5 align-self-center">
-        <h3 class="text-themecolor">Manage Categories</h3>
-    </div>
-    <div class="col-md-7 align-self-center">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item">Category</li>
-            <li class="breadcrumb-item active">Manage</li>
-        </ol>
-    </div>
-    <!--div>
-        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
-                class="ti-settings text-white"></i></button>
-    </div-->
-</div>
+<% content_for :head do %>
+  <style>
+  .dataTables_wrapper .dataTables_paginate .pagination {
+    /* To center paginator */
+    /* .dataTables_wrapper .dataTables_paginate {text-align: center;} */
+    display: inline-block !important;
+  }
+  </style>
+<% end %>
 
 
-<div class="container-fluid">
+<% content_for :header do %>
+  <div class="row page-titles">
+      <div class="col-md-5 align-self-center">
+          <h3 class="text-themecolor">Manage Categories</h3>
+      </div>
+      <div class="col-md-7 align-self-center">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item">Category</li>
+              <li class="breadcrumb-item active">Manage</li>
+          </ol>
+      </div>
+  </div>
+<% end %>
+
+
+<% content_for :alert do %>
   <div class="row">
     <div class="col-12">
       <% flash.each do |type, msg| %>
@@ -45,6 +45,8 @@
       <% end %>
     </div>
   </div>
+<% end %>
+
 
   <div class="row">
     <div class="col-12">
@@ -162,39 +164,40 @@
 
     </div>
   </div>
-</div>
 
 
-<script>
-    $(document).ready(function () {
-        var t = $('#myTable').DataTable({
-            'paging': true,
-            'info': false,
-            "columnDefs": [
-                {
-                    "targets": [0, 3],
-                    "orderable": false,
-                    "searchable": false
-                }
-            ],
-            // "order": [[ 2, 'desc' ]], // by time_created
-            "language": {
-                "lengthMenu": "# items per page _MENU_",
-                "info": "Showing _START_ to _END_ of _TOTAL_ categories",
-                "emptyTable": "No categories",    
-                "infoFiltered": "(filtered from _MAX_ total categories)",
-                "zeroRecords": "No matching categories found",
-                "infoEmpty": "No categories to show",
-                "loadingRecords": "Loading categories..."
-            },
-            "sDom": "lfrtp"
-        });
+<% content_for :scripts do %>
+  <script>
+      $(document).ready(function () {
+          var t = $('#myTable').DataTable({
+              'paging': true,
+              'info': false,
+              "columnDefs": [
+                  {
+                      "targets": [0, 3],
+                      "orderable": false,
+                      "searchable": false
+                  }
+              ],
+              // "order": [[ 2, 'desc' ]], // by time_created
+              "language": {
+                  "lengthMenu": "# items per page _MENU_",
+                  "info": "Showing _START_ to _END_ of _TOTAL_ categories",
+                  "emptyTable": "No categories",    
+                  "infoFiltered": "(filtered from _MAX_ total categories)",
+                  "zeroRecords": "No matching categories found",
+                  "infoEmpty": "No categories to show",
+                  "loadingRecords": "Loading categories..."
+              },
+              "sDom": "lfrtp"
+          });
 
-        t.on('draw', function () {
-            var PageInfo = $('#myTable').DataTable().page.info();
-            t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1 + PageInfo.start;
-            });
-        });
-    });
-</script>
+          t.on('draw', function () {
+              var PageInfo = $('#myTable').DataTable().page.info();
+              t.column(0, { page: 'current' }).nodes().each(function (cell, i) {
+                  cell.innerHTML = i + 1 + PageInfo.start;
+              });
+          });
+      });
+  </script>
+<% end %>

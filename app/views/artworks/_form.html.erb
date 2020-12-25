@@ -1,37 +1,83 @@
-<%= form_with(model: artwork, local: true) do |form| %>
-  <% if artwork.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(artwork.errors.count, "error") %> prohibited this artwork from being saved:</h2>
+<%= form_with(
+      model: artwork,
+      local: true,
+      html: {class: "needs-validation", novalidate: true}
+    ) do |form| %>
 
-      <ul>
-        <% artwork.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="form-body">
+      <hr>
+      <div class="row p-t-20">
+          <div class="col-lg-6 col-md-6">
+              <div class="field input-group">
+                  <%= form.label :input_file, 'Upload your artwork file', class: 'control-label' %>
+                  <%= form.file_field :input_file,
+                      id: 'input-file-now-custom-1',
+                      class: 'dropify',
+                      readonly: form.object.persisted?,
+                      data: {
+                        max_file_size: '20M',
+                        default_file: @artwork.img_link
+                      },
+                      required: (not form.object.persisted?) %>
+                  <div class="invalid-feedback">
+                    Artwork file must have max size of 20MB.
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row p-t-20">
+          <div class="col-lg-12">
+              <div class="field input-group">
+                  <%= form.label :name, class: 'control-label' %>
+                  <%= form.text_field :name,
+                      class: 'form-control',
+                      placeholder: "Artwork name",
+                      required: true %>
+                  <div class="invalid-feedback">
+                    Artwork name must have length of 1 to 100 characters.
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row p-t-20">
+          <div class="col-lg-12">
+              <div class="field input-group">
+                  <%= form.label :value, class: 'control-label' %>
+                  <%= form.text_field :value,
+                      class: 'form-control',
+                      placeholder: "Artwork value",
+                      required: true %>
+                  <div class="invalid-feedback">
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row p-t-20">
+          <div class="col-lg-12">
+              <div class="field input-group">
+                  <%= form.label :catid, 'Category', class: 'col-md-2 col-form-label' %>
+                  <div class="col-md-10">
+                    <%= form.select :catid,
+                          options_for_select([
+                            "Cell", "Work",
+                            "Office", "Home", "Other"
+                          ]),
+                          prompt: 'Select Category',
+                          class: 'custom-select col-12',
+                          required: true %>
+                  </div>
+                  <div class="invalid-feedback">
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
-
-  <div class="field">
-    <%= form.label :img_link %>
-    <%= form.text_field :img_link %>
-  </div>
-
-  <div class="field">
-    <%= form.label :value %>
-    <%= form.number_field :value %>
-  </div>
-
-  <div class="field">
-    <%= form.label :is_public %>
-    <%= form.number_field :is_public %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions form-actions">
+      <div class="actions">
+        <%= form.submit class: 'btn btn-success m-r-20' %>
+        <%= link_to 'View artwork list',
+            artworks_path,
+            class: "btn btn-secondary" %>
+      </div>
   </div>
 <% end %>

@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <style type="text/css">
-      .color{
-        color: #ffffff
-      }
-    </style>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon.png">
-    <title>Edit User</title>
-    <!-- Bootstrap Core CSS -->
-    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="/css/style.css" rel="stylesheet">
-    <!-- You can change the theme colors from here -->
-    <link href="/css/colors/blue.css" id="theme" rel="stylesheet">
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-<![endif]-->
-</head>
-<body class="text-center">
+<% content_for :title do %>
+  Edit Profile
+<% end %>
+
+
+<% content_for :alert do %>
+  <div class="row">
+    <div class="col-12">
+      <% flash.each do |type, msg| %>
+        <% if type == 'notice' %>
+          <div class="alert alert-success">
+            <%= msg %>
+          </div>
+        <% elsif type == 'alert' %>
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="text-center">
   <nav style="background-color: #4f3ad1" class="navbar navbar-expand-md navbar-dark bg-#2069b5 fixed-top">
   <a class="navbar-brand" href="/">Artwork</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,5 +81,4 @@
       <%#<h3>Cancel my account</h3>
       <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
     </div>
-</body>
-</html>
+</div>

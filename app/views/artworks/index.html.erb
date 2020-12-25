@@ -1,28 +1,31 @@
-<%= stylesheet_link_tag "css/style" %>
-<style>
-  .el-element-overlay .el-card-item {
-    padding-bottom: 0;
-  }
-  .el-element-overlay .el-card-item .el-card-avatar {
-    margin-bottom: 0;
-  }
-  /* .el-element-overlay .el-card-item .el-overlay-1 {
-    text-align: left;
-    padding-bottom: 0;
-  } */
-  .el-element-overlay .el-card-item .el-overlay-1 .el-info > li a:hover {
-    background: transparent;
-    border-color: transparent;
-  }
-  .formal-text {
-    /* padding-left: 15px;
-    padding-bottom: 10px; */
-    padding-top: 10px;
-    margin: 0 !important;
-    text-transform: capitalize;
-  }
-</style>
+<% content_for :head do %>
+  <style>
+    .el-element-overlay .el-card-item {
+      padding-bottom: 0;
+    }
+    .el-element-overlay .el-card-item .el-card-avatar {
+      margin-bottom: 0;
+    }
+    /* .el-element-overlay .el-card-item .el-overlay-1 {
+      text-align: left;
+      padding-bottom: 0;
+    } */
+    .el-element-overlay .el-card-item .el-overlay-1 .el-info > li a:hover {
+      background: transparent;
+      border-color: transparent;
+    }
+    .formal-text {
+      /* padding-left: 15px;
+      padding-bottom: 10px; */
+      padding-top: 10px;
+      margin: 0 !important;
+      text-transform: capitalize;
+    }
+  </style>
+<% end %>
 
+
+<% content_for :header do %>
 <div class="row page-titles">
     <!-- Page inner title -->
     <div class="col-md-2 align-self-center">
@@ -51,13 +54,32 @@
         </ol>
     </div>
 </div>
-<!-- ============================================================== -->
-<!-- End Bread crumb and right sidebar toggle -->
-<!-- ============================================================== -->
-<!-- ============================================================== -->
-<!-- Container fluid  -->
-<!-- ============================================================== -->
-<div class="container-fluid">
+<% end %>
+
+
+<% content_for :alert do %>
+  <div class="row">
+    <div class="col-12">
+      <% flash.each do |type, msg| %>
+        <% if type == 'notice' %>
+          <div class="alert alert-success">
+            <%= msg %>
+          </div>
+        <% elsif type == 'alert' %>
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
   <div class="row m-t-40">
     <div class="col-md-12">
         <h4 class="m-b-0">All Artworks</h4>
@@ -102,31 +124,25 @@
     <% end %>
 
   </div>
-</div>
 
 
-<%
-=begin%>
- section 'pageScript'
-<%
-=end
-%>
-
-<script>
-  $(document).ready(function() {
-  // Select and loop the container element of the elements you want to equalise
-    $('.box-container').each(function() {  
-      // Cache the highest
-      var highestBox = 0;
-      // Select and loop the elements you want to equalise
-      $('.box-column', this).each(function() {
-        // If this box is higher than the cached highest then store it
-        if ($(this).height() > highestBox) {
-          highestBox = $(this).height(); 
-        }
-      });  
-      // Set the height of all those children to whichever was highest 
-      $('.box-column', this).height(highestBox);
+<% content_for :scripts do %>
+  <script>
+    $(document).ready(function() {
+    // Select and loop the container element of the elements you want to equalise
+      $('.box-container').each(function() {  
+        // Cache the highest
+        var highestBox = 0;
+        // Select and loop the elements you want to equalise
+        $('.box-column', this).each(function() {
+          // If this box is higher than the cached highest then store it
+          if ($(this).height() > highestBox) {
+            highestBox = $(this).height(); 
+          }
+        });  
+        // Set the height of all those children to whichever was highest 
+        $('.box-column', this).height(highestBox);
+      });
     });
-  });
-</script>
+  </script>
+<% end %>
