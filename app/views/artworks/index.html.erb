@@ -86,9 +86,9 @@
         <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
     </div>
   </div>
-    
+
   <div class="card-columns el-element-overlay">
-    
+
     <% @artworks.each do |artwork| %>
       <% if artwork.image.present?%>
         <div class="card">
@@ -128,17 +128,17 @@
   <script>
     $(document).ready(function() {
     // Select and loop the container element of the elements you want to equalise
-      $('.box-container').each(function() {  
+      $('.box-container').each(function() {
         // Cache the highest
         var highestBox = 0;
         // Select and loop the elements you want to equalise
         $('.box-column', this).each(function() {
           // If this box is higher than the cached highest then store it
           if ($(this).height() > highestBox) {
-            highestBox = $(this).height(); 
+            highestBox = $(this).height();
           }
-        });  
-        // Set the height of all those children to whichever was highest 
+        });
+        // Set the height of all those children to whichever was highest
         $('.box-column', this).height(highestBox);
       });
     });
