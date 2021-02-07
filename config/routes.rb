@@ -4,19 +4,20 @@ Rails.application.routes.draw do
   # namespace :admin do
   #   root to: "admin#index"
   # end
-  scope '/admin' do 
+  scope '/admin' do
     resources :categories
     resources :users
   end
-  
+
   resources :artworks
 
   # resources :categories, only: [:index]
-  
+
   root to: 'artworks#index', as: 'home'
-  
+
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
   get 'my/artworks', to: 'artworks#my_artworks', as: 'show_my_artworks'
+  # get 'my/artworks/new', to: 'artworks#new', as: 'show_my_artworks'
 
   resources :users do
     resources :artworks do

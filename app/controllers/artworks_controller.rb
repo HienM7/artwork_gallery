@@ -4,7 +4,7 @@ class ArtworksController < ApplicationController
 
   # GET /artworks
   # GET /artworks.json
-  
+
   def index
     @artworks = Artwork.search(params[:keyword])
   end
@@ -37,12 +37,6 @@ class ArtworksController < ApplicationController
   # POST /artworks.json
   def create
     a = artwork_params
-    # byebug
-    # user_id = current_user.id
-    # name = params[:name]
-    # image = params[:image]
-    # value = params[:value]
-    # category_id = params[:category_id]
     a['user_id'] = current_user.id
 
     @artwork = Artwork.new(a)
@@ -86,14 +80,14 @@ class ArtworksController < ApplicationController
     if request.xhr?
       transfer_ok = true  # TODO, stub here
       dl_artw = Artwork.find(params[:id])
-      
+
       if params[:option] == 'free'
         # img_url = dl_artw.img_link
         img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
-        
+
         if params[:amount].to_i > 0
           transfer_ok = make_donate(current_user, artw, params[:amount])
-          
+
           if transfer_ok
             render json: { img_url: img_url, artw_name: dl_artw.name }
           else
@@ -106,7 +100,7 @@ class ArtworksController < ApplicationController
         else
           render json: { img_url: img_url, artw_name: dl_artw.name }
         end
-      
+
       elsif params[:option] == 'paid'
         img_url = dl_artw.img_link
         transfer_ok = make_transfer(current_user, artw_owner)
@@ -134,7 +128,7 @@ class ArtworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def artwork_params
-      params.require(:artwork).permit(:name, :image, :value, :category_id)
+      params.require(:artwork).permit(:name, :description, :image, :value, :category_id, :is_public)
     end
 
     # MOVE TO USER
