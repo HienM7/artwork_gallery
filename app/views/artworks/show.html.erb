@@ -482,10 +482,9 @@
                     <div class="col-12">
                       <div class="text-left">
                         <h5>
-                          <i class="icon-user"></i>
                           <%#= @artwork.user.avatar, link %>
-                          <%#= @artwork.user.name, link %>
-                          Daniel
+                          <i class="icon-user"></i>
+                          <%= link_to @artwork.user.username, @artwork.user %>
                         </h5>
                       </div>
                     </div>
