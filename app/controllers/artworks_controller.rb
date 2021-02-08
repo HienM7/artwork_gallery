@@ -72,45 +72,24 @@ class ArtworksController < ApplicationController
 
   def download
     if request.xhr?
-      transfer_ok = true  # TODO, stub here
       dl_artw = Artwork.find(params[:id])
 
       if params[:option] == 'free'
-        # img_url = dl_artw.img_link
-        img_url = 'https://res.cloudinary.com/dg3yegu7g/image/upload/v1588155445/met0x6w42pzg4kjs5ooj.jpg'
+        img_url = dl_artw.image.service_url
 
-        if params[:amount].to_i > 0
-          transfer_ok = make_donate(current_user, artw, params[:amount])
+        transfer_ok = current_user.make_donation(dl_artw, params[:amount].to_i)
 
-          if transfer_ok
-            render json: { img_url: img_url, artw_name: dl_artw.name }
-          else
-            render json: {
-              error: 'Cannot transfer points and download the artwork. ' +
-                     'Make sure you have enough points.'
-            }
-          end
-
-        else
-          render json: { img_url: img_url, artw_name: dl_artw.name }
-        end
+        download_res dl_artw.name, img_url, transfer_ok
 
       elsif params[:option] == 'paid'
-        img_url = dl_artw.img_link
-        transfer_ok = make_transfer(current_user, artw_owner)
+        img_url = dl_artw.image.service_url # TODO : change to high quality img
 
-        if transfer_ok
-          render json: { img_url: img_url, artw_name: dl_artw.name }
-        else
-          render json: {
-            error: 'Cannot transfer points and download the artwork. ' +
-                   'Make sure you have enough points.'
-          }
-        end
+        transfer_ok = current_user.make_purchase(dl_artw)
+
+        download_res dl_artw.name, img_url, transfer_ok
       end
-
     else
-      redirect_to dl_artw.img_link
+      redirect_to dl_artw.image.service_url
     end
   end
 
@@ -125,28 +104,14 @@ class ArtworksController < ApplicationController
       params.require(:artwork).permit(:name, :description, :image, :value, :category_id, :is_public)
     end
 
-    # MOVE TO USER
-    # def able_to_pay(amount)
-    #   return current_user.point > amount
-    # end
-
-    def make_donate(usr1, artw, amount)
-      if usr1.point >= amount
-        usr1.point -= amount
-        artw.user.point += amount
-        return true
+    def download_res(artw_name, img_url, transfer_ok)
+      if transfer_ok
+        render json: { img_url: img_url, artw_name: artw_name }
       else
-        return false
-      end
-    end
-
-    def make_transfer(usr1, artw)
-      if usr1.point >= artw.value
-        usr1.point -= artw.value
-        artw.user.point += artw.value
-        return true
-      else
-        return false
+        render json: {
+          error: 'Cannot make point transfer and download the artwork. ' +
+                 'Make sure you have enough points.'
+        }
       end
     end
 end
