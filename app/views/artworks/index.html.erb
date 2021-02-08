@@ -106,12 +106,14 @@
                       <i class="icon-link"></i>
                     <% end %>
                     <br />
-                    <p class="formal-text">by Anonymous </p>
-                    <%#= link_to  artwork.user.name, user_path(artwork.user) %>
+                    <p class="formal-text">
+                      by
+                      <%= link_to  artwork.user.username, user_path(artwork.user) %>
+                    </p>
                     <br />
                     <p class="formal-text">
-                      <%#= artwork.favorites.count %>
-                      999 <i class="icon-heart"></i>
+                      <%= artwork.fav_count %>
+                      <i class="icon-heart"></i>
                     </p>
                   </li>
                 </ul>
