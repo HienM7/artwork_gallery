@@ -132,7 +132,7 @@
               <div class="ribbon ribbon-danger ribbon-right">Inactive</div>
               <%# elseif (@artwork.status == 'draft')  %>
               <div class="ribbon ribbon-default ribbon-right">Draft</div>
-              <%# endif %> 
+              <%# endif %>
 <%
 =end%>
               <div class="el-card-item">
@@ -155,7 +155,7 @@
                           meth = :get
                           uses_ajax = false
                           toggle_data = {}
-                          
+
                           if current_user
                             fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
                             fav_id = if fav then fav.id else 0 end
@@ -424,7 +424,7 @@
                                         <ul class="icheck-list">
                                           <!-- NOTE: options for collection_check_boxes contain invisible chars -->
                                           <!--       used as a quick fix for checkbox bug -->
-                                          <%= form.collection_check_boxes :reasons, 
+                                          <%= form.collection_check_boxes :reasons,
                                               [
                                                 ["⠀⠀Violence", "v"],
                                                 ["⠀⠀Nudity", "n"],
@@ -482,10 +482,9 @@
                     <div class="col-12">
                       <div class="text-left">
                         <h5>
-                          <i class="icon-user"></i>
                           <%#= @artwork.user.avatar, link %>
-                          <%#= @artwork.user.name, link %>
-                          Daniel
+                          <i class="icon-user"></i>
+                          <%= link_to @artwork.user.username, @artwork.user %>
                         </h5>
                       </div>
                     </div>
@@ -519,26 +518,17 @@
                                       link_to_artworks_with_same_tag,
                                       class: "btn btn-sm btn-outline-info",
                                       style: "margin-bottom: 5px;" %>
-                        <% end %> 
+                        <% end %>
 <%
 =end%>
                       </div>
-                    </div> 
+                    </div>
                     <div class="col-12 m-t-10">
                       <div class="text-left">
                         <hr />
                         <h4>Description</h4>
                         <p>
-                          <%#= @artwork.description %>
-                          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                          totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                          dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-                          sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est,
-                          qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi
-                          tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam,
-                          quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
-                          Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-                          vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+                          <%= @artwork.description %>
                         </p>
                       </div>
                     </div>
@@ -550,7 +540,7 @@
         <!-- Column -->
 
         <!-- Column -->
-        <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12" id="right-info-container">   
+        <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12" id="right-info-container">
             <div class="card">
                 <!-- Nav tabs // change to simple scrollable list -->
                 <ul class="nav nav-tabs customtab" role="tablist">
@@ -564,41 +554,21 @@
                 <!-- Tab panes -->
                 <div class="tab-content" id="right-info" style="padding: 2.5%;">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
-                      <% @similar.each_with_index do |simart, index| %>
-                        <%
-# hardcoded links for dev purposes
-link1 = 'https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg'
-link2 = 'https://images.pexels.com/photos/736230/pexels-photo-736230.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-                          if index % 2 == 1
-                            simart.img_link = link1
-                          else
-                            simart.img_link = link2
-                          end
-                        %>
-                        <%= link_to  artwork_path(simart),
+                      <% (similar_artworks @artwork).each do |sim_artw| %>
+                        <%= link_to  artwork_path(sim_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
-                            style="background-image: url('<%= simart.img_link %>');">
+                            style="background-image: url('<%= sim_artw.image.service_url %>');">
                           </div>
                         <% end %>
                       <% end %>
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
-                      <% @same_author.each_with_index do |sameauthor, index| %>
-                        <%
-# hardcoded links for dev purposes
-link1 = 'https://cdn.mos.cms.futurecdn.net/ntFmJUZ8tw3ULD3tkBaAtf.jpg'
-link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountains-Turkey.jpg'
-                          if index % 2 == 0
-                            sameauthor.img_link = link1
-                          else
-                            sameauthor.img_link = link2
-                          end
-                        %>
-                        <%= link_to  artwork_path(sameauthor),
+                      <% (same_authors_artworks @artwork).each do |sa_artw| %>
+                        <%= link_to  artwork_path(sa_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
-                            style="background-image: url('<%= sameauthor.img_link %>');">
+                            style="background-image: url('<%= sa_artw.image.service_url %>');">
                           </div>
                         <% end %>
                       <% end %>
@@ -626,7 +596,7 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
         }
       );
     }
-    
+
     $(document).on('ajax:success', 'form#dl-form', function (event) {
       const [data, status, xhr] = event.detail;
       if (data.error) {
@@ -687,7 +657,7 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
 
         /* Opens new tab */
         // let popout = window.open(data.img_url);
-        // if (!popout || popout.closed || typeof popout.closed == 'undefined') { 
+        // if (!popout || popout.closed || typeof popout.closed == 'undefined') {
         //     window.location.href = data.img_url;
         // }
         // else {
@@ -702,7 +672,7 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
       const [data, status, xhr] = event.detail;
       $("#favcount").text(data.count);
       console.log("success ajax response: fav_count = " + data.count);  ////////
-      
+
       let $a = $("#favlink");
       let meth = $a.attr('data-method');
       let tg_meth = $a.attr('data-toggle-meth');
@@ -735,7 +705,7 @@ link2 = 'https://cdn.britannica.com/67/19367-050-885866B4/Valley-Taurus-Mountain
                 right_info = $(".card-body#instructors").height();
             } else if (target == "#learnersdiv") {
                 right_info = $(".card-body#learners").height();
-            } 
+            }
         });
     });
 </script>
