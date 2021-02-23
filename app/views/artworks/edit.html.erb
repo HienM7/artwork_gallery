@@ -1,6 +1,104 @@
-<h1>Editing Artwork</h1>
+<% content_for :header do %>
+<div class="row page-titles">
+  <div class="col-md-5 align-self-center">
+    <h3 class="text-themecolor">Artwork Edit</h3>
+  </div>
+  <div class="col-md-7 align-self-center">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">Artwork</li>
+      <li class="breadcrumb-item active">Edit</li>
+    </ol>
+  </div>
+</div>
+<% end %>
 
-<%= render 'form', artwork: @artwork %>
 
-<%= link_to 'Show', @artwork %> |
-<%= link_to 'Back', artworks_path %>
+<% content_for :alert do %>
+  <div class="row">
+    <div class="col-12">
+      <% flash.each do |type, msg| %>
+        <% if type == 'notice' %>
+          <div class="alert alert-success">
+            <%= msg %>
+          </div>
+        <% elsif type == 'alert' %>
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Edit Artwork</h4>
+                <h6 class="card-subtitle">
+                    Edit your artwork information.
+                </h6>
+                <%= render 'form',
+                    artwork: @artwork,
+                    categories: show_categories,
+                    tagnames: tagnames
+                %>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<% content_for :scripts do %>
+  <%#= javascript_pack_tag 'form_validation' %>
+  <%#= javascript_pack_tag 'dropify' %>
+  <script>
+    $(document).ready(function() {
+        // Basic
+        $('.dropify').dropify();
+
+        // Translated
+        $('.dropify-fr').dropify({
+            messages: {
+                default: 'Glissez-déposez un fichier ici ou cliquez',
+                replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+                remove: 'Supprimer',
+                error: 'Désolé, le fichier trop volumineux'
+            }
+        });
+
+        // Used events
+        var drEvent = $('#input-file-events').dropify();
+
+        drEvent.on('dropify.beforeClear', function(event, element) {
+            return confirm("Do you really want to delete \"" + element.file.name + "\" ?");
+        });
+
+        drEvent.on('dropify.afterClear', function(event, element) {
+            alert('File deleted');
+        });
+
+        drEvent.on('dropify.errors', function(event, element) {
+            console.log('Has Errors');
+        });
+
+        var drDestroy = $('#input-file-to-destroy').dropify();
+        drDestroy = drDestroy.data('dropify')
+        $('#toggleDropify').on('click', function(e) {
+            e.preventDefault();
+            if (drDestroy.isDropified()) {
+                drDestroy.destroy();
+            } else {
+                drDestroy.init();
+            }
+        })
+    });
+    </script>
+<% end %>
