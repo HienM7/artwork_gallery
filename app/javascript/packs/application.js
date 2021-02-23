@@ -23,6 +23,7 @@ require("packs/waves")
 require("packs/form_validation")
 require("packs/jquery_sparkline")
 require("packs/dropify")
+require("packs/bootstrap-tagsinput")
 
 require("packs/sidebar_nav")
 require("packs/sidebarmenu")
