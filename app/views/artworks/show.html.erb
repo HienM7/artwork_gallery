@@ -500,27 +500,11 @@
                     </div>
                     <div class="col-12">
                       <div class="text-left m-t-10">
-                        <% dummy_tags = [
-                          'US',
-                          'mountain',
-                          '30-day-challenge',
-                          'sky'
-                        ] %>
-                        <% dummy_tags.each do |tag| %>
+                        <% tagnames.each do |tag| %>
                           <%= link_to tag,
                               '#',
                               class: "badge badge-info text-dark" %>
                         <% end %>
-<%
-=begin%>
-                        <% @artwork.tags.each do |tag| %>
-                          <%= link_to tag.name,
-                                      link_to_artworks_with_same_tag,
-                                      class: "btn btn-sm btn-outline-info",
-                                      style: "margin-bottom: 5px;" %>
-                        <% end %>
-<%
-=end%>
                       </div>
                     </div>
                     <div class="col-12 m-t-10">

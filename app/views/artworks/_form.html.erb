@@ -80,7 +80,28 @@
             </div>
         </div>
     </div>
-    <!-- the graphic's publishing status -->
+    <!-- the artwork's TAGS -->
+    <div class="row p-t-20">
+        <div class="col-lg-12">
+            <div class="field input-group">
+                <%= form.label :tagnames, 'Tags', class: 'col-md-2 col-form-label' %>
+                <div class="col-md-10">
+                    <div class="tags-default">
+                        <%= form.text_field :tagnames,
+                            value: tagnames,
+                            class: 'form-control',
+                            placeholder: 'Add tags',
+                            data: { role: 'tagsinput' },
+                            autocomplete: 'off',
+                            required: false %>
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- the artwork's publishing status -->
     <div class="row p-t-20">
         <div class="col-lg-12">
             <div class="field input-group">

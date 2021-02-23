@@ -12,7 +12,7 @@ class User < ApplicationRecord
 	validates :credit_card,	numericality: true
 
 	has_many :artworks
-	has_many :favorites
+	has_many :favorites, dependent: :destroy
   has_many :fav_artworks, through: :favorites, source: :artwork
 
 	def make_donation(artw, amount)

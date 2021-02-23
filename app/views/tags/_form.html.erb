@@ -1,0 +1,33 @@
+<%= form_with(
+      model: tag,
+      local: true,
+      html: { class: "needs-validation", novalidate: true }
+    ) do |form| %>
+
+  <div class="form-body">
+      <hr>
+      <div class="row p-t-20">
+          <div class="col-md-6">
+              <div class="field input-group">
+                  <%= form.label :name, class: 'control-label' %>
+                  <%= form.text_field :name,
+                      class: 'form-control',
+                      placeholder: "Tag name",
+                      required: true %>
+                  <div class="invalid-feedback">
+                    Tag name must have length of 1 to 100 characters.
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="actions form-actions">
+      <div class="actions">
+        <%= form.submit class: 'btn btn-success m-r-20' %>
+        <%= link_to 'View tag list',
+            tags_path,
+            class: "btn btn-secondary" %>
+      </div>
+  </div>
+
+<% end %>

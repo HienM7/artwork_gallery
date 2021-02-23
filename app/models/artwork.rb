@@ -1,10 +1,17 @@
 class Artwork < ApplicationRecord
   belongs_to :category
+
   belongs_to :user
   # has_and_belongs_to_many: :users
-  has_many :favorites
+
+  has_many :favorites, dependent: :destroy
   has_many :fav_users, through: :favorites, source: :user
+
   has_one_attached :image
+
+  attr_accessor :tagnames
+
+  include Taggable
 
   def self.search(keyword)
     artws = Artwork.artw_with_fav_count

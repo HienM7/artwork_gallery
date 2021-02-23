@@ -16,15 +16,18 @@ class ArtworksController < ApplicationController
   # GET /artworks/1
   # GET /artworks/1.json
   def show
+    render 'show', locals: { tagnames: @artwork.tags.map(&:name) }
   end
 
   # GET /artworks/new
   def new
     @artwork = Artwork.new
+    render 'new', locals: { tagnames: '' }
   end
 
   # GET /artworks/1/edit
   def edit
+    render 'edit', locals: { tagnames: @artwork.tags.map(&:name).join(',') }
   end
 
   # POST /artworks
@@ -101,7 +104,7 @@ class ArtworksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def artwork_params
-      params.require(:artwork).permit(:name, :description, :image, :value, :category_id, :is_public)
+      params.require(:artwork).permit(:name, :description, :image, :value, :category_id, :is_public, :tagnames)
     end
 
     def download_res(artw_name, img_url, transfer_ok)
