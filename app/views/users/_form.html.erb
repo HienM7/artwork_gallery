@@ -1,83 +1,72 @@
 <%= form_with(
       model: @user,
       local: true,
-      html: {class: "needs-validation", novalidate: true}
+      html: {class: "form needs-validation", novalidate: true}
     ) do |form| %>
 
-  <% next_act = { New: 'Create', Edit: 'Update' } %>
+    <hr>
 
-  <div class="form-body">
-      <hr>
-      <div class="row p-t-20">
-          <div class="col-md-6">
-              <div class="field input-group">
-                  <%= form.label :name, class: 'control-label' %>
-                  <%= form.text_field :username,
-                      class: 'form-control',
-                      placeholder: "Category name",
-                      required: true %>
-                  <div class="invalid-feedback">
-                    User name must have length of 1 to 100 characters.
-                  </div>
-              </div>
-          </div>
-      </div>
-        <div class="row p-t-20">
-          <div class="col-md-6">
-              <div class="field input-group">
-                  <%= form.label :password, class: 'control-label' %>                 
-                  <%= form.password_field :password,
-                  class: 'form-control',
-                  placeholder: "Password"
-                  %>
-              </div>
-          </div>
-      </div>
-        <div class="row p-t-20">
-          <div class="col-md-6">
-              <div class="field input-group">
-                  <%= form.label :password, class: 'control-label' %>                 
-                  <%= form.password_field :password_confirmation,
-                  class: 'form-control',
-                  placeholder: "Confirm your password"
-                  %>
-              </div>
-          </div>
-      </div>
-       <div class="row p-t-20">
-          <div class="col-md-6">
-              <div class="field input-group">
-                  <%= form.label :point, class: 'control-label' %>                 
-                  <%= form.text_field :point,
-                  class: 'form-control',
-                  placeholder: "Confirm your password",
-                  required: true %>
-              </div>
-          </div>
-      </div>
-       <div class="row p-t-20">
-          <div class="col-md-6">
-              <div class="field input-group">
-                  <%= form.label :email, class: 'control-label' %>                 
-                  <%= form.text_field :email,
-                  class: 'form-control',
-                  placeholder: "Confirm your password",
-                  required: true %>
-              </div>
-          </div>
-      </div>
-      
-  </div>
-  <div class="actions form-actions">
-      <div class="actions">
-        <%= form.button :button, type: :submit,
-            class: 'btn btn-success m-r-20' do %>
-          <%= next_act[action_label.to_sym] %>
-        <% end %>
-        <%= link_to 'View user list',
-            users_path,
-            class: "btn btn-secondary" %>
-      </div>
-  </div>
+    <div class="form-group row m-t-20">
+        <%= form.label :name, class: 'col-md-2 col-form-label' %>
+        <div class="col-md-10">
+            <%= form.text_field :username,
+                class: 'form-control',
+                placeholder: "Category name",
+                required: true %>
+            <div class="invalid-feedback">
+            User name must have length of 1 to 100 characters.
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <%= form.label :password, class: 'col-md-2 col-form-label' %>
+        <div class="col-md-10">
+            <%= form.password_field :password,
+                class: 'form-control',
+                placeholder: "Password" %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <%= form.label :password, class: 'col-md-2 col-form-label' %>
+        <div class="col-md-10">
+            <%= form.password_field :password_confirmation,
+                class: 'form-control',
+                placeholder: "Confirm your password" %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <%= form.label :point, class: 'col-md-2 col-form-label' %>
+        <div class="col-md-10">
+            <%= form.text_field :point,
+                class: 'form-control',
+                placeholder: "Confirm your password",
+                required: true %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <%= form.label :email, class: 'col-md-2 col-form-label' %>
+        <div class="col-md-10">
+            <%= form.text_field :email,
+                class: 'form-control',
+                placeholder: "Confirm your password",
+                required: true %>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-2 col-form-label"></label>
+        <div class="col-md-10">
+            <div class="actions">
+                <%= form.submit class: 'btn btn-success m-r-20' %>
+                <%= link_to 'View user list',
+                    users_path,
+                    class: "btn btn-secondary" %>
+            </div>
+        </div>
+    </div>
 
 <% end %>
