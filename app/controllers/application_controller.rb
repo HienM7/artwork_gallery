@@ -11,11 +11,6 @@ class ApplicationController < ActionController::Base
 	end
 
 	private
-
-	def ensure_admin_user!
-    redirect_to home_path unless current_user && current_user.is_admin?
-	end
-
   def ensure_login
     if !current_user
       redirect_to new_user_session_path

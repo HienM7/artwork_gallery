@@ -3,8 +3,7 @@ Rails.application.routes.draw do
 
   devise_for :users, controllers: { registrations: 'registrations' }
 
-  scope '/admin' do
-    # resources :categories, only: [:index]
+  namespace :admin do
     resources :categories
     resources :tags
     resources :users

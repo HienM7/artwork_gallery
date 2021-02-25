@@ -1,0 +1,51 @@
+<% content_for :title do "New category" end %>
+
+
+<% content_for :header do %>
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">Create category</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">Category</li>
+            <li class="breadcrumb-item active">Create</li>
+        </ol>
+    </div>
+</div>
+<% end %>
+
+
+<% content_for :alert do %>
+    <div class="row">
+        <div class="col-12">
+        <% flash.each do |type, msg| %>
+            <div class="alert alert-danger">
+            <%= msg %>
+            </div>
+        <% end %>
+        </div>
+    </div>
+<% end %>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">New Category</h4>
+                    <h6 class="card-subtitle">
+                        Enter the name of the new category.
+                    </h6>
+                    <%= render 'form',
+                        category: @category %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<% content_for :scripts do %>
+    <%= javascript_pack_tag 'form_validation' %>
+<% end %>

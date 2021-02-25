@@ -1,7 +1,6 @@
-class UsersController < ApplicationController
+class Admin::UsersController < AdminController
   before_action :find_user, only: [:show, :edit, :update, :destroy ]
-	before_action :ensure_admin_user!
- 
+
   def index
     @users = User.all
   end
@@ -18,8 +17,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params_create)
-    
-    if @user.save 
+
+    if @user.save
       redirect_to users_path, :flash => { :success => 'User was successfully created.' }
     else
       render :action => 'new'
@@ -44,11 +43,11 @@ class UsersController < ApplicationController
 		def find_user
 			@user = User.find params[:id]
 		end
-	
+
     def user_params_create
       params.require(:user).permit(:username, :password, :password_confirmation, :email, :point)
 		end
-		
+
 		def user_params_update
 			if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
 				params[:user].delete(:password)
@@ -56,7 +55,7 @@ class UsersController < ApplicationController
 				params.require(:user).permit(:username, :email, :point)
 			else
       	params.require(:user).permit(:username, :password, :password_confirmation, :email, :point )
-				
+
 			end
 		end
 end
