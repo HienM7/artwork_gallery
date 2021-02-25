@@ -58,7 +58,7 @@
       <div class="alert alert-danger" role="alert">
           session 'error'
       </div>
-      <% end %> 
+      <% end %>
 <%
 =end%>
       <div class="card">
@@ -94,7 +94,7 @@
                     </td>
                     <td>
                       <%#= link_to 'Show', user %>
-                      <%= link_to edit_user_path(user),
+                      <%= link_to edit_admin_user_path(user),
                           class: 'btn btn-primary btn-xs' do %>
                         <i class="fa fa-edit"></i> Edit
                       <% end %>
@@ -142,7 +142,7 @@
                                       data-dismiss="modal">
                                 Cancel
                               </button>
-                              <%= link_to user_path(user),
+                              <%= link_to admin_user_path(user),
                                   method: :delete,
                                   class: "btn btn-danger waves-effect waves-light" do %>
                                 Confirm
@@ -181,7 +181,7 @@
             "language": {
                 "lengthMenu": "# items per page _MENU_",
                 "info": "Showing _START_ to _END_ of _TOTAL_ users",
-                "emptyTable": "No Users",    
+                "emptyTable": "No Users",
                 "infoFiltered": "(filtered from _MAX_ total Users)",
                 "zeroRecords": "No matching Users found",
                 "infoEmpty": "No Users to show",
