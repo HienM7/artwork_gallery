@@ -8,7 +8,7 @@
     <meta name="description" content="ROR Artwork Gallery Project">
     <meta name="author" content="Team 4">
 
-    <%= favicon_link_tag asset_path('paint-palette.png') %>
+    <%= favicon_link_tag asset_path('picture.png') %>
     <title>
         <%= content_for?(:title) ? "#{yield(:title)} - Artrails" : "Artrails Artwork Gallery" %>
     </title>
@@ -148,7 +148,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
                               href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <%= image_tag  asset_path('paint-palette.png'), alt: 'user', class: 'profile-pic' %>
+                                <!-- hardcoded image -->
+                                <%= image_tag  asset_path('paint-palette256.png'), alt: 'User', class: 'profile-pic' %>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <% if current_user ########################## %>
@@ -156,7 +157,9 @@
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbzRbR5I1_bOPdaT8CaZ5GMkTTejy3Jl0Y1g&usqp=CAU" alt="user"></div>
+                                            <div class="u-img">
+                                            <%= image_tag  asset_path('paint-palette256.png'), alt: 'User profile', class: 'profile-pic' %>
+                                            </div>
                                             <div class="u-text">
                                                 <h4>Steave Jobs</h4>
                                                 <p class="text-muted">stevejobs@gmail.com</p><a href="/users/edit" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -206,8 +209,7 @@
                 <div class="user-profile">
                     <!-- User profile image -->
                     <div class="profile-img">
-                        <%#= image_tag  asset_path('paint-palette.png'), alt: 'user' %>
-                        <div class="u-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbzRbR5I1_bOPdaT8CaZ5GMkTTejy3Jl0Y1g&usqp=CAU" alt="user"></div>
+                        <%= image_tag  asset_path('paint-palette256.png'), alt: 'user' %>
                         <!-- this is blinking heartbit-->
                     </div>
                     <!-- User profile text-->
@@ -368,11 +370,14 @@
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-              <span class="text-secondary"><a href="https://github.com/HienM7/artwork_gallery">Web project</a></span>
-              made with passion from
-              <strong class="text-primary">Team 4</strong>
-              - Designed by
-              <span class="text-secondary"><a href="https://themedesigner.in">themedesigner.in</a></span>
+                <span class="text-secondary"><a href="https://github.com/HienM7/artwork_gallery">Web project</a></span>
+                made with passion from
+                <strong class="text-primary">Team 4</strong>
+                - Designed by
+                <span class="text-secondary"><a href="https://themedesigner.in">themedesigner.in</a></span>
+                - Icons made by
+                <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">
+                www.flaticon.com</a>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
