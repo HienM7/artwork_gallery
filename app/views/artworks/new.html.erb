@@ -1,3 +1,6 @@
+<% content_for :title do "New artwork" end %>
+
+
 <% content_for :header do %>
 <div class="row page-titles">
   <div class="col-md-5 align-self-center">
@@ -46,8 +49,9 @@
                     Upload your artwork.
                 </h6>
                 <%= render 'form',
-                    artwork: @artwork, 
-                    categories: show_categories
+                    artwork: @artwork,
+                    categories: show_categories,
+                    tagnames: tagnames
                 %>
             </div>
         </div>

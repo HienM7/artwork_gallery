@@ -1,3 +1,5 @@
+<% content_for :title do "Tag edit" end %>
+
 
 <% content_for :header do %>
 <div class="row page-titles">
@@ -37,8 +39,7 @@
                     Edit the name of the tag.
                 </h6>
                 <%= render 'form',
-                    tag: @tag,
-                    action_label: 'Edit' %>
+                    tag: @tag %>
             </div>
         </div>
     </div>

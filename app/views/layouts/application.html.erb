@@ -4,21 +4,21 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="ROR Artwork Gallery Project">
     <meta name="author" content="Team 4">
-    
-    <!-- Favicon icon -->
+
     <%= favicon_link_tag asset_path('paint-palette.png') %>
-    <title><%= content_for?(:title) ? yield(:title) : "Artwork Gallery" %></title>
+    <title>
+        <%= content_for?(:title) ? "#{yield(:title)} - Artrails" : "Artrails Artwork Gallery" %>
+    </title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
-    <!-- Bootstrap Core CSS -->
-    <!--link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"-->
+
     <!-- Custom CSS -->
     <%= stylesheet_link_tag "css/style" %>
     <!-- You can change the theme colors from here -->
@@ -41,7 +41,7 @@
             /* top: 0 !important; */
         }
     </style>
-    
+
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <%= yield :head %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
@@ -164,8 +164,8 @@
                                     </li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="/users/edit"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
+                                    <li><a href="#"><i class="ti-wallet"></i> My Points</a></li>
+                                    <li><a href="#"><i class="ti-email"></i> Notifications</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                                     <li role="separator" class="divider"></li>
@@ -217,8 +217,8 @@
                                 <%= current_user.username %>
                             </span>
                         </h5>
-                        <a href="#" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                        
+                        <a href="#" class="" data-toggle="tooltip" title="Settings"><i class="mdi mdi-settings"></i></a>
+
                         <%= link_to destroy_user_session_path,
                                     method: :delete, data_toggle: "tooltip", title: "Logout" do %>
                         <i class="mdi mdi-power"></i>
@@ -230,21 +230,21 @@
 
                 <% end ###################################################### %>
 
-                
+
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        
+
                         <% if (not current_user) ############################ %>
 
                         <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
                         </li>
-                        
-                        <!--li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li-->
-                        
+
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li>
+
                         <% elsif current_user.is_admin ###################### %>
-                        
+
                         <li class="nav-devider"></li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu">USERS</span></a>
@@ -253,13 +253,14 @@
                                 <li><a href="/admin/users">View User List</a></li>
                             </ul>
                         </li>
-                        
-                        <!--li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
+
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
+                            <!-- need to change this gallery view to admin's one -->
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="index2.html">View Artwork List</a></li>
+                                <li><a href="/">View Artwork List</a></li>
                             </ul>
-                        </li-->
-                        
+                        </li>
+
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="/admin/categories/new">Add Category </a></li>
@@ -269,48 +270,48 @@
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">TAGS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/">Add Tag </a></li>
-                                <li><a href="/">View Tag List</a></li>
+                                <li><a href="/admin/tags/new">Add Tag </a></li>
+                                <li><a href="/admin/tags">View Tag List</a></li>
                             </ul>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/">View Transaction Log</a></li>
+                                <li><a href="#">View Transaction Log</a></li>
                             </ul>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span class="hide-menu">STATISTICS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/">Users</a></li>
-                                <li><a href="/">Artworks</a></li>
-                                <li><a href="/">Transactions</a></li>
+                                <li><a href="#">Users</a></li>
+                                <li><a href="#">Artworks</a></li>
+                                <li><a href="#">Transactions</a></li>
                             </ul>
                         </li>
-                        
+
                         <% else ############################################# %>
-                        
+
                         <li class="nav-devider"></li>
-                        
+
                         <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
                         </li>
-                        
-                        <!--li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li-->
+
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                        </li>
 
                         <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
                         </li>
 
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">YOUR ARTWORKS</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="/">Upload Artwork</a></li>
-                                <li><a href="/">View Artwork List</a></li>
+                                <li><a href="artworks/new">Upload Artwork</a></li>
+                                <li><a href="my/artworks">View Artwork List</a></li>
                             </ul>
                         </li>
 
-                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
+                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
                         </li>
-                        
+
                         <% end ############################################## %>
 
                     </ul>
@@ -337,7 +338,7 @@
             <!-- ============================================================== -->
             <!-- End Bread crumb and right sidebar toggle -->
             <!-- ============================================================== -->
-            
+
             <!-- ============================================================== -->
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -350,11 +351,11 @@
                 <!-- ============================================================== -->
                 <!-- Start Page Content -->
                 <!-- ============================================================== -->
-                
+
                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
                 <%= yield %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                
+
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
@@ -362,13 +363,16 @@
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
             <!-- ============================================================== -->
-            
+
             <!-- ============================================================== -->
             <!-- footer -->
             <!-- ============================================================== -->
             <footer class="footer text-center">
-              Web project made with love from <strong class="text-primary">Team 4</strong>
-              - Designed by <strong class="text-secondary">themedesigner.in</strong>
+              <span class="text-secondary"><a href="https://github.com/HienM7/artwork_gallery">Web project</a></span>
+              made with passion from
+              <strong class="text-primary">Team 4</strong>
+              - Designed by
+              <span class="text-secondary"><a href="https://themedesigner.in">themedesigner.in</a></span>
             </footer>
             <!-- ============================================================== -->
             <!-- End footer -->
@@ -381,7 +385,7 @@
     <!-- ============================================================== -->
     <!-- End Wrapper -->
     <!-- ============================================================== -->
-    
+
     <!-- ============================================================== -->
     <!-- JS -->
     <!-- ============================================================== -->

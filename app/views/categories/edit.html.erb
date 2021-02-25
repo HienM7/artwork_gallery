@@ -1,3 +1,5 @@
+<% content_for :title do "Category edit" end %>
+
 
 <% content_for :header do %>
 <div class="row page-titles">
@@ -37,8 +39,7 @@
                     Edit the name of the category.
                 </h6>
                 <%= render 'form',
-                    category: @category,
-                    action_label: 'Edit' %>
+                    category: @category %>
             </div>
         </div>
     </div>
