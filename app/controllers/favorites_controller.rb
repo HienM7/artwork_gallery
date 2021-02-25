@@ -1,33 +1,36 @@
 class FavoritesController < ApplicationController
+  before_action :ensure_login, only: [:create, :destroy]
+
   def create
-    # @user = current_user.id
-    @user = User.find(params[:user_id])
-    @artwork = Artwork.find(params[:artwork_id])
-    favorites = {user_id: @user.id, artwork_id: @artwork.id}
-    @favorite = Favorite.new(favorites)
+    favorite_params[:user_id] = current_user.id
+    @favorite = Favorite.new(favorite_params)
     @favorite.save!
-    
+
     if request.xhr?
-      favs = Favorite.where(artwork_id: params[:artwork_id])
       render json: {
-        count: favs.count,
+        count: Favorite.fav_count(favorite_params[:artwork_id]),
         favid: @favorite.id
       }
     else
       redirect_to @artwork
     end
   end
-  
+
   def destroy
-    Favorite.find(params[:id]).destroy
-    
+    @favorite = current_user.favorites.find(params[:id])
+    @favorite.destroy
+
     if request.xhr?
-      favs = Favorite.where(artwork_id: params[:artwork_id])
       render json: {
-        count: favs.count
+        count: Favorite.fav_count(favorite_params[:artwork_id])
       }
     else
       redirect_to @artwork
     end
   end
+
+  private
+    def favorite_params
+      params.permit(:user_id, :artwork_id)
+    end
 end
