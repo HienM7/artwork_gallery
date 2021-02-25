@@ -1,3 +1,6 @@
+<% content_for :title do "All categories" end %>
+
+
 <% content_for :head do %>
   <style>
   .dataTables_wrapper .dataTables_paginate .pagination {
@@ -60,7 +63,7 @@
       <div class="alert alert-danger" role="alert">
           session 'error'
       </div>
-      <% end %> 
+      <% end %>
 <%
 =end%>
       <div class="card">
@@ -183,7 +186,7 @@
               "language": {
                   "lengthMenu": "# items per page _MENU_",
                   "info": "Showing _START_ to _END_ of _TOTAL_ categories",
-                  "emptyTable": "No categories",    
+                  "emptyTable": "No categories",
                   "infoFiltered": "(filtered from _MAX_ total categories)",
                   "zeroRecords": "No matching categories found",
                   "infoEmpty": "No categories to show",
