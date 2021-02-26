@@ -10,7 +10,7 @@ class ArtworksController < ApplicationController
   end
 
   def my_artworks
-    @artworks = Artwork.where(user_id: current_user.id)
+    @artworks = Artwork.search(params[:keyword]).where(user_id: current_user.id)
   end
 
   # GET /artworks/1
