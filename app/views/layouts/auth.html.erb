@@ -2,84 +2,64 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="ROR Artwork Gallery Project">
-    <meta name="author" content="Team 4">
-    
-    <!-- Favicon icon -->
-    <%= favicon_link_tag asset_path('paint-palette.png') %>
-    <title><%= content_for?(:title) ? yield(:title) : "Artwork Gallery" %></title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application' %>
-    <!-- Bootstrap Core CSS -->
-    <!--link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet"-->
-    <!-- Custom CSS -->
-    <%= stylesheet_link_tag "css/style" %>
-    <!-- You can change the theme colors from here -->
-    <%= stylesheet_link_tag "css/colors/green" %>
+
+    <%= render 'layouts/head' %>
+
     <style>
         .alert {
             margin-bottom: 0;
         }
+        a:hover {
+            background-color: transparent !important;
+        }
+        .custom-footer {
+            z-index: 100;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 5px;
+            background: rgba(255, 255, 255, 0.);
+            color: #fff;
+        }
+        .link-highlight {
+            color: #aee1e1 !important;
+            /* text-shadow: 0 0 2px #fff, 1px 1px 2px #ccc; */
+        }
     </style>
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <%= yield :head %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+    <%= yield :head %>
+
 </head>
 
 <body>
-    <!-- ============================================================== -->
+
     <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
 
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <%= yield :alert %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+        <%= yield :alert %>
 
-            <!-- ============================================================== -->
-            <!-- Start Page Content -->
-            <!-- ============================================================== -->
-            
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <%= yield %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            
-            <!-- ============================================================== -->
-            <!-- End PAge Content -->
-            <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        
-        <!-- ============================================================== -->
-        <!-- footer -->
-        <!-- ============================================================== -->
-        <!--footer class="footer text-center">
-            Web project made with love from <strong class="text-primary">Team 4</strong>
-            - Designed by <strong class="text-secondary">themedesigner.in</strong>
-        </footer-->
-        <!-- ============================================================== -->
-        <!-- End footer -->
-        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <%= yield %>
+
+        <!-- Page Footer -->
+        <footer class="custom-footer text-center">
+            <strong><a class="link-highlight" href="https://github.com/HienM7/artwork_gallery">Web project</a>
+            made with passion from Team 4</strong>
+            <br />
+            <small>
+            Template designed by
+            <a class="link-highlight" href="https://themedesigner.in">themedesigner.in</a>
+            - Artwork made by
+            Kitty-Craftsy on <a class="link-highlight" href="https://www.deviantart.com/kitty-craftsy/art/Magical-Forest-865182382" title="Deviant Art">
+            Deviant Art</a>
+            </small>
+        </footer>
+
     </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
+    <!-- End Main Wrapper -->
 
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <%= yield :scripts %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <%= yield :scripts %>
+
 </body>
 
 </html>

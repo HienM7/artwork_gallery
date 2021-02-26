@@ -85,48 +85,12 @@
 
   <div class="row m-t-40">
     <div class="col-md-12">
-        <h4 class="m-b-0">All Artworks</h4>
-        <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
+        <h4 class="m-b-0">My Artworks</h4>
+        <p class="text-muted m-t-0 font-12">All of your uploaded artworks.</p>
     </div>
   </div>
 
-  <div class="card-columns el-element-overlay">
-
-    <% @artworks.each do |artwork| %>
-
-    <div class="card">
-      <div class="el-card-item">
-        <div class="el-card-avatar el-overlay-1">
-          <%= link_to  artwork_path(artwork),
-              class: 'image-popup-vertical-fit' do %>
-            <%= image_tag  artwork.image,
-                           alt: 'Oops!' %>
-          <% end %>
-          <div class="el-overlay">
-            <ul class="el-info">
-              <li>
-                <%= link_to  artwork_path(artwork) do %>
-                  <%= artwork.name %>
-                  <i class="icon-link"></i>
-                <% end %>
-                <br />
-                <p class="formal-text">by Anonymous </p>
-                <%#= link_to  artwork.user.name, user_path(artwork.user) %>
-                <br />
-                <p class="formal-text">
-                  <%#= artwork.favorites.count %>
-                  999 <i class="icon-heart"></i>
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <% end %>
-
-  </div>
+  <%= render "gallery", artworks: @artworks %>
 
 
 <% content_for :scripts do %>

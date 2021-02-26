@@ -3,6 +3,15 @@
 <% end %>
 
 
+<% content_for :head do %>
+  <style>
+    .login-register-bg {
+      background-image: url('<%= image_url("magical_forest_by_kitty_craftsy.png") %>');
+    }
+  </style>
+<% end %>
+
+
 <% content_for :alert do %>
   <div class="row">
     <div class="col-12">
@@ -26,7 +35,7 @@
 <% end %>
 
 
-    <div class="login-register" style="background-image: url('https://cdn.conceptartempire.com/images/07/6005/00-featured-best-digital-painting-software.jpg');">
+    <div class="login-register login-register-bg">
       <div class="login-box card">
         <div class="card-body">
           <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
