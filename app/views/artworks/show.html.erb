@@ -150,53 +150,10 @@
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
-                          <%
-                          # For guest users
-                          empty_heart = 'text-active'
-                          filled_heart = 'text'
-                          link = new_user_session_path
-                          meth = :get
-                          uses_ajax = false
-                          toggle_data = {}
-
-                          if current_user
-                            fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
-                            fav_id = if fav then fav.id else 0 end
-                            delete_link = user_artwork_favorite_path(
-                              user_id: current_user.id,
-                              artwork_id: @artwork.id,
-                              id: fav_id
-                            )
-                            create_link = user_artwork_favorites_path(
-                              user_id: current_user.id,
-                              artwork_id: @artwork.id
-                            )
-
-                            if fav
-                              link = delete_link
-                              toggle_data = {
-                                toggle_href: create_link,
-                                toggle_meth: 'create'
-                              }
-                              empty_heart, filled_heart = filled_heart, empty_heart
-                              meth = :delete
-                              uses_ajax = true
-                            else
-                              link = create_link
-                              toggle_data = {
-                                toggle_href: delete_link,
-                                toggle_meth: 'delete'
-                              }
-                              meth = :post
-                              uses_ajax = true
-                            end
-                          end
-                          %>
-
-                          <%= link_to link,
-                              method: meth,
-                              remote: uses_ajax,
-                              data: toggle_data,
+                          <%= link_to fav_data[:link],
+                              method: fav_data[:meth],
+                              remote: fav_data[:uses_ajax],
+                              data: fav_data[:toggle_data],
                               id: 'favlink',
                               class: 'invisible' do %>
                             <button type="button"
@@ -204,13 +161,13 @@
                                 data-toggle="button"
                                 aria-pressed="true">
                               <i id="empty-heart"
-                                class="fa fa-heart-o <%= empty_heart %> visible"
+                                class="fa fa-heart-o <%= fav_data[:empty_heart] %> visible"
                                 data-toggle="tooltip"
                                 data-placement="bottom"
                                 title="Favorite"
                                 aria-hidden="true"></i>
                               <i id="filled-heart"
-                                class="fa fa-heart <%= filled_heart %> text-danger visible"
+                                class="fa fa-heart <%= fav_data[:filled_heart] %> text-danger visible"
                                 data-toggle="tooltip"
                                 data-placement="bottom"
                                 title="Favorite"
@@ -218,7 +175,7 @@
                             </button>
                           <% end %>
                           <span id="favcount">
-                            <%=Favorite.where(artwork_id: @artwork.id).count %>
+                            <%= artw_fav_count %>
                           </span>
                         </h5>
                       </div>
@@ -371,7 +328,7 @@
                                        data-placement="bottom"
                                        title="Copy link"></i>
                                   </button>
-                                  <a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<% @artwork.img_link %>&p[images][0]=&p[title]=Title%20Goes%20Here&p[summary]=Description%20goes%20here!" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250,top=80,left=180'); return false">
+                                  <a href="https://www.facebook.com/sharer/sharer.php?s=100&p[url]=<%= artwork_url(@artwork) %>&p[images][0]=&p[title]=Check%20out%20this%20excellent%20artwork%20on%20Artrails!&p[summary]=Description%20goes%20here!" target="_blank" onclick="window.open(this.href,'targetWindow','toolbar=no,location=0,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=250,top=80,left=180'); return false">
                                     <button class="btn btn-facebook waves-effect btn-circle btn-lg waves-light m-l-10 m-r-10" type="button">
                                       <i class="fa fa-facebook"
                                          data-toggle="tooltip"
@@ -473,7 +430,7 @@
 
                   <% end %>
 
-                  <div class="row m-l-10 m-t-10">
+                  <div class="row m-3">
                     <div class="col-12">
                       <div class="text-left vm">
                         <h3 class="text-themecolor m-t-10">
@@ -641,24 +598,12 @@
         });
 
         $('#download-modal').modal('hide');
-
-        /* Opens new tab */
-        // let popout = window.open(data.img_url);
-        // if (!popout || popout.closed || typeof popout.closed == 'undefined') {
-        //     window.location.href = data.img_url;
-        // }
-        // else {
-        //   window.setTimeout(function() {
-        //       popout.close();
-        //   }, 2000);
-        // }
       }
     });
 
     $(document).on('ajax:success', 'a#favlink', function (event) {
       const [data, status, xhr] = event.detail;
       $("#favcount").text(data.count);
-      console.log("success ajax response: fav_count = " + data.count);  ////////
 
       let $a = $("#favlink");
       let meth = $a.attr('data-method');

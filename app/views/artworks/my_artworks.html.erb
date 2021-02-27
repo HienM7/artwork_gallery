@@ -28,32 +28,23 @@
 <% end %>
 
 
+<% content_for :search do %>
+  <%= render "search" %>
+<% end %>
+
+
 <% content_for :header do %>
 <div class="row page-titles">
     <!-- Page inner title -->
-    <div class="col-md-2 align-self-center">
+    <div class="col-md-5 align-self-center">
         <h3 class="text-themecolor">Public Gallery</h3>
     </div>
-    <!-- Search form -->
-    <div class="col-md-6 align-self-center">
-        <div class="md-form active-pink active-pink-2 mt-0">
-          <%= form_with  url: artworks_path,
-                         method: 'get',
-                         local: true do |form| %>
-            <%= form.text_field :keyword,
-                class: 'form-control',
-                placeholder: "Search",
-                value: params[:keyword],
-                aria_label: "Search" %>
-          <% end %>
-        </div>
-    </div>
     <!-- Bread crumb -->
-    <div class="col-md-4 align-self-center">
+    <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item">Artwork</li>
-            <li class="breadcrumb-item active">List</li>
+            <li class="breadcrumb-item active">Mine</li>
         </ol>
     </div>
 </div>
@@ -85,48 +76,12 @@
 
   <div class="row m-t-40">
     <div class="col-md-12">
-        <h4 class="m-b-0">All Artworks</h4>
-        <p class="text-muted m-t-0 font-12">Explore plenty of artworks!</p>
+        <h4 class="m-b-0">My Artworks</h4>
+        <p class="text-muted m-t-0 font-12">All of your uploaded artworks.</p>
     </div>
   </div>
 
-  <div class="card-columns el-element-overlay">
-
-    <% @artworks.each do |artwork| %>
-
-    <div class="card">
-      <div class="el-card-item">
-        <div class="el-card-avatar el-overlay-1">
-          <%= link_to  artwork_path(artwork),
-              class: 'image-popup-vertical-fit' do %>
-            <%= image_tag  artwork.image,
-                           alt: 'Oops!' %>
-          <% end %>
-          <div class="el-overlay">
-            <ul class="el-info">
-              <li>
-                <%= link_to  artwork_path(artwork) do %>
-                  <%= artwork.name %>
-                  <i class="icon-link"></i>
-                <% end %>
-                <br />
-                <p class="formal-text">by Anonymous </p>
-                <%#= link_to  artwork.user.name, user_path(artwork.user) %>
-                <br />
-                <p class="formal-text">
-                  <%#= artwork.favorites.count %>
-                  999 <i class="icon-heart"></i>
-                </p>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <% end %>
-
-  </div>
+  <%= render "gallery", artworks: @artworks %>
 
 
 <% content_for :scripts do %>

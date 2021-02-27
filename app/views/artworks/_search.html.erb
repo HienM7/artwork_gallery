@@ -1,0 +1,11 @@
+<%= form_with  url: artworks_path,
+               method: 'get',
+               class: 'form-material',
+               local: true do |form| %>
+  <%= form.text_field :keyword,
+      class: 'search-form-control form-control form-control-line',
+      autocomplete: 'off',
+      placeholder: "Search",
+      value: params[:keyword],
+      aria_label: "Search" %>
+<% end %>

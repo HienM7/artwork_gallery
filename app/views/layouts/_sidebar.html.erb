@@ -1,0 +1,126 @@
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar">
+
+        <% if current_user ########################################## %>
+
+        <!-- User profile -->
+        <div class="user-profile">
+            <!-- User profile image -->
+            <div class="profile-img">
+                <%= image_tag  asset_path('paint-palette256.png'), alt: 'user' %>
+                <!-- this is blinking heartbit-->
+            </div>
+            <!-- User profile text-->
+            <div class="profile-text">
+                <h5>
+                    <span class="text-light">
+                        <%= current_user.username %>
+                    </span>
+                </h5>
+                <a href="#" class="" data-toggle="tooltip" title="Settings"><i class="mdi mdi-settings"></i></a>
+
+                <%= link_to destroy_user_session_path,
+                            method: :delete, data_toggle: "tooltip", title: "Logout" do %>
+                <i class="mdi mdi-power"></i>
+                <% end %>
+
+            </div>
+        </div>
+        <!-- End User profile text-->
+
+        <% end ###################################################### %>
+
+
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+
+                <% if (not current_user) ############################ %>
+
+                <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                </li>
+
+                <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                </li>
+
+                <% elsif current_user.is_admin ###################### %>
+
+                <li class="nav-devider"></li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu">USERS</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <!--li><a href="/admin/users/new">Add User </a></li-->
+                        <li><a href="/admin/users">View User List</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
+                    <!-- need to change this gallery view to admin's one -->
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="/">View Artwork List</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="/admin/categories/new">Add Category </a></li>
+                        <li><a href="/admin/categories">View Category List</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">TAGS</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="/admin/tags/new">Add Tag </a></li>
+                        <li><a href="/admin/tags">View Tag List</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="#">View Transaction Log</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span class="hide-menu">STATISTICS</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="#">Users</a></li>
+                        <li><a href="#">Artworks</a></li>
+                        <li><a href="#">Transactions</a></li>
+                    </ul>
+                </li>
+
+                <% else ############################################# %>
+
+                <li class="nav-devider"></li>
+
+                <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
+                </li>
+
+                <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
+                </li>
+
+                <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
+                </li>
+
+                <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">YOUR ARTWORKS</span></a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li><a href="/artworks/new">Upload Artwork</a></li>
+                        <li><a href="/my/artworks">View Artwork List</a></li>
+                    </ul>
+                </li>
+
+                <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
+                </li>
+
+                <% end ############################################## %>
+
+            </ul>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
+</aside>

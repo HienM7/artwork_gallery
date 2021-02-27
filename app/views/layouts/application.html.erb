@@ -2,27 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="ROR Artwork Gallery Project">
-    <meta name="author" content="Team 4">
 
-    <%= favicon_link_tag asset_path('picture.png') %>
-    <title>
-        <%= content_for?(:title) ? "#{yield(:title)} - Artrails" : "Artrails Artwork Gallery" %>
-    </title>
-
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= stylesheet_pack_tag 'application', media: 'all' %>
-    <%= javascript_pack_tag 'application' %>
-
-    <!-- Custom CSS -->
-    <%= stylesheet_link_tag "css/style" %>
-    <!-- You can change the theme colors from here -->
-    <%= stylesheet_link_tag "css/colors/green" %>
+    <%= render 'layouts/head' %>
 
     <style>
         a.btn.btn-primary.btn-xs:visited {
@@ -40,378 +21,68 @@
         .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
             /* top: 0 !important; */
         }
+        .search-form-control {
+            color: #fff !important;
+            text-shadow: 0 0 1px #fff;
+            background-image: linear-gradient(#f4f9f9, #f4f9f9), linear-gradient(rgba(164, 235, 243, 0.53), rgba(164, 235, 243, 0.53)) !important;
+        }
+        .search-form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #fff;
+            opacity: 1; /* Firefox */
+        }
+        .search-form-control:-ms-input-placeholder,
+        .search-form-control::-ms-input-placeholder { /* IE 10-11, Edge */
+            color: #fff;
+        }
     </style>
 
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <%= yield :head %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <%= yield :head %>
 
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
-    </div>
-    <!-- ============================================================== -->
+
+    <%= render 'layouts/preloader' %>
+
     <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
     <div id="main-wrapper">
-        <!-- ============================================================== -->
-        <!-- Topbar header - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <header class="topbar">
-            <nav class="navbar top-navbar navbar-expand-md navbar-light">
-                <!-- ============================================================== -->
-                <!-- Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-header" style="background: #272c33 !important;">
-                    <a class="navbar-brand" href="/">
-                        <!-- Logo icon -->
-                        <b>
-                            <!-- Logo icon -->
-                            <%= image_tag  image_url('logo.png'), alt: 'homepage', height: '36' %>
-                        </b>
-                    </a>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Logo -->
-                <!-- ============================================================== -->
-                <div class="navbar-collapse">
-                    <!-- ============================================================== -->
-                    <!-- toggle and nav items -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav mr-auto mt-md-0">
-                        <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
-                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        <!-- ============================================================== -->
-                        <!-- Comment -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
-                                <div class="notify"> <span class="heartbit"></span> <span class="point"></span> </div>
-                            </a>
-                            <div class="dropdown-menu mailbox animated slideInUp">
-                                <ul>
-                                    <li>
-                                        <div class="drop-title">Notifications</div>
-                                    </li>
-                                    <li>
-                                        <div class="message-center">
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Admin</h5> <span class="mail-desc">Just see my new admin!</span> <span class="time">9:30 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-success btn-circle"><i class="ti-calendar"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Event today</h5> <span class="mail-desc">Just a reminder that you have event</span> <span class="time">9:10 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-info btn-circle"><i class="ti-settings"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Settings</h5> <span class="mail-desc">You can customize this template as you want</span> <span class="time">9:08 AM</span> </div>
-                                            </a>
-                                            <!-- Message -->
-                                            <a href="#">
-                                                <div class="btn btn-primary btn-circle"><i class="ti-user"></i></div>
-                                                <div class="mail-contnet">
-                                                    <h5>Pavan kumar</h5> <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02 AM</span> </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="nav-link text-center" href="javascript:void(0);"> <strong>Check all notifications</strong> <i class="fa fa-angle-right"></i> </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- ============================================================== -->
-                        <!-- End Comment -->
-                        <!-- ============================================================== -->
-                    </ul>
-                    <!-- ============================================================== -->
-                    <!-- User profile -->
-                    <!-- ============================================================== -->
-                    <ul class="navbar-nav my-lg-0">
-                        <!-- ============================================================== -->
-                        <!-- Profile -->
-                        <!-- ============================================================== -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
-                              href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <!-- hardcoded image -->
-                                <%= image_tag  asset_path('paint-palette256.png'), alt: 'User', class: 'profile-pic' %>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right scale-up">
-                                <% if current_user ########################## %>
 
-                                <ul class="dropdown-user">
-                                    <li>
-                                        <div class="dw-user-box">
-                                            <div class="u-img">
-                                            <%= image_tag  asset_path('paint-palette256.png'), alt: 'User profile', class: 'profile-pic' %>
-                                            </div>
-                                            <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">stevejobs@gmail.com</p><a href="/users/edit" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
-                                        </div>
-                                    </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="/users/edit"><i class="ti-user"></i> My Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> My Points</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Notifications</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li>
-                                    <%= link_to  "Logout", destroy_user_session_path,
-                                    method: :delete %>
-                                    </li>
-                                </ul>
+        <%= render 'layouts/topbar' %>
 
-                                <% else %>
+        <%= render 'layouts/sidebar' %>
 
-                                <ul class="dropdown-user">
-                                    <li><a href="/users/sign_in"><i class="fa fa-sign-in"></i> Login</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="/users/sign_up"><i class="fa fa-address-book-o"></i> Signup</a></li>
-                                </ul>
-
-                                <% end %>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <!-- ============================================================== -->
-        <!-- End Topbar header -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <aside class="left-sidebar">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-
-                <% if current_user ########################################## %>
-
-                <!-- User profile -->
-                <div class="user-profile">
-                    <!-- User profile image -->
-                    <div class="profile-img">
-                        <%= image_tag  asset_path('paint-palette256.png'), alt: 'user' %>
-                        <!-- this is blinking heartbit-->
-                    </div>
-                    <!-- User profile text-->
-                    <div class="profile-text">
-                        <h5>
-                            <span class="text-light">
-                                <%= current_user.username %>
-                            </span>
-                        </h5>
-                        <a href="#" class="" data-toggle="tooltip" title="Settings"><i class="mdi mdi-settings"></i></a>
-
-                        <%= link_to destroy_user_session_path,
-                                    method: :delete, data_toggle: "tooltip", title: "Logout" do %>
-                        <i class="mdi mdi-power"></i>
-                        <% end %>
-
-                    </div>
-                </div>
-                <!-- End User profile text-->
-
-                <% end ###################################################### %>
-
-
-                <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-
-                        <% if (not current_user) ############################ %>
-
-                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
-                        </li>
-
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li>
-
-                        <% elsif current_user.is_admin ###################### %>
-
-                        <li class="nav-devider"></li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-clipboard-account"></i><span class="hide-menu">USERS</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <!--li><a href="/admin/users/new">Add User </a></li-->
-                                <li><a href="/admin/users">View User List</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">ARTWORKS</span></a>
-                            <!-- need to change this gallery view to admin's one -->
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="/">View Artwork List</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="/admin/categories/new">Add Category </a></li>
-                                <li><a href="/admin/categories">View Category List</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-tag-multiple"></i><span class="hide-menu">TAGS</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="/admin/tags/new">Add Tag </a></li>
-                                <li><a href="/admin/tags">View Tag List</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="#">View Transaction Log</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-chart-areaspline"></i><span class="hide-menu">STATISTICS</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="#">Users</a></li>
-                                <li><a href="#">Artworks</a></li>
-                                <li><a href="#">Transactions</a></li>
-                            </ul>
-                        </li>
-
-                        <% else ############################################# %>
-
-                        <li class="nav-devider"></li>
-
-                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-home"></i><span class="hide-menu">HOME</span></a>
-                        </li>
-
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-layers"></i><span class="hide-menu">CATEGORIES</span></a>
-                        </li>
-
-                        <li> <a class="waves-effect waves-dark" href="/" aria-expanded="false"><i class="mdi mdi-heart"></i><span class="hide-menu">FAVORITES</span></a>
-                        </li>
-
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-camera-burst"></i><span class="hide-menu">YOUR ARTWORKS</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="artworks/new">Upload Artwork</a></li>
-                                <li><a href="my/artworks">View Artwork List</a></li>
-                            </ul>
-                        </li>
-
-                        <li> <a class="waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-cash-multiple"></i><span class="hide-menu">TRANSACTIONS</span></a>
-                        </li>
-
-                        <% end ############################################## %>
-
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </aside>
-        <!-- ============================================================== -->
-        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- Page wrapper  -->
-        <!-- ============================================================== -->
         <div class="page-wrapper">
-            <!-- ============================================================== -->
+
             <!-- Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
+            <%= yield :header %>
 
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <%= yield :header %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-            <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-
-            <!-- ============================================================== -->
-            <!-- End Bread crumb and right sidebar toggle -->
-            <!-- ============================================================== -->
-
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
             <div class="container-fluid">
 
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <%= yield :alert %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+                <!-- Start Feedback Messages -->
+                <%= yield :alert %>
 
-                <!-- ============================================================== -->
                 <!-- Start Page Content -->
-                <!-- ============================================================== -->
+                <%= yield %>
 
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <%= yield %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-
-                <!-- ============================================================== -->
-                <!-- End PAge Content -->
-                <!-- ============================================================== -->
             </div>
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
 
-            <!-- ============================================================== -->
-            <!-- footer -->
-            <!-- ============================================================== -->
-            <footer class="footer text-center">
-                <span class="text-secondary"><a href="https://github.com/HienM7/artwork_gallery">Web project</a></span>
-                made with passion from
-                <strong class="text-primary">Team 4</strong>
-                - Designed by
-                <span class="text-secondary"><a href="https://themedesigner.in">themedesigner.in</a></span>
-                - Icons made by
-                <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">
-                www.flaticon.com</a>
-            </footer>
-            <!-- ============================================================== -->
-            <!-- End footer -->
-            <!-- ============================================================== -->
+            <%= render 'layouts/footer' %>
+
         </div>
-        <!-- ============================================================== -->
-        <!-- End Page wrapper  -->
-        <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Wrapper -->
-    <!-- ============================================================== -->
 
-    <!-- ============================================================== -->
-    <!-- JS -->
-    <!-- ============================================================== -->
-    <!-- Chart JS -->
-    <!-- slimscrollbar scrollbar JavaScript -->
+    </div>
+    <!-- End Main Wrapper -->
+
     <%#= javascript_pack_tag 'jquery_slimscroll' %>
-    <!--Wave Effects -->
     <%#= javascript_pack_tag 'waves' %>
-    <!--Menu sidebar -->
     <%#= javascript_pack_tag 'sidebarmenu' %>
-    <!--stickey kit -->
     <%#= javascript_pack_tag 'jquery_sticky_kit' %>
     <%#= javascript_pack_tag 'jquery_sparkline' %>
-    <!--Custom JavaScript -->
     <%#= javascript_pack_tag 'custom' %>
-
     <%#= javascript_pack_tag 'jQuery_style_switcher' %>
 
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <%= yield :scripts %> <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
-    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <%= yield :scripts %>
+
 </body>
 
 </html>

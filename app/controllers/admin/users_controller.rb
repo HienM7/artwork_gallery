@@ -19,7 +19,7 @@ class Admin::UsersController < AdminController
     @user = User.new(user_params_create)
 
     if @user.save
-      redirect_to users_path, :flash => { :success => 'User was successfully created.' }
+      redirect_to admin_users_path, :flash => { :success => 'User was successfully created.' }
     else
       render :action => 'new'
     end
@@ -27,7 +27,7 @@ class Admin::UsersController < AdminController
 
 	def update
     if @user.update_attributes(user_params_update)
-      redirect_to users_path, :flash => { :success => 'User was successfully updated.' }
+      redirect_to admin_users_path, :flash => { :success => 'User was successfully updated.' }
 		else
       render :action => 'edit'
     end
@@ -35,7 +35,7 @@ class Admin::UsersController < AdminController
 
   def destroy
     @user.destroy
-    redirect_to users_path, :flash => { :success => 'User was successfully deleted.' }
+    redirect_to admin_users_path, :flash => { :success => 'User was successfully deleted.' }
   end
 
 	private

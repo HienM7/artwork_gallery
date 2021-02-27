@@ -33,8 +33,4 @@ class Artwork < ApplicationRecord
 
     Artwork.select("*", "(#{fav_count_query}) AS fav_count")  # pagination ?
   end
-
-  def self.artw_with_author
-    Artwork.includes(:user)
-  end
 end

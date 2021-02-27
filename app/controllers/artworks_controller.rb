@@ -10,13 +10,61 @@ class ArtworksController < ApplicationController
   end
 
   def my_artworks
-    @artworks = Artwork.where(user_id: current_user.id)
+    @artworks = Artwork.search(params[:keyword]).where(user_id: current_user.id)
   end
 
   # GET /artworks/1
   # GET /artworks/1.json
   def show
-    render 'show', locals: { tagnames: @artwork.tags.map(&:name) }
+    # For guest users
+    fav_data =
+      if not current_user
+        {
+          empty_heart: 'text-active',
+          filled_heart: 'text',
+          link: new_user_session_path,
+          meth: :get,
+          uses_ajax: false,
+          toggle_data: {}
+        }
+      else
+        fav = Favorite.find_by(artwork_id: @artwork.id, user_id: current_user.id)
+        delete_link = user_artwork_favorite_path(
+          user_id: current_user.id,
+          artwork_id: @artwork.id,
+          id: fav ? fav.id : 0
+        )
+        create_link = user_artwork_favorites_path(
+          user_id: current_user.id,
+          artwork_id: @artwork.id
+        )
+
+        if fav
+          {
+            empty_heart: 'text',
+            filled_heart: 'text-active',
+            link: delete_link,
+            meth: :delete,
+            uses_ajax: true,
+            toggle_data: { toggle_href: create_link, toggle_meth: 'post' }
+          }
+        else
+          {
+            empty_heart: 'text-active',
+            filled_heart: 'text',
+            link: create_link,
+            meth: :post,
+            uses_ajax: true,
+            toggle_data: { toggle_href: delete_link, toggle_meth: 'delete' }
+          }
+        end
+      end
+
+    render 'show', locals: {
+      fav_data: fav_data,
+      artw_fav_count: Favorite.fav_count(@artwork.id),
+      tagnames: @artwork.tags.map(&:name)
+    }
   end
 
   # GET /artworks/new
