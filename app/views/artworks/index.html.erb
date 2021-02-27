@@ -25,28 +25,19 @@
 <% end %>
 
 
+<% content_for :search do %>
+  <%= render "search" %>
+<% end %>
+
+
 <% content_for :header do %>
 <div class="row page-titles">
     <!-- Page inner title -->
-    <div class="col-md-2 align-self-center">
+    <div class="col-md-5 align-self-center">
         <h3 class="text-themecolor">Public Gallery</h3>
     </div>
-    <!-- Search form -->
-    <div class="col-md-6 align-self-center">
-        <div class="md-form active-pink active-pink-2 mt-0">
-          <%= form_with  url: artworks_path,
-                         method: 'get',
-                         local: true do |form| %>
-            <%= form.text_field :keyword,
-                class: 'form-control',
-                placeholder: "Search",
-                value: params[:keyword],
-                aria_label: "Search" %>
-          <% end %>
-        </div>
-    </div>
     <!-- Bread crumb -->
-    <div class="col-md-4 align-self-center">
+    <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item">Artwork</li>

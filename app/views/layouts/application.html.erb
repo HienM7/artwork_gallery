@@ -21,6 +21,19 @@
         .mini-sidebar .sidebar-nav #sidebarnav > li > ul {
             /* top: 0 !important; */
         }
+        .search-form-control {
+            color: #fff !important;
+            text-shadow: 0 0 1px #fff;
+            background-image: linear-gradient(#f4f9f9, #f4f9f9), linear-gradient(rgba(164, 235, 243, 0.53), rgba(164, 235, 243, 0.53)) !important;
+        }
+        .search-form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: #fff;
+            opacity: 1; /* Firefox */
+        }
+        .search-form-control:-ms-input-placeholder,
+        .search-form-control::-ms-input-placeholder { /* IE 10-11, Edge */
+            color: #fff;
+        }
     </style>
 
     <%= yield :head %>
