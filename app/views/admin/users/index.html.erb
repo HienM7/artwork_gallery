@@ -1,4 +1,7 @@
-<%= stylesheet_link_tag "css/style" %>
+<% content_for :title do "All tags" end %>
+
+
+<% content_for :head do %>
 <style>
 .dataTables_wrapper .dataTables_paginate .pagination {
   /* To center paginator */
@@ -6,7 +9,10 @@
   display: inline-block !important;
 }
 </style>
+<% end %>
 
+
+<% content_for :header do %>
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
         <h3 class="text-themecolor">Manage Users</h3>
@@ -18,14 +24,11 @@
             <li class="breadcrumb-item active">Manage</li>
         </ol>
     </div>
-    <!--div>
-        <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i
-                class="ti-settings text-white"></i></button>
-    </div-->
 </div>
+<% end %>
 
 
-<div class="container-fluid">
+<% content_for :alert do %>
   <div class="row">
     <div class="col-12">
       <% flash.each do |type, msg| %>
@@ -45,6 +48,7 @@
       <% end %>
     </div>
   </div>
+<% end %>
 
   <div class="row">
     <div class="col-12">
@@ -65,7 +69,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <h4 class="card-title">User List</h4>
-            <h6 class="card-subtitle">Find and manage all Users here.</h6>
+            <h6 class="card-subtitle">Find and manage all users here.</h6>
 
             <table id="myTable" class="table table-bordered table-striped">
               <thead>
@@ -165,6 +169,7 @@
 </div>
 
 
+<% content_for :scripts do %>
 <script>
     $(document).ready(function () {
         var t = $('#myTable').DataTable({
@@ -198,3 +203,4 @@
         });
     });
 </script>
+<% end %>
