@@ -1,0 +1,230 @@
+<% content_for :title do "Profile - " + @user.username end %>
+
+
+<% content_for :head do %>
+<% end %>
+
+
+<% content_for :header do %>
+<div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+        <h3 class="text-themecolor">View Profile</h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item">
+              <% if current_user && current_user.is_admin %>
+                <%= link_to "User", admin_users_path %>
+              <% else %>
+                User
+              <% end %>
+            </li>
+            <li class="breadcrumb-item active">Profile</li>
+        </ol>
+    </div>
+</div>
+<% end %>
+
+
+<% content_for :alert do %>
+  <div class="row">
+    <div class="col-12">
+      <% flash.each do |type, msg| %>
+        <% if type == 'notice' or type == 'success' %>
+          <div class="alert alert-success">
+            <%= msg %>
+          </div>
+        <% elsif type == 'alert' %>
+          <div class="alert alert-danger">
+            <%= msg %>
+          </div>
+        <% else %>
+          <div class="alert alert-warning">
+            <%= msg %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+
+  <div class="row">
+      <!-- Column -->
+      <div class="col-lg-4 col-xlg-3 col-md-5">
+          <div class="card">
+              <div class="card-body">
+                  <div class="m-t-30 text-center">
+                      <%= image_tag  asset_path('paint-palette256.png'), alt: 'user', class: "img-circle", width: "150" %>
+                      <h4 class="card-title m-t-10">
+                        <%= @user.username %>
+                      </h4>
+                      <h6 class="card-subtitle"></h6>
+                      <div class="row text-center justify-content-md-center">
+                          <div class="col-5">
+                            <a href="javascript:void(0)" class="link" data-toggle="tooltip" data-placement="bottom" title="Member for <%= time_ago_in_words @user.created_at %>">
+                              <i class="icon-clock"></i>
+                              <span class="font-medium">
+                              <%= @user.created_at.strftime("%b %d '%y") %>
+                              </span>
+                            </a>
+                          </div>
+                          <div class="col-4">
+                            <a href="#gallery" class="link" data-toggle="tooltip" data-placement="bottom" title="<%= @user.artworks.count %> artworks">
+                              <i class="icon-picture"></i>
+                              <span class="font-medium">
+                              <%= @user.artworks.count %>
+                              </span>
+                            </a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <hr>
+
+              <% if current_user && current_user.is_admin %>
+              <div class="text-center">
+                  <%= link_to "Edit user profile", edit_admin_user_path(current_user), class: "btn btn-primary waves-effect waves-light" %>
+              </div>
+              <hr>
+              <% elsif my_profile %>
+              <div class="text-center">
+                  <%= link_to "Edit profile", edit_user_registration_path,
+                      class: "btn btn-primary waves-effect waves-light" %>
+              </div>
+              <hr>
+              <% end %>
+
+              <div class="card-body">
+                  <small class="text-muted">Email address </small>
+                  <h6><%= @user.email %></h6>
+                  <div>
+                    <small class="text-muted p-t-30 db">Social Profile</small>
+                    <br/>
+                    <button class="btn btn-circle btn-secondary"><i class="fa fa-facebook"></i></button>
+                    <button class="btn btn-circle btn-secondary"><i class="fa fa-twitter"></i></button>
+                    <button class="btn btn-circle btn-secondary"><i class="fa fa-youtube"></i></button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <!-- Column -->
+      <div class="col-lg-8 col-xlg-9 col-md-7">
+          <div class="card">
+              <!-- Nav tabs -->
+              <ul class="nav nav-tabs profile-tab" role="tablist">
+                  <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#gallery" role="tab">Gallery</a> </li>
+
+                  <% if my_profile %>
+
+                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#timeline" role="tab">Timeline</a> </li>
+                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a> </li>
+
+                  <% end %>
+
+              </ul>
+
+              <!-- Tab panes -->
+              <div class="tab-content">
+                  <!-- first tab -->
+                  <div class="tab-pane active" id="gallery" role="tabpanel">
+                      <div class="card-body">
+                          <div class="row">
+                              <!-- dummy data -->
+                              <div class="col-md-3 col-xs-6 b-r"> <strong>Most favorited artwork</strong>
+                                  <br>
+                                  <p class="text-muted"><a href="#">Lorem</a></p>
+                              </div>
+                              <div class="col-md-3 col-xs-6 b-r"> <strong>Total favorites</strong>
+                                  <br>
+                                  <p class="text-muted">0123</p>
+                              </div>
+                              <div class="col-md-3 col-xs-6 b-r"> <strong>Main category</strong>
+                                  <br>
+                                  <p class="text-muted"><a href="#">Digital Art</a></p>
+                              </div>
+                              <div class="col-md-3 col-xs-6"> <strong>Most valued artwork</strong>
+                                  <br>
+                                  <p class="text-muted"><a href="#">Lorem</a></p>
+                              </div>
+                          </div>
+                          <hr>
+                          <%= render 'application/mini_gallery' %>
+                      </div>
+                  </div>
+
+                  <% if my_profile %>
+
+                  <!-- second tab -->
+                  <div class="tab-pane" id="timeline" role="tabpanel">
+                      <div class="card-body">
+                          <div class="profiletimeline">
+
+                              <% @user.recent_favorites.each do |rfav| %>
+
+                              <div class="sl-item">
+                                  <div class="sl-left"> <%= image_tag  asset_path('paint-palette256.png'), alt: 'User', class: 'img-circle' %> </div>
+                                  <div class="sl-right">
+                                      <div>
+                                          <%= link_to rfav.fu_name,
+                                              user_profile_path(rfav.fu_id),
+                                              class: "link" %>
+                                          <span class="sl-date">
+                                          <%= time_ago_in_words rfav.f_time %>
+                                          ago
+                                          </span>
+                                          <p>Favorited your artwork
+                                          <%= link_to rfav.a_name,
+                                              artwork_path(rfav.fa_id) %>
+                                          </p>
+                                          <div class="like-comm">
+                                              <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i></a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <hr>
+
+                              <% end %>
+
+                          </div>
+                      </div>
+                  </div>
+                  <!-- third tab -->
+                  <div class="tab-pane" id="settings" role="tabpanel">
+                      <div class="card-body">
+<%
+=begin%>
+ <form class="form-horizontal form-material">
+                              <div class="form-group">
+                                  <label class="col-md-12">Full Name</label>
+                                  <div class="col-md-12">
+                                      <input type="text" placeholder="Joe" class="form-control form-control-line">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <label for="example-email" class="col-md-12">Email</label>
+                                  <div class="col-md-12">
+                                      <input type="email" placeholder="joe@admin.com" class="form-control form-control-line" name="example-email" id="example-email">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                  <div class="col-sm-12">
+                                      <button class="btn btn-success">Update Profile</button>
+                                  </div>
+                              </div>
+                          </form>
+<%
+=end%>
+                      </div>
+                  </div>
+
+                  <% end %>
+
+              </div>
+          </div>
+      </div>
+      <!-- Column -->
+  </div>
