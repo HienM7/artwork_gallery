@@ -1,5 +1,7 @@
 class Admin::UsersController < AdminController
-  before_action :find_user, only: [:show, :edit, :update, :destroy ]
+  before_action :find_user, only: [:show, :edit, :update, :destroy]
+
+  skip_before_action :authorized?, only: [:show_profile, :show_my_profile]
 
   def index
     @users = User.all
@@ -35,7 +37,25 @@ class Admin::UsersController < AdminController
 
   def destroy
     @user.destroy
-    redirect_to admin_users_path, :flash => { :success => 'User was successfully deleted.' }
+    redirect_to admin_users_path, flash: { success: 'User was successfully deleted.' }
+  end
+
+  def show_my_profile
+    if not current_user
+      redirect_to new_user_session_path
+    else
+      @user = User.find(current_user.id)
+      render 'profile', locals: { my_profile: true }
+    end
+  end
+
+  def show_profile
+    if current_user && current_user.id == params[:id].to_i
+      redirect_to my_profile_path
+    else
+      @user = User.find(params[:id])
+      render 'profile', locals: { my_profile: false }
+    end
   end
 
 	private

@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :authorized?
 
-  private
+  protected
     def authorized?
       unless current_user && current_user.is_admin
         flash[:error] = "You are not authorized to view that page."
