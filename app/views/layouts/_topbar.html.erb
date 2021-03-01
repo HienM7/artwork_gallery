@@ -90,18 +90,18 @@
                                     </div>
                                     <div class="u-text">
                                         <h4><%= current_user.username %></h4>
-                                        <p class="text-muted"><%= current_user.email %></p><a href="/users/edit" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                        <p class="text-muted"><%= current_user.email %></p><a href="<%= my_profile_path %>" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="/users/edit"><i class="ti-user"></i> My Profile</a></li>
+                            <li><a href="/users/edit"><i class="ti-user"></i> Edit Profile</a></li>
                             <li><a href="#"><i class="ti-wallet"></i> My Points</a></li>
                             <li><a href="#"><i class="ti-email"></i> Notifications</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
-                            <%= link_to  "Logout", destroy_user_session_path,
+                            <%= link_to "Logout", destroy_user_session_path,
                             method: :delete %>
                             </li>
                         </ul>
