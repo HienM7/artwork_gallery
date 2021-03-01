@@ -19,11 +19,12 @@ class ApplicationController < ActionController::Base
 	end
 
 	def layout_by_resource
-		log_act = [
+		log_actions = [
 			[:user, 'new'],
-			[:user, 'cancel']
+			[:user, 'cancel'],
+			[:user, 'create']
 		]
-		if devise_controller? && log_act.include?([resource_name, action_name])
+		if devise_controller? && log_actions.include?([resource_name, action_name])
 			"auth"
 		else
 			"application"
