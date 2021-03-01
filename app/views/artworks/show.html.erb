@@ -444,7 +444,7 @@
                         <h5>
                           <%#= @artwork.user.avatar, link %>
                           <i class="icon-user"></i>
-                          <%= link_to @artwork.user.username, @artwork.user %>
+                          <%= link_to @artwork.user.username, user_profile_path(@artwork.user) %>
                         </h5>
                       </div>
                     </div>
