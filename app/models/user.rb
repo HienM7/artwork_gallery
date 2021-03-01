@@ -38,4 +38,14 @@ class User < ApplicationRecord
 			false
 		end
 	end
+
+	def recent_favorites
+		fav_users_query = Favorite.joins(:user).select('users.id as fu_id, users.username as fu_name, favorites.artwork_id as fa_id, favorites.created_at as f_time').to_sql
+
+		self.artworks
+		.joins("INNER JOIN (#{fav_users_query}) AS fav_users ON artworks.id = fav_users.fa_id")
+		.select('artworks.name as a_name, fav_users.fu_id as fu_id, fav_users.fu_name as fu_name, fav_users.fa_id as fa_id, fav_users.f_time as f_time')
+		.order('f_time DESC')
+		.limit(5)
+	end
 end

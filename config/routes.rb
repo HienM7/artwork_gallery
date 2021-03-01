@@ -9,11 +9,14 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  get '/my/profile', to: 'admin/users#show_my_profile', as: 'my_profile'
+  get '/users/:id/profile', to: 'admin/users#show_profile', as: 'user_profile'
+
   resources :artworks
 
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
   get 'my/artworks', to: 'artworks#my_artworks', as: 'show_my_artworks'
-  # get 'my/artworks/new', to: 'artworks#new', as: 'show_my_artworks'
+  # get 'my/artworks/new', to: 'artworks#new', as: 'my_artworks'
 
   resources :users do
     resources :artworks do
