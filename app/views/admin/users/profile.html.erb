@@ -1,10 +1,6 @@
 <% content_for :title do "Profile - " + @user.username end %>
 
 
-<% content_for :head do %>
-<% end %>
-
-
 <% content_for :header do %>
 <div class="row page-titles">
     <div class="col-md-5 align-self-center">
@@ -56,7 +52,7 @@
           <div class="card">
               <div class="card-body">
                   <div class="m-t-30 text-center">
-                      <%= image_tag  asset_path('paint-palette256.png'), alt: 'user', class: "img-circle", width: "150" %>
+                      <%= image_tag asset_path('paint-palette256.png'), alt: 'user', class: "img-circle", width: "150" %>
                       <h4 class="card-title m-t-10">
                         <%= @user.username %>
                       </h4>
@@ -151,7 +147,10 @@
                               </div>
                           </div>
                           <hr>
-                          <%= render 'application/mini_gallery' %>
+
+                          <%= render 'mini_gallery',
+                              artworks: @user.artworks %>
+
                       </div>
                   </div>
 
@@ -165,7 +164,7 @@
                               <% @user.recent_favorites.each do |rfav| %>
 
                               <div class="sl-item">
-                                  <div class="sl-left"> <%= image_tag  asset_path('paint-palette256.png'), alt: 'User', class: 'img-circle' %> </div>
+                                  <div class="sl-left"> <%= image_tag asset_path('paint-palette256.png'), alt: 'User', class: 'img-circle' %> </div>
                                   <div class="sl-right">
                                       <div>
                                           <%= link_to rfav.fu_name,

@@ -1,0 +1,45 @@
+<% content_for :head do %>
+<style>
+    .square {
+      float: left;
+      position: relative;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+    .square-3 {
+      width: 30%;
+      padding-bottom: 30%; /* = width for a 1:1 aspect ratio */
+      margin: 1.66%;
+      /* FOR .square-n where n = _items_per_row
+       * _items_per_row = 100 / width
+       * _gutters = 100 - _items_per_row * width
+       * margin = _gutters / (2 * _items_per_row)
+       */
+    }
+    .square-2 {
+      width: 45%;
+      padding-bottom: 45%;
+      margin: 2.5%;
+    }
+    .square:hover span {
+      text-shadow: 2px 2px 4px #fff, -2px 2px 4px #fff, 2px -2px 4px #fff, -2px -2px 4px #fff;
+    }
+    .artw-title {
+      color: #000;
+      line-height: 48px;
+      text-shadow: 0 0 4px #fff;
+    }
+</style>
+<% end %>
+
+
+<% artworks.each do |artw| %>
+  <%= link_to artwork_path(artw),
+      class: 'image-popup-vertical-fit' do %>
+    <div class="square square-2 text-center"
+      style="background-image: url('<%= artw.image.service_url %>');">
+      <span class="artw-title"><%= artw.name %></span>
+    </div>
+  <% end %>
+<% end %>

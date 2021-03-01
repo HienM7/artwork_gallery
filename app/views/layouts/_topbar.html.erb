@@ -5,7 +5,7 @@
         <!-- Logo -->
         <div class="navbar-header" style="background: #272c33 !important;">
             <a class="navbar-brand" href="/">
-                <b><%= image_tag  image_url('logo.png'), alt: 'homepage', height: '36' %></b>
+                <b><%= image_tag image_url('logo.png'), alt: 'homepage', height: '36' %></b>
             </a>
         </div>
 
@@ -77,7 +77,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark"
                       href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <%= image_tag  asset_path('paint-palette256.png'), alt: 'User', class: 'profile-pic' %>
+                        <%= image_tag asset_path('paint-palette256.png'), alt: 'User', class: 'profile-pic' %>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right scale-up">
                         <% if current_user ########################## %>
@@ -86,7 +86,7 @@
                             <li>
                                 <div class="dw-user-box">
                                     <div class="u-img">
-                                    <%= image_tag  asset_path('paint-palette256.png'), alt: 'User profile', class: 'profile-pic' %>
+                                    <%= image_tag asset_path('paint-palette256.png'), alt: 'User profile', class: 'profile-pic' %>
                                     </div>
                                     <div class="u-text">
                                         <h4><%= current_user.username %></h4>
