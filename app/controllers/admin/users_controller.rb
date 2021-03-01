@@ -21,17 +21,17 @@ class Admin::UsersController < AdminController
     @user = User.new(user_params_create)
 
     if @user.save
-      redirect_to admin_users_path, :flash => { :success => 'User was successfully created.' }
+      redirect_to admin_users_path, flash: { success: 'User was successfully created.' }
     else
-      render :action => 'new'
+      render action: 'new'
     end
   end
 
 	def update
     if @user.update_attributes(user_params_update)
-      redirect_to admin_users_path, :flash => { :success => 'User was successfully updated.' }
+      redirect_to admin_users_path, flash: { success: 'User was successfully updated.' }
 		else
-      render :action => 'edit'
+      render action: 'edit'
     end
   end
 
@@ -74,8 +74,7 @@ class Admin::UsersController < AdminController
 				params[:user].delete(:password_confirmation)
 				params.require(:user).permit(:username, :email, :point)
 			else
-      	params.require(:user).permit(:username, :password, :password_confirmation, :email, :point )
-
+      	params.require(:user).permit(:username, :password, :password_confirmation, :email, :point)
 			end
 		end
 end
