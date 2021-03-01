@@ -6,21 +6,21 @@
       <div class="card">
         <div class="el-card-item">
           <div class="el-card-avatar el-overlay-1">
-            <%= link_to  artwork_path(artwork),
+            <%= link_to artwork_path(artwork),
                 class: 'image-popup-vertical-fit' do %>
               <%= image_tag artwork.image, alt: "Oops!"%>
             <% end %>
             <div class="el-overlay">
               <ul class="el-info">
                 <li>
-                  <%= link_to  artwork_path(artwork) do %>
+                  <%= link_to artwork_path(artwork) do %>
                     <%= artwork.name %>
                     <i class="icon-link"></i>
                   <% end %>
                   <br />
                   <p class="formal-text">
                     by
-                    <%= link_to  artwork.user.username, user_path(artwork.user) %>
+                    <%= link_to artwork.user.username, user_path(artwork.user) %>
                   </p>
                   <br />
                   <p class="formal-text">

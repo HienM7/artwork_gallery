@@ -499,7 +499,7 @@
                 <div class="tab-content" id="right-info" style="padding: 2.5%;">
                     <div class="tab-pane active" id="simarts" role="tabpanel">
                       <% (similar_artworks @artwork).each do |sim_artw| %>
-                        <%= link_to  artwork_path(sim_artw),
+                        <%= link_to artwork_path(sim_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
                             style="background-image: url('<%= sim_artw.image.service_url %>');">
@@ -509,7 +509,7 @@
                     </div>
                     <div class="tab-pane" id="sameauthor" role="tabpanel">
                       <% (same_authors_artworks @artwork).each do |sa_artw| %>
-                        <%= link_to  artwork_path(sa_artw),
+                        <%= link_to artwork_path(sa_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
                             style="background-image: url('<%= sa_artw.image.service_url %>');">
