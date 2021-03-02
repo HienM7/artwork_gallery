@@ -120,24 +120,6 @@
         <!-- Column -->
         <div class="col-lg-8 col-xlg-8 col-md-12 col-sm-12" id="left-info-container">
             <div class="card" id="left-info">
-<%
-=begin%>
- <%# if (@artwork.status == 'published') %>
-                  <%# if (session().get('admin')['role_id'] == 1) %>
-                  <div class="ribbon ribbon-info ribbon-right">Active</div>
-                  <%# endif %>
-                  <%# if (@artwork.max_quantity <= @artwork.learner_count) %>
-                  <div class="ribbon ribbon-danger">Full</div>
-                  <%# else %>
-                  <div class="ribbon ribbon-info">Available</div>
-                  <%# endif %>
-              <%# elseif (@artwork.status == 'inactive')  %>
-              <div class="ribbon ribbon-danger ribbon-right">Inactive</div>
-              <%# elseif (@artwork.status == 'draft')  %>
-              <div class="ribbon ribbon-default ribbon-right">Draft</div>
-              <%# endif %>
-<%
-=end%>
               <div class="el-card-item">
                 <div class="el-card-avatar el-overlay-1">
                     <%= image_tag @artwork.image, class: 'card-img-top img-responsive' %>
@@ -484,7 +466,7 @@
         <!-- Column -->
 
         <!-- Column -->
-        <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12" id="right-info-container">
+        <div class="col-lg-4 col-xlg-4 col-md-12 col-sm-12 m-b-30" id="right-info-container">
             <div class="card">
                 <!-- Nav tabs // change to simple scrollable list -->
                 <ul class="nav nav-tabs customtab" role="tablist">
