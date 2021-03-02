@@ -1,8 +1,9 @@
-<div class="card-columns el-element-overlay">
+<div class="row el-element-overlay">
 
   <% @artworks.each do |artwork| %>
     <% if artwork.image.present? %>
 
+    <div class="col-lg-3 col-md-6">
       <div class="card">
         <div class="el-card-item">
           <div class="el-card-avatar el-overlay-1">
@@ -17,16 +18,21 @@
                   crop: "thumb" %>
             <% end %>
             <div class="el-overlay">
-              <ul class="el-info">
+              <%= link_to artwork_path(artwork) do %>
+              <ul class="el-info h-100">
+              </ul>
+              <% end %>
+              <ul class="el-info compact">
                 <li>
                   <%= link_to artwork_path(artwork) do %>
-                    <%= artwork.name %>
-                    <i class="icon-link"></i>
+                    <span class="text-success"><%= artwork.name %></span>
                   <% end %>
                   <br />
                   <p class="formal-text">
-                    by
-                    <%= link_to artwork.user.username, user_profile_path(artwork.user) %>
+                    <%= link_to user_profile_path(artwork.user) do %>
+                      <span class="text-muted">by </span>
+                      <strong><%= artwork.user.username %></strong>
+                    <% end %>
                   </p>
                   <br />
                   <p class="formal-text">
@@ -39,6 +45,7 @@
           </div>
         </div>
       </div>
+    </div>
 
     <% end %>
   <% end %>
