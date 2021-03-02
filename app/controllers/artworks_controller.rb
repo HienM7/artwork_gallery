@@ -1,10 +1,10 @@
 class ArtworksController < ApplicationController
   before_action :set_artwork, only: [:show, :edit, :update, :destroy]
   before_action :ensure_login, only: [:my_artworks, :new, :edit, :create, :update, :destroy]
+  before_action :ensure_author, only: [:edit, :update, :delete]
 
   # GET /artworks
   # GET /artworks.json
-
   def index
     @artworks = Artwork.search(params[:keyword])
   end
@@ -148,6 +148,13 @@ class ArtworksController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_artwork
       @artwork = Artwork.find(params[:id])
+    end
+
+    def ensure_author
+      if @artwork.user != current_user
+        flash[:error] = "You are not authorized to view that page."
+        redirect_to home_path
+      end
     end
 
     # Only allow a list of trusted parameters through.
