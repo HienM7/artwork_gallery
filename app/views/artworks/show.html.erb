@@ -571,9 +571,14 @@
 
         fetch(request, options)
         .then((response) => {
-          response.arrayBuffer()
+          return response.blob();
+        })
+        .then((imgBlob) => {
+          let imgType = imgBlob.type;
+
+          new Response(imgBlob).arrayBuffer()
           .then((buffer) => {
-            let base64Flag = 'data:image/jpeg;base64,';
+            let base64Flag = `data:${imgType};base64,`;
             let imageStr = arrayBufferToBase64(buffer);
             let base64Encoded = base64Flag + imageStr;
 
