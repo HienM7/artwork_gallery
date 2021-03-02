@@ -30,6 +30,9 @@
       line-height: 48px;
       text-shadow: 0 0 4px #fff;
     }
+    .artw-title-bg {
+      background: rgba(255, 255, 255, 0.5);
+    }
 </style>
 <% end %>
 
@@ -38,8 +41,10 @@
   <%= link_to artwork_path(artw),
       class: 'image-popup-vertical-fit' do %>
     <div class="square square-2 text-center"
-      style="background-image: url('<%= artw.image.service_url %>');">
-      <span class="artw-title"><%= artw.name %></span>
+      style="background-image: url('<%= artw.cldn_url %>');">
+      <div class="artw-title-bg">
+        <span class="artw-title"><%= artw.name %></span>
+      </div>
     </div>
   <% end %>
 <% end %>

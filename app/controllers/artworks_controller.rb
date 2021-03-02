@@ -126,21 +126,21 @@ class ArtworksController < ApplicationController
       dl_artw = Artwork.find(params[:id])
 
       if params[:option] == 'free'
-        img_url = dl_artw.image.service_url
+        img_url = dl_artw.low_res_url
 
         transfer_ok = current_user.make_donation(dl_artw, params[:amount].to_i)
 
         download_res dl_artw.name, img_url, transfer_ok
 
       elsif params[:option] == 'paid'
-        img_url = dl_artw.image.service_url # TODO : change to high quality img
+        img_url = dl_artw.image.service_url
 
         transfer_ok = current_user.make_purchase(dl_artw)
 
         download_res dl_artw.name, img_url, transfer_ok
       end
     else
-      redirect_to dl_artw.image.service_url
+      redirect_to dl_artw.low_res_url
     end
   end
 

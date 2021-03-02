@@ -33,4 +33,35 @@ class Artwork < ApplicationRecord
 
     Artwork.select("*", "(#{fav_count_query}) AS fav_count")  # pagination ?
   end
+
+  def cldn_url(width=420, height=280)
+    Cloudinary::Utils.cloudinary_url(
+      self.image.key,
+      width: width, height: height,
+      sign_url: true,
+      gravity: "center",
+      crop: "thumb"
+    )
+  end
+
+  def low_res_url
+    Cloudinary::Utils.cloudinary_url(
+      self.image.key,
+      transformation: [
+        {
+          sign_url: true
+        },
+        {
+          if: "width > 855 and height > 570",
+            width: "855",
+            quality: 90,
+            crop: "scale"
+        },
+        {
+          if: "else",
+            quality: 85
+        }
+      ]
+    )
+  end
 end
