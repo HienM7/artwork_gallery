@@ -28,6 +28,7 @@
         <%= form.label :image, 'Your artwork file', class: 'col-md-2 col-form-label' %>
         <div class="col-md-4">
             <%= form.file_field :image,
+                direct_upload: true,
                 id: 'input-file-now-custom-1',
                 class: 'dropify form-control'
             %>
