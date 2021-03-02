@@ -122,7 +122,14 @@
             <div class="card" id="left-info">
               <div class="el-card-item">
                 <div class="el-card-avatar el-overlay-1">
-                    <%= image_tag @artwork.image, class: 'card-img-top img-responsive' %>
+                    <%= cl_image_tag @artwork.image.key,
+                        class: 'card-img-top img-responsive',
+                        alt: "Something went wrong, please try later.",
+                        loading: "lazy",
+                        width: 855, height: 570,
+                        sign_url: true,
+                        crop: "lpad",
+                        background: "auto:predominant" %>
                 </div>
                 <div class="el-card-content">
 
@@ -484,7 +491,7 @@
                         <%= link_to artwork_path(sim_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
-                            style="background-image: url('<%= sim_artw.image.service_url %>');">
+                            style="background-image: url('<%= sim_artw.cldn_url %>');">
                           </div>
                         <% end %>
                       <% end %>
@@ -494,7 +501,7 @@
                         <%= link_to artwork_path(sa_artw),
                             class: 'image-popup-vertical-fit' do %>
                           <div class="square square-2"
-                            style="background-image: url('<%= sa_artw.image.service_url %>');">
+                            style="background-image: url('<%= sa_artw.cldn_url %>');">
                           </div>
                         <% end %>
                       <% end %>

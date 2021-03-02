@@ -8,7 +8,13 @@
           <div class="el-card-avatar el-overlay-1">
             <%= link_to artwork_path(artwork),
                 class: 'image-popup-vertical-fit' do %>
-              <%= image_tag artwork.image, alt: "Oops!"%>
+              <%= cl_image_tag artwork.image.key,
+                  alt: "Oops!",
+                  loading: "lazy",
+                  width: 420, height: 280,
+                  sign_url: true,
+                  gravity: "center",
+                  crop: "thumb" %>
             <% end %>
             <div class="el-overlay">
               <ul class="el-info">
