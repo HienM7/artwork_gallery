@@ -73,6 +73,15 @@
       padding-bottom: 45%;
       margin: 2.5%;
     }
+    .unpublished, .unpublished:hover {
+      color: rgb(16, 52, 166);
+      font-weight: 600;
+    }
+    .username-box {
+      background: rgba(255, 255, 255, 0.3);
+      display: inline-block;
+      padding: 0 2px;
+    }
 </style>
 <% end %>
 
@@ -169,6 +178,101 @@
                         </h5>
                       </div>
                     </div>
+
+                    <% if current_user && current_user.is_author(@artwork) %>
+
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <%= link_to edit_artwork_path(@artwork) do %>
+                            <button class="btn btn-outline invisible">
+                              <i class="ti-pencil-alt btn visible" data-toggle="tooltip" data-placement="bottom" title="Edit"></i>
+                            </button>
+                          <% end %>
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <%= link_to toggle_pub_path,
+                              method: :post,
+                              remote: true,
+                              id: 'tog-pub-link',
+                              class: 'invisible' do %>
+                            <button class="btn btn-outline invisible" id="pub-btn">
+                              <i id="pub-icon"
+                                class="ti-archive btn visible <%= @artwork.is_public? ? "" : "unpublished" %>"
+                                data-toggle="tooltip" data-placement="bottom"
+                                title="<%= @artwork.is_public? ? "Unpublish" : "Publish" %>"></i>
+                            </button>
+                          <% end %>
+                        </h5>
+                      </div>
+                    </div>
+                    <div class="col-3 b-r">
+                      <div class="text-center">
+                        <h5>
+                          <button class="btn btn-outline invisible"
+                                  data-toggle="modal"
+                                  data-target="#trash-modal">
+                            <i class="ti-trash btn visible" data-toggle="tooltip" data-placement="bottom" title="Delete"></i>
+                          </button>
+                        </h5>
+                        <div class="modal fade"
+                            id="trash-modal"
+                            tabindex="-1"
+                            role="dialog"
+                            aria-labelledby="delete-artwork"
+                            aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered"
+                              role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="modal-title"
+                                    id="delete-artwork">
+                                  Delete artwork?
+                                </h4>
+                                <button type="button"
+                                        class="close"
+                                        data-dismiss="modal"
+                                        aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <p>
+                                  <span class="text-primary">Name: </span>
+                                  <%= @artwork.name %>
+                                </p>
+                                <p>
+                                  <span class="text-primary">Total favorites: </span>
+                                  <%= artw_fav_count %>
+                                </p>
+                                <p class="m-t-15">
+                                  <span class="text-danger">This action is irreversible!</span>
+                                </p>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button"
+                                        class="btn btn-default waves-effect"
+                                        data-dismiss="modal">
+                                  Cancel
+                                </button>
+                                <%= link_to artwork_path(@artwork),
+                                    method: :delete,
+                                    class: "btn btn-danger waves-effect waves-light" do %>
+                                  Confirm
+                                <% end %>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <% else %>
+
                     <div class="col-3 b-r">
                       <div class="text-center">
                         <h5>
@@ -619,6 +723,11 @@
 
       $filled.toggleClass('text text-active');
       $empty.toggleClass('text text-active');
+    });
+
+    $('#pub-btn').click(function () {
+      let pubIcon = $('#pub-icon');
+      pubIcon.toggleClass("unpublished");
     });
 
     $(document).ready(function () {
