@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :artworks
 
   post 'artworks/:id/download', to: 'artworks#download', as: 'download'
+  post 'artworks/:id/toggle_pub', to: 'artworks#toggle_pub_status', as: 'toggle_pub'
   get 'my/artworks', to: 'artworks#my_artworks', as: 'show_my_artworks'
   # get 'my/artworks/new', to: 'artworks#new', as: 'my_artworks'
 

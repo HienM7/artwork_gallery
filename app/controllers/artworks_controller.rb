@@ -1,12 +1,12 @@
 class ArtworksController < ApplicationController
-  before_action :set_artwork, only: [:show, :edit, :update, :destroy]
+  before_action :set_artwork, only: [:show, :edit, :update, :destroy, :download, :toggle_pub_status]
   before_action :ensure_login, only: [:my_artworks, :new, :edit, :create, :update, :destroy]
-  before_action :ensure_author, only: [:edit, :update, :delete]
+  before_action :ensure_author, only: [:edit, :update, :delete, :toggle_pub_status]
 
   # GET /artworks
   # GET /artworks.json
   def index
-    @artworks = Artwork.search(params[:keyword])
+    @artworks = Artwork.search(params[:keyword]).where(is_public: true)
   end
 
   def my_artworks
@@ -16,6 +16,13 @@ class ArtworksController < ApplicationController
   # GET /artworks/1
   # GET /artworks/1.json
   def show
+    # unpublished artwork
+    if not @artwork.is_public? and @artwork.user != current_user
+      flash[:error] = "You are not authorized to view that page."
+      redirect_to home_path
+      return
+    end
+
     # For guest users
     fav_data =
       if not current_user
@@ -111,6 +118,11 @@ class ArtworksController < ApplicationController
     end
   end
 
+  def toggle_pub_status
+    # request.xhr?
+    @artwork.update_column(:is_public, ! @artwork.is_public?)
+  end
+
   # DELETE /artworks/1
   # DELETE /artworks/1.json
   def destroy
@@ -151,7 +163,7 @@ class ArtworksController < ApplicationController
     end
 
     def ensure_author
-      if @artwork.user != current_user
+      if current_user && @artwork.user != current_user
         flash[:error] = "You are not authorized to view that page."
         redirect_to home_path
       end
